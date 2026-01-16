@@ -8,10 +8,10 @@ import { useCartStore } from "@/lib/cart-store"
 import { loadStripe } from "@stripe/stripe-js"
 import { Elements, PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js"
 
-// Initialize Stripe (Replace with your actual publishable key)
-const stripePromise = loadStripe("pk_test_TYooMQauvdEDq54NiTphI7jx")
+// Initialize Stripe
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
-function CheckoutForm() {
+function CheckoutForm({ amount }: { amount: number }) {
     const stripe = useStripe()
     const elements = useElements()
     const [email, setEmail] = useState("")
@@ -30,14 +30,27 @@ function CheckoutForm() {
 
         setIsLoading(true)
 
-        // Simulate payment processing for demo purposes
-        // In a real app, you would confirm the payment intent here
-        setTimeout(() => {
+        const { error } = await stripe.confirmPayment({
+            elements,
+            confirmParams: {
+                return_url: `${window.location.origin}/checkout/success`,
+                payment_method_data: {
+                    billing_details: {
+                        name: `${firstName} ${lastName}`,
+                        email: email,
+                    },
+                },
+            },
+        })
+
+        if (error) {
+            setMessage(error.message || "An unexpected error occurred.")
             setIsLoading(false)
-            setMessage("Payment successful! (Demo Mode)")
-            clearCart()
-            // Redirect to success page or show success message
-        }, 2000)
+        } else {
+            // Your customer will be redirected to your `return_url`. For some payment
+            // methods like iDEAL, your customer will be redirected to an intermediate
+            // site first to authorize the payment, then redirected to the `return_url`.
+        }
     }
 
     return (
@@ -114,19 +127,12 @@ function CheckoutForm() {
                     Payment Method
                 </h2>
 
-                {/* Stripe Element Placeholder - In a real integration, use <PaymentElement /> */}
-                <div className="p-4 border border-gray-200 rounded-lg bg-gray-50 text-center text-gray-500 text-sm">
-                    Stripe Payment Element would load here.
-                    <br />
-                    (Requires valid Client Secret from backend)
-                </div>
-
-
+                <PaymentElement />
             </div>
 
             <button
                 type="submit"
-                disabled={isLoading || !stripe}
+                disabled={isLoading || !stripe || !elements}
                 className="w-full bg-gradient-to-r from-primary to-red-700 hover:from-red-800 hover:to-red-900 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
                 {isLoading ? (
@@ -140,7 +146,7 @@ function CheckoutForm() {
             </button>
 
             {message && (
-                <div className="p-4 rounded-lg bg-green-50 text-green-700 text-center font-medium">
+                <div className="p-4 rounded-lg bg-red-50 text-red-700 text-center font-medium">
                     {message}
                 </div>
             )}
@@ -161,14 +167,29 @@ export default function CheckoutPage() {
     const [discount, setDiscount] = useState(0)
     const [couponError, setCouponError] = useState("")
     const [isCouponApplied, setIsCouponApplied] = useState(false)
+    const [clientSecret, setClientSecret] = useState("")
 
     useEffect(() => {
         setMounted(true)
     }, [])
 
-    if (!mounted) return null
-
     const totalPrice = getTotalPrice()
+    const finalPrice = totalPrice - discount
+
+    useEffect(() => {
+        if (finalPrice > 0) {
+            // Create PaymentIntent as soon as the page loads
+            fetch("/api/create-payment-intent", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ amount: finalPrice }),
+            })
+                .then((res) => res.json())
+                .then((data) => setClientSecret(data.clientSecret))
+        }
+    }, [finalPrice])
+
+    if (!mounted) return null
 
     const handleApplyCoupon = () => {
         if (couponCode.toUpperCase() === "LIGHT10") {
@@ -183,7 +204,13 @@ export default function CheckoutPage() {
         }
     }
 
-    const finalPrice = totalPrice - discount
+    const appearance = {
+        theme: 'stripe',
+    };
+    const options = {
+        clientSecret,
+        appearance,
+    };
 
     return (
         <div className="min-h-screen bg-gray-50 py-8 md:py-12">
@@ -206,9 +233,15 @@ export default function CheckoutPage() {
                 <div className="grid lg:grid-cols-3 gap-8 lg:gap-12">
                     {/* Left Column - Forms */}
                     <div className="lg:col-span-2 order-2 lg:order-1">
-                        <Elements stripe={stripePromise}>
-                            <CheckoutForm />
-                        </Elements>
+                        {clientSecret ? (
+                            <Elements options={options as any} stripe={stripePromise}>
+                                <CheckoutForm amount={finalPrice} />
+                            </Elements>
+                        ) : (
+                            <div className="flex justify-center items-center h-64">
+                                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+                            </div>
+                        )}
                     </div>
 
                     {/* Right Column - Order Summary */}
