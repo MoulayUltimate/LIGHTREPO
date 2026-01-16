@@ -131,10 +131,13 @@ export async function GET(req: Request) {
                         }
                     }
 
+                    const enteredAtDate = latestView?.createdAt || visitor.createdAt
+                    const enteredAt = enteredAtDate ? Math.floor((enteredAtDate as Date).getTime() / 1000) : Math.floor(Date.now() / 1000)
+
                     visitorDetails.push({
                         id: visitor.id.substring(0, 8),
                         country: visitor.country || 'Unknown',
-                        enteredAt: latestView?.createdAt || visitor.createdAt,
+                        enteredAt: enteredAt,
                         status: status,
                         currentPage: currentPage,
                     })
