@@ -2,6 +2,7 @@ import { NextResponse } from "next/server"
 import Stripe from "stripe"
 import { drizzle } from "drizzle-orm/d1"
 import { orders } from "@/db/schema"
+import { sendTelegramMessage } from "@/lib/telegram"
 
 export const runtime = 'edge'
 // Trigger redeploy for env vars
@@ -51,6 +52,13 @@ export async function POST(req: Request) {
             console.error("Failed to create order in DB:", dbError)
         }
         */
+
+        // Notify Telegram
+        await sendTelegramMessage(
+            `🛒 <b>New Checkout Started</b>\n\n` +
+            `💰 Amount: ${amount} ${currency.toUpperCase()}\n` +
+            `📦 Items: ${items.length}\n`
+        )
 
         return NextResponse.json({ clientSecret: paymentIntent.client_secret })
     } catch (error) {

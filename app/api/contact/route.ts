@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import { drizzle } from "drizzle-orm/d1"
 import { contactMessages } from "@/db/schema"
+import { sendTelegramMessage } from "@/lib/telegram"
 
 export const runtime = "edge"
 
@@ -22,6 +23,15 @@ export async function POST(req: Request) {
             message,
             status: "new",
         })
+
+        // Notify Telegram
+        await sendTelegramMessage(
+            `📩 <b>New Contact Message</b>\n\n` +
+            `👤 Name: ${name}\n` +
+            `📧 Email: ${email}\n` +
+            `📝 Subject: ${subject}\n` +
+            `💬 Message: ${message}`
+        )
 
         return NextResponse.json({ success: true })
     } catch (error) {

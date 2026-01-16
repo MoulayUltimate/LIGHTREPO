@@ -3,6 +3,7 @@ import Stripe from "stripe"
 import { drizzle } from "drizzle-orm/d1"
 import { orders } from "@/db/schema"
 import { eq } from "drizzle-orm"
+import { sendTelegramMessage } from "@/lib/telegram"
 
 export const runtime = 'edge'
 
@@ -39,6 +40,13 @@ export async function POST(req: Request) {
             })
             .where(eq(orders.stripePaymentIntentId, paymentIntentId))
             .run()
+
+        // Notify Telegram
+        await sendTelegramMessage(
+            `✅ <b>Order Completed</b>\n\n` +
+            `💰 Amount: ${paymentIntent.amount / 100} ${paymentIntent.currency.toUpperCase()}\n` +
+            `🆔 Transaction ID: ${paymentIntentId}\n`
+        )
 
         return NextResponse.json({
             success: true,
