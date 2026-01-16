@@ -4,12 +4,14 @@ import Link from "next/link"
 import Image from "next/image"
 import { ProductButton } from "@/components/ui/product-button"
 import { products, CURRENCY_SYMBOL } from "@/lib/products"
+import { useModalStore } from "@/lib/modal-store"
 
 export function HeroSection() {
   const product = products[0]
+  const openModal = useModalStore((state) => state.openModal)
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-100">
+    <section className="relative overflow-hidden border-b border-gray-200">
       {/* Decorative Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-primary/5 blur-3xl" />
@@ -20,12 +22,13 @@ export function HeroSection() {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left Column - Image */}
           <div className="relative order-2 lg:order-1">
-            <div className="relative aspect-[4/3] max-w-xl mx-auto">
+            <div className="relative order-2 lg:order-1 flex justify-center">
               <Image
                 src="/lightburn-software-screenshot.webp"
                 alt="LightBurn Pro Software Interface"
-                fill
-                className="object-contain"
+                width={600}
+                height={450}
+                className="rounded-2xl shadow-xl"
                 priority
               />
             </div>
@@ -57,11 +60,9 @@ export function HeroSection() {
             </div>
 
             {/* CTA */}
-            <Link href="/product/lightburn-pro">
-              <ProductButton size="lg" variant="primary" className="px-8">
-                Buy Now
-              </ProductButton>
-            </Link>
+            <ProductButton size="lg" variant="primary" className="px-8" onClick={openModal}>
+              Buy Now
+            </ProductButton>
           </div>
         </div>
       </div>

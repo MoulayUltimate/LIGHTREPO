@@ -6,6 +6,7 @@ import Link from "next/link"
 import { ShoppingCart, Trash2, Minus, Plus, ArrowLeft, ShieldCheck, Lock, CreditCard } from "lucide-react"
 import { ProductButton } from "@/components/ui/product-button"
 import { useCartStore } from "@/lib/cart-store"
+import { useModalStore } from "@/lib/modal-store"
 
 export default function CartPage() {
   const [mounted, setMounted] = useState(false)
@@ -14,6 +15,7 @@ export default function CartPage() {
   const updateQuantity = useCartStore((state) => state.updateQuantity)
   const getTotalPrice = useCartStore((state) => state.getTotalPrice)
   const clearCart = useCartStore((state) => state.clearCart)
+  const openModal = useModalStore((state) => state.openModal)
 
   useEffect(() => {
     setMounted(true)
@@ -97,12 +99,12 @@ export default function CartPage() {
 
                   {/* Details */}
                   <div className="flex-1 min-w-0">
-                    <Link
-                      href={`/product/${item.product.slug}`}
-                      className="font-semibold text-gray-900 hover:text-primary transition-colors line-clamp-2"
+                    <button
+                      onClick={openModal}
+                      className="font-semibold text-gray-900 hover:text-primary transition-colors line-clamp-2 text-left"
                     >
                       {item.product.name}
-                    </Link>
+                    </button>
 
                     <div className="flex items-baseline gap-2 mt-1">
                       <span className="font-bold text-lg text-gray-900">${item.product.price.toFixed(2)}</span>

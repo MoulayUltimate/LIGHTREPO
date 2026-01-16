@@ -37,8 +37,8 @@ const partners = [
 
 export function TrustedPartners() {
   return (
-    <section className="py-16 md:py-20 bg-[#f9fafb]">
-      <div className="mx-auto max-w-[900px] px-5">
+    <section className="py-16 md:py-20 border-b border-gray-200">
+      <div className="mx-auto max-w-7xl px-5">
         <div className="group flex items-center gap-3.5 mb-8">
           <Shield className="w-7 h-7 text-gray-900" />
           <h3 className="relative text-2xl font-bold text-gray-900 pb-1.5">
@@ -47,27 +47,27 @@ export function TrustedPartners() {
           </h3>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {partners.map((partner) => (
             <div
               key={partner.name}
-              className="group relative bg-white rounded-2xl p-7 flex items-center gap-5 border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-[0_8px_22px_rgba(136,34,51,0.26)] hover:-translate-y-1"
+              className="group relative bg-white rounded-2xl p-8 flex items-start gap-5 border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-[0_8px_22px_rgba(136,34,51,0.26)] hover:-translate-y-1 min-h-[140px]"
             >
               <div className="absolute left-0 top-0 h-full w-[5px] bg-primary origin-top scale-y-0 transition-transform duration-300 group-hover:scale-y-100" />
 
-              <div className="flex-shrink-0">
+              <div className="flex-shrink-0 w-20 h-20 flex items-center justify-center">
                 <Image
                   src={partner.logo || "/placeholder.svg"}
                   alt={`${partner.name} logo`}
-                  width={44}
-                  height={44}
-                  className="h-11 w-auto object-contain"
+                  width={64}
+                  height={64}
+                  className="max-h-16 w-auto object-contain"
                   unoptimized
                 />
               </div>
-              <div>
-                <div className="font-bold text-lg text-gray-900 mb-1.5">{partner.name}</div>
-                <div className="text-base text-gray-500">{partner.description}</div>
+              <div className="flex-1 min-w-0">
+                <div className="font-bold text-lg text-gray-900 mb-2.5 leading-tight">{partner.name}</div>
+                <div className="text-base text-gray-600 leading-relaxed">{partner.description}</div>
               </div>
             </div>
           ))}

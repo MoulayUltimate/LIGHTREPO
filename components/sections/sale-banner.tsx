@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import { useModalStore } from "@/lib/modal-store"
 
 export function SaleBanner() {
+  const openModal = useModalStore((state) => state.openModal)
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -67,12 +69,12 @@ export function SaleBanner() {
           USE LIGHT10 FOR <span className="underline">10% OFF</span>
         </h2>
 
-        <Link
-          href="/product/lightburn-pro"
+        <button
+          onClick={openModal}
           className="inline-block bg-white text-primary font-bold px-8 py-3 rounded-lg hover:bg-gray-100 transition-colors"
         >
           Download now
-        </Link>
+        </button>
       </div>
     </section>
   )

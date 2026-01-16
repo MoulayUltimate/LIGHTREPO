@@ -12,28 +12,28 @@ const stats = [
     icon: Ban,
     title: "NO EXTRA CHARGES",
     subtitle: "No fees",
-    color: "text-blue-600",
-    bg: "bg-blue-100",
+    color: "text-primary",
+    bg: "bg-primary/10",
   },
   {
     icon: CreditCard,
     title: "SAFE PAYMENTS",
     subtitle: "Credit card",
-    color: "text-green-600",
-    bg: "bg-green-100",
+    color: "text-primary",
+    bg: "bg-primary/10",
   },
   {
     icon: Headphones,
     title: "24/7 SUPPORT",
     subtitle: "Available 24/7",
-    color: "text-purple-600",
-    bg: "bg-purple-100",
+    color: "text-primary",
+    bg: "bg-primary/10",
   },
 ]
 
 export function StatsBar() {
   return (
-    <section className="bg-white py-8 shadow-sm border-y border-gray-100">
+    <section className="py-8 shadow-sm border-b border-gray-200">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <h2 className="text-2xl md:text-3xl font-bold text-center text-gray-900 mb-8">
           Better Software For <span className="text-primary">Laser Cutters!</span>

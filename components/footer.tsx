@@ -1,7 +1,12 @@
+"use client"
+
 import Link from "next/link"
 import Image from "next/image"
+import { useModalStore } from "@/lib/modal-store"
 
 export function Footer() {
+  const openModal = useModalStore((state) => state.openModal)
+
   return (
     <footer className="bg-gray-900 text-gray-300">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
@@ -25,9 +30,9 @@ export function Footer() {
             <h3 className="text-white font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/product/lightburn-pro" className="text-sm hover:text-white transition-colors">
+                <button onClick={openModal} className="text-sm hover:text-white transition-colors text-left">
                   Shop
-                </Link>
+                </button>
               </li>
               <li>
                 <Link href="#" className="text-sm hover:text-white transition-colors">
@@ -59,6 +64,11 @@ export function Footer() {
               <li>
                 <Link href="/refund-policy" className="text-sm hover:text-white transition-colors">
                   Refund Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/delivery-policy" className="text-sm hover:text-white transition-colors">
+                  Delivery Policy
                 </Link>
               </li>
             </ul>

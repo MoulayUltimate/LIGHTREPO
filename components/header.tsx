@@ -5,6 +5,7 @@ import Image from "next/image"
 import { useState, useEffect } from "react"
 import { Menu, X, ShoppingCart } from "lucide-react"
 import { useCartStore } from "@/lib/cart-store"
+import { useModalStore } from "@/lib/modal-store"
 import { CURRENCY_SYMBOL } from "@/lib/products"
 
 export function Header() {
@@ -13,6 +14,7 @@ export function Header() {
   const [mounted, setMounted] = useState(false)
   const getTotalItems = useCartStore((state) => state.getTotalItems)
   const getTotalPrice = useCartStore((state) => state.getTotalPrice)
+  const openModal = useModalStore((state) => state.openModal)
 
   useEffect(() => {
     setMounted(true)
@@ -30,9 +32,8 @@ export function Header() {
     <header className="sticky top-0 z-50">
       {/* Main Header */}
       <div
-        className={`bg-white/95 backdrop-blur-md transition-shadow duration-300 ${
-          isScrolled ? "shadow-md" : "shadow-sm"
-        }`}
+        className={`bg-white/95 backdrop-blur-md transition-shadow duration-300 ${isScrolled ? "shadow-md" : "shadow-sm"
+          }`}
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
@@ -52,13 +53,35 @@ export function Header() {
               </Link>
             </div>
 
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center gap-8">
+              <Link
+                href="/"
+                className="text-sm font-medium text-gray-700 hover:text-primary transition-colors"
+              >
+                Home
+              </Link>
+              <Link
+                href="/contact"
+                className="text-sm font-medium text-gray-700 hover:text-primary transition-colors"
+              >
+                Contact Us
+              </Link>
+              <Link
+                href="/refund-policy"
+                className="text-sm font-medium text-gray-700 hover:text-primary transition-colors"
+              >
+                Refund and Returns Policy
+              </Link>
+            </nav>
+
             {/* Right Side Actions */}
             <div className="flex items-center gap-4">
               <Link href="#" className="hidden sm:flex text-gray-600 hover:text-primary transition-colors text-sm">
                 Login / Register
               </Link>
-              <Link
-                href="/cart"
+              <button
+                onClick={openModal}
                 className="relative flex items-center gap-2 p-2 text-gray-600 hover:text-primary transition-colors"
               >
                 <span className="text-sm font-medium">
@@ -71,7 +94,7 @@ export function Header() {
                     {totalItems}
                   </span>
                 )}
-              </Link>
+              </button>
             </div>
           </div>
         </div>
@@ -87,13 +110,15 @@ export function Header() {
               >
                 Home
               </Link>
-              <Link
-                href="/product/lightburn-pro"
-                className="block py-2 text-gray-700 hover:text-primary font-medium"
-                onClick={() => setIsMenuOpen(false)}
+              <button
+                onClick={() => {
+                  setIsMenuOpen(false)
+                  openModal()
+                }}
+                className="block w-full text-left py-2 text-gray-700 hover:text-primary font-medium"
               >
                 Shop
-              </Link>
+              </button>
               <Link
                 href="#"
                 className="block py-2 text-gray-700 hover:text-primary font-medium"
