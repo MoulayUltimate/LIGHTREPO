@@ -2,6 +2,10 @@ export async function sendTelegramMessage(message: string) {
     const token = process.env.TELEGRAM_BOT_TOKEN
     const chatId = process.env.TELEGRAM_CHAT_ID
 
+    console.log("Sending Telegram message...")
+    console.log("Token exists:", !!token)
+    console.log("Chat ID exists:", !!chatId)
+
     if (!token || !chatId) {
         console.warn("Telegram credentials missing")
         return
@@ -19,8 +23,11 @@ export async function sendTelegramMessage(message: string) {
             }),
         })
 
+        const responseText = await res.text()
+        console.log("Telegram API response:", responseText)
+
         if (!res.ok) {
-            console.error("Failed to send Telegram message", await res.text())
+            console.error("Failed to send Telegram message", responseText)
         }
     } catch (error) {
         console.error("Telegram error:", error)
