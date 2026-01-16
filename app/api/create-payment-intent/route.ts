@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server"
 import Stripe from "stripe"
+import { drizzle } from "drizzle-orm/d1"
+import { orders } from "@/db/schema"
 
 export const runtime = 'edge'
 // Trigger redeploy for env vars
@@ -15,7 +17,7 @@ export async function POST(req: Request) {
             apiVersion: "2025-01-27.acacia",
         })
 
-        const { amount } = await req.json()
+        const { amount, items } = await req.json()
 
         if (!amount) {
             return new NextResponse("Amount is required", { status: 400 })
@@ -27,7 +29,25 @@ export async function POST(req: Request) {
             automatic_payment_methods: {
                 enabled: true,
             },
+            metadata: {
+                items: JSON.stringify(items)
+            }
         })
+
+        // Create order in DB
+        try {
+            const db = drizzle(process.env.DB as D1Database)
+            await db.insert(orders).values({
+                id: crypto.randomUUID(),
+                stripePaymentIntentId: paymentIntent.id,
+                amount: Math.round(amount * 100),
+                status: "pending",
+                metadata: JSON.stringify(items),
+            })
+        } catch (dbError) {
+            console.error("Failed to create order in DB:", dbError)
+            // Continue even if DB fails, so user can still pay (we can reconcile later)
+        }
 
         return NextResponse.json({ clientSecret: paymentIntent.client_secret })
     } catch (error) {

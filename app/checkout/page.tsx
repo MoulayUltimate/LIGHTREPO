@@ -11,7 +11,7 @@ import { Elements, PaymentElement, useStripe, useElements } from "@stripe/react-
 // Initialize Stripe
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
-function CheckoutForm({ amount }: { amount: number }) {
+function CheckoutForm({ amount, clientSecret }: { amount: number, clientSecret: string }) {
     const stripe = useStripe()
     const elements = useElements()
     const [email, setEmail] = useState("")
@@ -29,6 +29,22 @@ function CheckoutForm({ amount }: { amount: number }) {
         }
 
         setIsLoading(true)
+
+        // Update order with customer details
+        try {
+            await fetch("/api/orders", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    paymentIntentId: clientSecret.split("_secret")[0], // Extract PI ID from client secret
+                    email: email,
+                    name: `${firstName} ${lastName}`
+                }),
+            })
+        } catch (err) {
+            console.error("Failed to update order details", err)
+            // Continue with payment anyway
+        }
 
         const { error } = await stripe.confirmPayment({
             elements,
@@ -188,7 +204,15 @@ export default function CheckoutPage() {
             fetch("/api/create-payment-intent", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ amount: finalPrice }),
+                body: JSON.stringify({
+                    amount: finalPrice,
+                    items: items.map(item => ({
+                        id: item.product.id,
+                        name: item.product.name,
+                        quantity: item.quantity,
+                        price: item.product.price
+                    }))
+                }),
             })
                 .then((res) => {
                     if (!res.ok) {
@@ -267,7 +291,7 @@ export default function CheckoutPage() {
                             </div>
                         ) : clientSecret ? (
                             <Elements options={options as any} stripe={stripePromise}>
-                                <CheckoutForm amount={finalPrice} />
+                                <CheckoutForm amount={finalPrice} clientSecret={clientSecret} />
                             </Elements>
                         ) : (
                             <div className="flex justify-center items-center h-64">
