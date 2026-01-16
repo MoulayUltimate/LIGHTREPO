@@ -1,10 +1,33 @@
 "use client"
 
-import { useActionState } from "react"
+import { useState } from "react"
 import { authenticate } from "@/lib/actions"
 
 export default function LoginPage() {
-    const [errorMessage, dispatch] = useActionState(authenticate, undefined)
+    const [errorMessage, setErrorMessage] = useState<string | undefined>("")
+    const [isPending, setIsPending] = useState(false)
+
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        setIsPending(true)
+        setErrorMessage("")
+
+        const formData = new FormData(event.currentTarget)
+        const result = await authenticate(undefined, formData)
+
+        if (result) {
+            setErrorMessage(result)
+            setIsPending(false)
+        } else {
+            // Redirect handled by server action or middleware? 
+            // Actually authenticate action calls signIn which throws redirect.
+            // So if we get here, it might be weird unless signIn didn't redirect.
+            // But signIn usually throws.
+            // Let's assume if it returns, it's an error string or undefined.
+            // If it throws Redirect, this catch block won't catch it unless we wrap it.
+            // But we are calling a server action.
+        }
+    }
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-gray-100">
@@ -12,7 +35,7 @@ export default function LoginPage() {
                 <div className="text-center">
                     <h2 className="mt-6 text-3xl font-extrabold text-gray-900">Admin Login</h2>
                 </div>
-                <form action={dispatch} className="mt-8 space-y-6">
+                <form onSubmit={handleSubmit} className="mt-8 space-y-6">
                     <div className="space-y-4 rounded-md shadow-sm">
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
@@ -47,9 +70,10 @@ export default function LoginPage() {
                     <div>
                         <button
                             type="submit"
-                            className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                            disabled={isPending}
+                            className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50"
                         >
-                            Sign in
+                            {isPending ? "Signing in..." : "Sign in"}
                         </button>
                     </div>
                     <div className="flex h-8 items-end space-x-1" aria-live="polite" aria-atomic="true">
