@@ -1,8 +1,9 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { LayoutDashboard, ShoppingCart, MessageSquare, LogOut, Settings } from "lucide-react"
+import { usePathname, useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
+import { LayoutDashboard, ShoppingCart, MessageSquare, LogOut } from "lucide-react"
 
 export default function AdminLayout({
     children,
@@ -10,17 +11,31 @@ export default function AdminLayout({
     children: React.ReactNode
 }) {
     const pathname = usePathname()
+    const router = useRouter()
+    const [mounted, setMounted] = useState(false)
+
+    useEffect(() => {
+        setMounted(true)
+    }, [])
 
     // Don't show admin layout on login page
     if (pathname === "/admin/login") {
         return <>{children}</>
     }
 
+    const handleSignOut = () => {
+        sessionStorage.removeItem("admin_session")
+        router.push("/admin/login")
+    }
+
     const navigation = [
+        { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
         { name: "Analytics", href: "/admin/analytics", icon: LayoutDashboard },
         { name: "Orders", href: "/admin/orders", icon: ShoppingCart },
         { name: "Messages", href: "/admin/messages", icon: MessageSquare },
     ]
+
+    if (!mounted) return null
 
     return (
         <div className="min-h-screen bg-gray-50 flex">
@@ -38,8 +53,8 @@ export default function AdminLayout({
                                 key={item.name}
                                 href={item.href}
                                 className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${isActive
-                                    ? "bg-indigo-50 text-indigo-600"
-                                    : "text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+                                        ? "bg-indigo-50 text-indigo-600"
+                                        : "text-gray-700 hover:bg-gray-50 hover:text-gray-900"
                                     }`}
                             >
                                 <item.icon className={`h-5 w-5 ${isActive ? "text-indigo-600" : "text-gray-400"}`} />
@@ -50,13 +65,13 @@ export default function AdminLayout({
                 </nav>
 
                 <div className="p-4 border-t border-gray-200">
-                    <a
-                        href="/api/auth/signout"
-                        className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-red-600 hover:bg-red-50 transition-colors"
+                    <button
+                        onClick={handleSignOut}
+                        className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-red-600 hover:bg-red-50 transition-colors w-full"
                     >
                         <LogOut className="h-5 w-5" />
                         Sign Out
-                    </a>
+                    </button>
                 </div>
             </aside>
 
