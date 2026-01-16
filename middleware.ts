@@ -1,9 +1,19 @@
-import NextAuth from "next-auth"
-import { authConfig } from "./auth.config"
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
 
-export default NextAuth(authConfig).auth
+export function middleware(request: NextRequest) {
+    const { pathname } = request.nextUrl
+
+    // Allow access to login page
+    if (pathname === '/admin/login') {
+        return NextResponse.next()
+    }
+
+    // For now, allow all admin access (we'll add proper auth check later)
+    // The real auth check will happen client-side via sessionStorage
+    return NextResponse.next()
+}
 
 export const config = {
-    // https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
-    matcher: ["/((?!api|_next/static|_next/image|.*\\.png$).*)"],
+    matcher: ['/admin/:path*'],
 }

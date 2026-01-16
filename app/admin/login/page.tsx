@@ -24,9 +24,11 @@ export default function LoginPage() {
             console.log("📦 Result received:", result)
 
             if (typeof result === "object" && result.success) {
-                console.log("✨ Login successful, redirecting...")
+                console.log("✨ Login successful, creating session...")
+                // Store in sessionStorage temporarily
+                sessionStorage.setItem("admin_session", JSON.stringify({ email: result.email }))
+                console.log("📍 Redirecting to admin...")
                 router.push("/admin")
-                router.refresh() // Ensure session is updated
             } else if (typeof result === "string") {
                 console.log("⚠️ Error message:", result)
                 setErrorMessage(result)
@@ -63,7 +65,7 @@ export default function LoginPage() {
                                 autoComplete="email"
                                 required
                                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                                placeholder="admin@example.com"
+                                placeholder="admin@lightburnos.com"
                             />
                         </div>
                         <div>
