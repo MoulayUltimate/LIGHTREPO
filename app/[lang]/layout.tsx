@@ -33,6 +33,8 @@ export const viewport: Viewport = {
 
 import { getDictionary } from "@/lib/dictionary"
 
+import Script from "next/script"
+
 export default async function RootLayout({
     children,
     params,
@@ -56,6 +58,19 @@ export default async function RootLayout({
     return (
         <html lang={lang}>
             <body className="font-sans antialiased">
+                <Script
+                    async
+                    src="https://www.googletagmanager.com/gtag/js?id=AW-17873403949"
+                    strategy="afterInteractive"
+                />
+                <Script id="google-ads-tag" strategy="afterInteractive">
+                    {`
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments);}
+                        gtag('js', new Date());
+                        gtag('config', 'AW-17873403949');
+                    `}
+                </Script>
                 <CurrencyProvider initialCurrency={currency}>
                     <Suspense fallback={null}>
                         <AnalyticsTracker />
