@@ -41,9 +41,10 @@ export default function RootLayout({
         <main>{children}</main>
         <Footer />
         <ProductModal />
-        <Suspense fallback={null}>
+        {/* Temporarily disabled for debugging */}
+        {/* <Suspense fallback={null}>
           <AnalyticsTracker />
-        </Suspense>
+        </Suspense> */}
       </body>
     </html>
   )
