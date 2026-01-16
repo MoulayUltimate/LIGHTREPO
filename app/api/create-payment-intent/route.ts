@@ -2,6 +2,7 @@ import { NextResponse } from "next/server"
 import Stripe from "stripe"
 
 export const runtime = 'edge'
+// Trigger redeploy for env vars
 
 export async function POST(req: Request) {
     try {
