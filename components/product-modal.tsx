@@ -8,12 +8,13 @@ import { useCartStore } from "@/lib/cart-store"
 import { useModalStore } from "@/lib/modal-store"
 import { cn } from "@/lib/utils"
 import { products } from "@/lib/products"
+import { useCurrency } from "@/components/currency-provider"
 
 export function ProductModal() {
     const { isOpen, closeModal } = useModalStore()
     const items = useCartStore((state) => state.items)
     const addItem = useCartStore((state) => state.addItem)
-    const getTotalPrice = useCartStore((state) => state.getTotalPrice)
+    const { price: currencyPrice, symbol } = useCurrency()
     const [isClosing, setIsClosing] = useState(false)
 
     // Auto-add default product if cart is empty when opening
@@ -42,8 +43,8 @@ export function ProductModal() {
 
     if (!isOpen && !isClosing) return null
 
-    const totalPrice = getTotalPrice()
-    const shipping = 0
+    const totalQuantity = items.reduce((acc, item) => acc + item.quantity, 0)
+    const displayTotal = currencyPrice * totalQuantity
 
     return (
         <div className={cn(
@@ -104,7 +105,7 @@ export function ProductModal() {
                                         {item.product.name}
                                     </h3>
                                     <div className="text-primary font-bold">
-                                        ${item.product.price.toFixed(2)}
+                                        {symbol}{currencyPrice.toFixed(2)}
                                     </div>
                                     <div className="text-sm text-gray-500 mt-1">
                                         Qty: {item.quantity}
@@ -120,7 +121,7 @@ export function ProductModal() {
                     <div className="space-y-2 text-sm">
                         <div className="flex justify-between text-gray-600">
                             <span>Subtotal</span>
-                            <span className="font-medium">${totalPrice.toFixed(2)}</span>
+                            <span className="font-medium">{symbol}{displayTotal.toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between text-gray-600">
                             <span>Shipping</span>
@@ -130,7 +131,7 @@ export function ProductModal() {
 
                     <div className="flex justify-between text-lg font-bold text-gray-900 pt-4 border-t border-gray-200">
                         <span>Total</span>
-                        <span>${totalPrice.toFixed(2)}</span>
+                        <span>{symbol}{displayTotal.toFixed(2)}</span>
                     </div>
 
                     <Link href="/checkout" className="block w-full" onClick={closeModal}>

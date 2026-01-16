@@ -1,12 +1,14 @@
 "use client"
 
 import Image from "next/image"
-import { products, CURRENCY_SYMBOL } from "@/lib/products"
+import { products } from "@/lib/products"
 import { useModalStore } from "@/lib/modal-store"
+import { useCurrency } from "@/components/currency-provider"
 
 export function ProductShowcase() {
   const openModal = useModalStore((state) => state.openModal)
   const product = products[0]
+  const { price, originalPrice, symbol } = useCurrency()
 
   return (
     <>
@@ -35,12 +37,12 @@ export function ProductShowcase() {
               {/* Pricing */}
               <div className="flex items-baseline gap-3 mb-2">
                 <span className="text-lg text-gray-400 line-through">
-                  {product.originalPrice.toFixed(2)}
-                  {CURRENCY_SYMBOL}
+                  {originalPrice.toFixed(2)}
+                  {symbol}
                 </span>
                 <span className="text-2xl md:text-3xl font-bold text-gray-900">
-                  {product.price.toFixed(2)}
-                  {CURRENCY_SYMBOL}
+                  {price.toFixed(2)}
+                  {symbol}
                 </span>
               </div>
 

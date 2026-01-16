@@ -7,6 +7,7 @@ import { ArrowLeft, ShieldCheck, Lock, CreditCard, Mail, User } from "lucide-rea
 import { useCartStore } from "@/lib/cart-store"
 import { loadStripe } from "@stripe/stripe-js"
 import { Elements, PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js"
+import { useCurrency } from "@/components/currency-provider"
 
 // Initialize Stripe
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
@@ -21,6 +22,7 @@ function CheckoutForm({ amount, clientSecret }: { amount: number, clientSecret: 
     const [message, setMessage] = useState<string | null>(null)
     const clearCart = useCartStore((state) => state.clearCart)
     const items = useCartStore((state) => state.items)
+    const { price: currencyPrice } = useCurrency()
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -41,7 +43,7 @@ function CheckoutForm({ amount, clientSecret }: { amount: number, clientSecret: 
                     email: email,
                     name: `${firstName} ${lastName}`,
                     amount: amount,
-                    items: items
+                    items: items.map(item => ({ ...item, product: { ...item.product, price: currencyPrice } }))
                 }),
             })
         } catch (err) {
@@ -82,7 +84,7 @@ function CheckoutForm({ amount, clientSecret }: { amount: number, clientSecret: 
                         paymentIntentId: clientSecret.split("_secret")[0],
                         email: email,
                         amount: amount,
-                        items: items,
+                        items: items.map(item => ({ ...item, product: { ...item.product, price: currencyPrice } })),
                         name: `${firstName} ${lastName}`.trim()
                     }),
                 })
@@ -201,7 +203,7 @@ function CheckoutForm({ amount, clientSecret }: { amount: number, clientSecret: 
 
 export default function CheckoutPage() {
     const items = useCartStore((state) => state.items)
-    const getTotalPrice = useCartStore((state) => state.getTotalPrice)
+    const { price: currencyPrice, symbol, currency } = useCurrency()
     const [mounted, setMounted] = useState(false)
     const [couponCode, setCouponCode] = useState("")
     const [discount, setDiscount] = useState(0)
@@ -213,7 +215,7 @@ export default function CheckoutPage() {
         setMounted(true)
     }, [])
 
-    const totalPrice = getTotalPrice()
+    const totalPrice = items.reduce((acc, item) => acc + item.quantity, 0) * currencyPrice
     const finalPrice = totalPrice - discount
 
     const [error, setError] = useState<string | null>(null)
@@ -230,11 +232,12 @@ export default function CheckoutPage() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     amount: finalPrice,
+                    currency: currency.toLowerCase(),
                     items: items.map(item => ({
                         id: item.product.id,
                         name: item.product.name,
                         quantity: item.quantity,
-                        price: item.product.price
+                        price: currencyPrice
                     }))
                 }),
             })
@@ -350,7 +353,7 @@ export default function CheckoutPage() {
                                                 </h3>
                                                 <div className="flex justify-between items-center mt-1">
                                                     <span className="text-sm text-gray-500">Qty: {item.quantity}</span>
-                                                    <span className="font-bold text-gray-900">${(item.product.price * item.quantity).toFixed(2)}</span>
+                                                    <span className="font-bold text-gray-900">{symbol}{(currencyPrice * item.quantity).toFixed(2)}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -389,12 +392,12 @@ export default function CheckoutPage() {
                             <div className="space-y-3 pt-4 border-t border-gray-100">
                                 <div className="flex justify-between text-gray-600">
                                     <span>Subtotal</span>
-                                    <span>${totalPrice.toFixed(2)}</span>
+                                    <span>{symbol}{totalPrice.toFixed(2)}</span>
                                 </div>
                                 {isCouponApplied && (
                                     <div className="flex justify-between text-green-600">
                                         <span>Discount (10%)</span>
-                                        <span>-${discount.toFixed(2)}</span>
+                                        <span>-{symbol}{discount.toFixed(2)}</span>
                                     </div>
                                 )}
                                 <div className="flex justify-between text-gray-600">
@@ -403,7 +406,7 @@ export default function CheckoutPage() {
                                 </div>
                                 <div className="flex justify-between text-xl font-bold text-gray-900 pt-2 border-t border-gray-100">
                                     <span>Total</span>
-                                    <span>${finalPrice.toFixed(2)}</span>
+                                    <span>{symbol}{finalPrice.toFixed(2)}</span>
                                 </div>
                             </div>
 

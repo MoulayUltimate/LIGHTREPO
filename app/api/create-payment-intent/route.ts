@@ -17,7 +17,7 @@ export async function POST(req: Request) {
             apiVersion: "2025-02-24.acacia",
         })
 
-        const { amount, items } = await req.json()
+        const { amount, items, currency } = await req.json()
 
         if (!amount) {
             return new NextResponse("Amount is required", { status: 400 })
@@ -25,7 +25,7 @@ export async function POST(req: Request) {
 
         const paymentIntent = await stripe.paymentIntents.create({
             amount: Math.round(amount * 100), // Convert to cents
-            currency: "usd",
+            currency: currency || "usd",
             description: "Lightburn Pro Guide Service",
             automatic_payment_methods: {
                 enabled: true,

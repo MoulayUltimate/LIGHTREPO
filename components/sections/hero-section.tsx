@@ -3,12 +3,14 @@
 import Link from "next/link"
 import Image from "next/image"
 import { ProductButton } from "@/components/ui/product-button"
-import { products, CURRENCY_SYMBOL } from "@/lib/products"
+import { products } from "@/lib/products"
 import { useModalStore } from "@/lib/modal-store"
+import { useCurrency } from "@/components/currency-provider"
 
 export function HeroSection() {
   const product = products[0]
   const openModal = useModalStore((state) => state.openModal)
+  const { price, symbol } = useCurrency()
 
   return (
     <section className="relative overflow-hidden border-b border-gray-200">
@@ -55,7 +57,7 @@ export function HeroSection() {
             {/* Price */}
             <div className="flex items-baseline gap-3">
               <span className="text-5xl md:text-6xl font-bold text-gray-900">
-                {product.price.toFixed(2)} {CURRENCY_SYMBOL}
+                {price.toFixed(2)} {symbol}
               </span>
             </div>
 
