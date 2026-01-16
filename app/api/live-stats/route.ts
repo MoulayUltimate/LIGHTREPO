@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 import { drizzle } from "drizzle-orm/d1"
 import { visitors, pageViews, orders } from "@/db/schema"
-import { sql, count, sum } from "drizzle-orm"
+import { sql, count } from "drizzle-orm"
 
 export const runtime = "edge"
 
@@ -22,7 +22,7 @@ export async function GET(req: Request) {
         // 1. Visitors right now (unique visitors in last 10 min)
         try {
             recentPageViews = await db
-                .select({ visitorId: pageViews.visitorId })
+                .select({ visitorId: pageViews.visitorId, path: pageViews.path, createdAt: pageViews.createdAt })
                 .from(pageViews)
                 .where(sql`${pageViews.createdAt} > ${tenMinutesAgoTimestamp}`)
                 .all()
@@ -74,19 +74,15 @@ export async function GET(req: Request) {
         const purchased = recentOrders.filter(o => o.status === 'paid').length
         const totalSales = recentOrders
             .filter(o => o.status === 'paid')
-            .reduce((sum, o) => sum + (o.amount || 0), 0) / 100 // Convert from cents
+            .reduce((sum, o) => sum + (o.amount || 0), 0) / 100
 
         const totalOrders = recentOrders.filter(o => o.status !== 'abandoned').length
-
-        // Checking out = live visitors on /checkout page (real-time tracking)
         const checkingOut = activeCarts
-
-        // Active carts = people who abandoned (entered email but didn't complete)
         const abandonedCarts = recentOrders.filter(o => o.status === 'abandoned').length
         const totalActiveCarts = abandonedCarts
 
-        // 6. Get top countries from recent visitors
-        let topCountries: { country: string; count: number }[] = []
+        // 6. Get detailed visitor list with status, country, and time
+        let visitorDetails: any[] = []
         try {
             const recentVisitorIds = new Set(recentPageViews.map(pv => pv.visitorId).filter(Boolean))
             if (recentVisitorIds.size > 0) {
@@ -96,19 +92,41 @@ export async function GET(req: Request) {
                     .where(sql`${visitors.id} IN (${Array.from(recentVisitorIds).map(id => `'${id}'`).join(',')})`)
                     .all()
 
-                const countryMap = new Map<string, number>()
-                recentVisitors.forEach(v => {
-                    const country = v.country || 'Unknown'
-                    countryMap.set(country, (countryMap.get(country) || 0) + 1)
-                })
+                for (const visitor of recentVisitors) {
+                    const visitorPageViews = recentPageViews.filter(pv => pv.visitorId === visitor.id)
+                    const latestView = visitorPageViews[visitorPageViews.length - 1]
+                    const currentPage = latestView?.path || '/'
 
-                topCountries = Array.from(countryMap.entries())
-                    .map(([country, count]) => ({ country, count }))
-                    .sort((a, b) => b.count - a.count)
-                    .slice(0, 5)
+                    // Find order for this visitor by email or timing
+                    const visitorOrder = recentOrders.find(o => {
+                        const orderTime = o.createdAt as any
+                        const visitorTime = latestView?.createdAt || visitor.createdAt
+                        return Math.abs(orderTime - (visitorTime as any)) < 300
+                    })
+
+                    let status = 'browsing'
+                    if (currentPage.includes('/checkout')) {
+                        status = 'checking_out'
+                    }
+                    if (visitorOrder) {
+                        if (visitorOrder.status === 'paid') status = 'paid'
+                        else if (visitorOrder.status === 'abandoned') status = 'abandoned'
+                        else if (visitorOrder.status === 'pending') status = 'checking_out'
+                    }
+
+                    visitorDetails.push({
+                        id: visitor.id.substring(0, 8),
+                        country: visitor.country || 'Unknown',
+                        enteredAt: latestView?.createdAt || visitor.createdAt,
+                        status: status,
+                        currentPage: currentPage,
+                    })
+                }
+
+                visitorDetails.sort((a, b) => (b.enteredAt || 0) - (a.enteredAt || 0))
             }
         } catch (e) {
-            console.error("Error fetching countries:", e)
+            console.error("Error fetching visitor details:", e)
         }
 
         return NextResponse.json({
@@ -119,11 +137,10 @@ export async function GET(req: Request) {
             activeCarts: totalActiveCarts,
             checkingOut: checkingOut,
             purchased: purchased,
-            topCountries: topCountries,
+            visitorDetails: visitorDetails,
         })
     } catch (error) {
         console.error("Live Stats Error:", error)
-        // Return zeros instead of error to prevent frontend crash
         return NextResponse.json({
             visitorsNow: 0,
             sessions: 0,
@@ -132,7 +149,7 @@ export async function GET(req: Request) {
             activeCarts: 0,
             checkingOut: 0,
             purchased: 0,
-            topCountries: [],
+            visitorDetails: [],
         })
     }
 }

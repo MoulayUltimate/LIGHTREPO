@@ -11,7 +11,13 @@ interface LiveStats {
     activeCarts: number
     checkingOut: number
     purchased: number
-    topCountries: { country: string; count: number }[]
+    visitorDetails: Array<{
+        id: string
+        country: string
+        enteredAt: number
+        status: string
+        currentPage: string
+    }>
 }
 
 export default function LiveViewPage() {
@@ -23,7 +29,7 @@ export default function LiveViewPage() {
         activeCarts: 0,
         checkingOut: 0,
         purchased: 0,
-        topCountries: [],
+        visitorDetails: [],
     })
     const [loading, setLoading] = useState(true)
     const [mounted, setMounted] = useState(false)
@@ -156,19 +162,45 @@ export default function LiveViewPage() {
                     </div>
                 </div>
 
-                {/* Countries - nested inside Customer Behavior */}
-                {stats.topCountries.length > 0 && (
+                {/* Visitor Details List */}
+                {stats.visitorDetails.length > 0 && (
                     <>
                         <div className="border-t border-gray-100"></div>
                         <div className="p-6">
-                            <h3 className="text-sm font-semibold text-gray-700 mb-4">Visitors by Country (Last 10 min)</h3>
+                            <h3 className="text-sm font-semibold text-gray-700 mb-4">Live Visitors (Last 10 min)</h3>
                             <div className="space-y-3">
-                                {stats.topCountries.map((country, index) => (
-                                    <div key={index} className="flex items-center justify-between">
-                                        <span className="text-sm font-medium text-gray-700">{country.country}</span>
-                                        <span className="text-sm text-gray-500">{country.count} visitor{country.count !== 1 ? 's' : ''}</span>
-                                    </div>
-                                ))}
+                                {stats.visitorDetails.map((visitor, index) => {
+                                    const timeAgo = Math.floor((Date.now() / 1000 - visitor.enteredAt) / 60)
+                                    const statusColors = {
+                                        browsing: 'bg-gray-100 text-gray-700',
+                                        checking_out: 'bg-yellow-100 text-yellow-700',
+                                        abandoned: 'bg-red-100 text-red-700',
+                                        paid: 'bg-green-100 text-green-700',
+                                    }
+                                    const statusLabels = {
+                                        browsing: 'Browsing',
+                                        checking_out: 'Checking Out',
+                                        abandoned: 'Abandoned',
+                                        paid: 'Paid',
+                                    }
+                                    return (
+                                        <div key={index} className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
+                                            <div className="flex items-center gap-3">
+                                                <div className="text-2xl">{visitor.country === 'US' ? '🇺🇸' : visitor.country === 'MA' ? '🇲🇦' : visitor.country === 'GB' ? '🇬🇧' : visitor.country === 'FR' ? '🇫🇷' : visitor.country === 'DE' ? '🇩🇪' : visitor.country === 'CA' ? '🇨🇦' : '🌍'}</div>
+                                                <div>
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="text-sm font-mono text-gray-600">#{visitor.id}</span>
+                                                        {timeAgo < 2 && <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>}
+                                                    </div>
+                                                    <div className="text-xs text-gray-500">{timeAgo === 0 ? 'Just now' : `${timeAgo} min ago`}</div>
+                                                </div>
+                                            </div>
+                                            <span className={`px-2 py-1 rounded text-xs font-medium ${statusColors[visitor.status as keyof typeof statusColors] || 'bg-gray-100 text-gray-700'}`}>
+                                                {statusLabels[visitor.status as keyof typeof statusLabels] || visitor.status}
+                                            </span>
+                                        </div>
+                                    )
+                                })}
                             </div>
                         </div>
                     </>
