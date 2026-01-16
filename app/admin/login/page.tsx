@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { authenticate } from "@/lib/actions"
 import { useRouter } from "next/navigation"
 
 export default function LoginPage() {
@@ -16,32 +15,37 @@ export default function LoginPage() {
         setErrorMessage("")
 
         const formData = new FormData(event.currentTarget)
-        console.log("📋 FormData created")
+        const email = formData.get("email")
+        const password = formData.get("password")
+
+        console.log("📋 Making API request...")
 
         try {
-            console.log("🌐 Calling authenticate...")
-            const result = await authenticate(undefined, formData)
-            console.log("📦 Result received:", result)
+            const response = await fetch("/api/admin/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email, password }),
+            })
 
-            if (typeof result === "object" && result.success) {
-                console.log("✨ Login successful, creating session...")
-                // Store in sessionStorage temporarily
-                sessionStorage.setItem("admin_session", JSON.stringify({ email: result.email }))
-                console.log("📍 Redirecting to admin...")
+            console.log("📦 Response status:", response.status)
+            const data = await response.json()
+            console.log("📦 Response data:", data)
+
+            if (data.success) {
+                console.log("✨ Login successful!")
+                sessionStorage.setItem("admin_session", JSON.stringify({ email: data.email }))
+                console.log("📍 Redirecting...")
                 router.push("/admin")
-            } else if (typeof result === "string") {
-                console.log("⚠️ Error message:", result)
-                setErrorMessage(result)
-                setIsPending(false)
             } else {
-                console.log("❓ Unexpected result type:", typeof result, result)
-                setErrorMessage("An unexpected error occurred.")
+                console.log("⚠️ Login failed:", data.error)
+                setErrorMessage(data.error || "Login failed")
                 setIsPending(false)
             }
         } catch (error) {
-            console.error("🔥 Client-side error:", error)
-            console.error("Error details:", error instanceof Error ? error.message : String(error))
-            setErrorMessage("An unexpected error occurred: " + (error instanceof Error ? error.message : String(error)))
+            console.error("🔥 Request error:", error)
+            setErrorMessage("An error occurred. Please try again.")
             setIsPending(false)
         }
     }
