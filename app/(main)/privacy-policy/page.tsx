@@ -1,3 +1,4 @@
+export const runtime = 'edge'
 import { Shield } from "lucide-react"
 
 export default function PrivacyPolicyPage() {

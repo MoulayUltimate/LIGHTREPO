@@ -1,3 +1,4 @@
+export const runtime = 'edge'
 "use client"
 
 import { useEffect, useState } from "react"
@@ -7,15 +8,16 @@ import { ShoppingCart, Trash2, Minus, Plus, ArrowLeft, ShieldCheck, Lock, Credit
 import { ProductButton } from "@/components/ui/product-button"
 import { useCartStore } from "@/lib/cart-store"
 import { useModalStore } from "@/lib/modal-store"
+import { useCurrency } from "@/components/currency-provider"
 
 export default function CartPage() {
   const [mounted, setMounted] = useState(false)
   const items = useCartStore((state) => state.items)
   const removeItem = useCartStore((state) => state.removeItem)
   const updateQuantity = useCartStore((state) => state.updateQuantity)
-  const getTotalPrice = useCartStore((state) => state.getTotalPrice)
   const clearCart = useCartStore((state) => state.clearCart)
   const openModal = useModalStore((state) => state.openModal)
+  const { price, originalPrice, symbol } = useCurrency()
 
   useEffect(() => {
     setMounted(true)
@@ -57,8 +59,8 @@ export default function CartPage() {
     )
   }
 
-  const totalPrice = getTotalPrice()
-  const originalTotal = items.reduce((total, item) => total + item.product.originalPrice * item.quantity, 0)
+  const totalPrice = items.reduce((total, item) => total + price * item.quantity, 0)
+  const originalTotal = items.reduce((total, item) => total + originalPrice * item.quantity, 0)
   const savings = originalTotal - totalPrice
 
   return (
@@ -107,9 +109,9 @@ export default function CartPage() {
                     </button>
 
                     <div className="flex items-baseline gap-2 mt-1">
-                      <span className="font-bold text-lg text-gray-900">${item.product.price.toFixed(2)}</span>
+                      <span className="font-bold text-lg text-gray-900">{symbol}{price.toFixed(2)}</span>
                       <span className="text-sm text-gray-400 line-through">
-                        ${item.product.originalPrice.toFixed(2)}
+                        {symbol}{originalPrice.toFixed(2)}
                       </span>
                     </div>
 
@@ -152,15 +154,15 @@ export default function CartPage() {
               <div className="space-y-4 mb-6">
                 <div className="flex justify-between text-gray-600">
                   <span>Subtotal</span>
-                  <span>${originalTotal.toFixed(2)}</span>
+                  <span>{symbol}{originalTotal.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-green-600 font-medium">
                   <span>You Save</span>
-                  <span>-${savings.toFixed(2)}</span>
+                  <span>-{symbol}{savings.toFixed(2)}</span>
                 </div>
                 <div className="border-t pt-4 flex justify-between text-xl font-bold text-gray-900">
                   <span>Total</span>
-                  <span>${totalPrice.toFixed(2)}</span>
+                  <span>{symbol}{totalPrice.toFixed(2)}</span>
                 </div>
               </div>
 

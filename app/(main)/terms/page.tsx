@@ -1,3 +1,4 @@
+export const runtime = 'edge'
 import { FileText } from "lucide-react"
 
 export default function TermsPage() {

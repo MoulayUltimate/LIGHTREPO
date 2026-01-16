@@ -1,3 +1,4 @@
+export const runtime = 'edge'
 import { ShieldCheck, Mail, Clock, Zap } from "lucide-react"
 
 export default function DeliveryPolicyPage() {

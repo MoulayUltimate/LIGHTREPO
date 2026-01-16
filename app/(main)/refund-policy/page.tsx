@@ -1,3 +1,4 @@
+export const runtime = 'edge'
 import { RefreshCw } from "lucide-react"
 
 export default function RefundPolicyPage() {

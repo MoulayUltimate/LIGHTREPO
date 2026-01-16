@@ -1,3 +1,5 @@
+export const runtime = 'edge'
+
 import { HeroSection } from "@/components/sections/hero-section"
 import { StatsBar } from "@/components/sections/stats-bar"
 import { MotivationSection } from "@/components/sections/motivation-section"
