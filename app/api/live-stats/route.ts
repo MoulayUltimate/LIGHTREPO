@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 import { drizzle } from "drizzle-orm/d1"
 import { visitors, pageViews, orders } from "@/db/schema"
-import { sql, count } from "drizzle-orm"
+import { sql, count, inArray } from "drizzle-orm"
 
 export const runtime = "edge"
 
@@ -86,15 +86,11 @@ export async function GET(req: Request) {
         try {
             const recentVisitorIds = new Set(recentPageViews.map(pv => pv.visitorId).filter(Boolean))
             if (recentVisitorIds.size > 0) {
-                // Fetch all visitors and filter in JS (more reliable than SQL IN clause)
-                const allRecentVisitors = await db
+                const recentVisitors = await db
                     .select()
                     .from(visitors)
-                    .where(sql`${visitors.createdAt} > ${tenMinutesAgoTimestamp - 600}`) // Extra buffer
+                    .where(inArray(visitors.id, Array.from(recentVisitorIds)))
                     .all()
-
-                // Filter to only visitors we saw in page views
-                const recentVisitors = allRecentVisitors.filter(v => recentVisitorIds.has(v.id))
 
                 for (const visitor of recentVisitors) {
                     const visitorPageViews = recentPageViews.filter(pv => pv.visitorId === visitor.id)
