@@ -1,11 +1,6 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
-import { Suspense } from "react"
-import { Header } from "@/components/header"
-import { Footer } from "@/components/footer"
-import { ProductModal } from "@/components/product-modal"
-import { AnalyticsTracker } from "@/components/analytics-tracker"
 import "./globals.css"
 
 const _geist = Geist({ subsets: ["latin"] })
@@ -27,17 +22,6 @@ export const viewport: Viewport = {
   themeColor: "#8B1A1A",
   width: "device-width",
   initialScale: 1,
-}
-
-function LayoutContent({ children }: { children: React.ReactNode }) {
-  return (
-    <>
-      <Header />
-      <main>{children}</main>
-      <Footer />
-      <ProductModal />
-    </>
-  )
 }
 
 export default function RootLayout({
