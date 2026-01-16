@@ -29,6 +29,17 @@ export const viewport: Viewport = {
   initialScale: 1,
 }
 
+function LayoutContent({ children }: { children: React.ReactNode }) {
+  return (
+    <>
+      <Header />
+      <main>{children}</main>
+      <Footer />
+      <ProductModal />
+    </>
+  )
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -37,14 +48,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-sans antialiased">
-        <Header />
-        <main>{children}</main>
-        <Footer />
-        <ProductModal />
-        {/* Temporarily disabled for debugging */}
-        {/* <Suspense fallback={null}>
-          <AnalyticsTracker />
-        </Suspense> */}
+        {children}
       </body>
     </html>
   )
