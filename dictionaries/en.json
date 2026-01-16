@@ -279,5 +279,62 @@
             "ssl": "SSL Encrypted",
             "protection": "Buyer Protection"
         }
+    },
+    "success": {
+        "title": "Thank You!",
+        "message": "Your order has been placed successfully. You will receive an email confirmation shortly.",
+        "continue": "Continue Shopping",
+        "loading": {
+            "title": "Confirming Order...",
+            "message": "Please wait while we verify your payment."
+        },
+        "error": {
+            "title": "Something went wrong",
+            "message": "We couldn't confirm your payment automatically. If you were charged, please contact support.",
+            "contact": "Contact Support"
+        }
+    },
+    "contact": {
+        "title": "Contact Us",
+        "subtitle": "Have questions about LightBurn Pro? Our team is here to help you 24/7.",
+        "directContact": "Or email us directly at:",
+        "success": {
+            "title": "Message Sent!",
+            "message": "Thank you for reaching out. We'll get back to you within 24 hours.",
+            "sendAnother": "Send Another Message"
+        },
+        "error": "Something went wrong. Please try again.",
+        "form": {
+            "name": "Your Name",
+            "namePlaceholder": "John Doe",
+            "email": "Email Address",
+            "emailPlaceholder": "john@example.com",
+            "subject": "Subject",
+            "selectSubject": "Select a subject",
+            "message": "Message",
+            "messagePlaceholder": "How can we help you?",
+            "submit": "Send Message",
+            "subjects": {
+                "sales": "Sales Inquiry",
+                "support": "Technical Support",
+                "licensing": "Licensing Question",
+                "refund": "Refund Request",
+                "other": "Other"
+            }
+        }
+    },
+    "legal": {
+        "refundPolicy": {
+            "title": "Refund Policy"
+        },
+        "privacyPolicy": {
+            "title": "Privacy Policy"
+        },
+        "termsOfService": {
+            "title": "Terms of Service"
+        },
+        "shippingPolicy": {
+            "title": "Shipping Policy"
+        }
     }
 }

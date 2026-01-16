@@ -1,7 +1,11 @@
 export const runtime = 'edge'
+import { getDictionary } from "@/lib/dictionary"
 import { FileText } from "lucide-react"
 
-export default function TermsPage() {
+export default async function TermsPage({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = await params
+  const dict = await getDictionary(lang)
+
   return (
     <div className="bg-bg min-h-screen py-12 md:py-16">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
@@ -10,7 +14,7 @@ export default function TermsPage() {
           <div className="inline-flex items-center justify-center h-16 w-16 rounded-full bg-primary/10 mb-6">
             <FileText className="h-8 w-8 text-primary" />
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Terms & Conditions</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{dict.legal.termsOfService.title}</h1>
           <p className="text-gray-600">Last updated: January 2025</p>
         </div>
 

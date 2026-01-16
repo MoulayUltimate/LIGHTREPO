@@ -1,12 +1,16 @@
 export const runtime = 'edge'
+import { getDictionary } from "@/lib/dictionary"
 import { ShieldCheck, Mail, Clock, Zap } from "lucide-react"
 
-export default function DeliveryPolicyPage() {
+export default async function DeliveryPolicyPage({ params }: { params: Promise<{ lang: string }> }) {
+    const { lang } = await params
+    const dict = await getDictionary(lang)
+
     return (
         <div className="bg-white min-h-screen py-12 md:py-16">
             <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-12">
-                    <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Digital Delivery Policy</h1>
+                    <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{dict.legal.shippingPolicy.title}</h1>
                     <p className="text-lg text-gray-600">
                         Instant access to your software, delivered directly to your email.
                     </p>

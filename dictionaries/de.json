@@ -279,5 +279,62 @@
             "ssl": "SSL-verschlüsselt",
             "protection": "Käuferschutz"
         }
+    },
+    "success": {
+        "title": "Vielen Dank!",
+        "message": "Ihre Bestellung wurde erfolgreich aufgegeben. Sie erhalten in Kürze eine E-Mail-Bestätigung.",
+        "continue": "Weiter einkaufen",
+        "loading": {
+            "title": "Bestellung wird bestätigt...",
+            "message": "Bitte warten Sie, während wir Ihre Zahlung überprüfen."
+        },
+        "error": {
+            "title": "Etwas ist schiefgelaufen",
+            "message": "Wir konnten Ihre Zahlung nicht automatisch bestätigen. Wenn Sie belastet wurden, wenden Sie sich bitte an den Support.",
+            "contact": "Support kontaktieren"
+        }
+    },
+    "contact": {
+        "title": "Kontaktieren Sie uns",
+        "subtitle": "Haben Sie Fragen zu LightBurn Pro? Unser Team ist rund um die Uhr für Sie da.",
+        "directContact": "Oder schreiben Sie uns direkt an:",
+        "success": {
+            "title": "Nachricht gesendet!",
+            "message": "Vielen Dank für Ihre Nachricht. Wir melden uns innerhalb von 24 Stunden bei Ihnen.",
+            "sendAnother": "Weitere Nachricht senden"
+        },
+        "error": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.",
+        "form": {
+            "name": "Ihr Name",
+            "namePlaceholder": "Max Mustermann",
+            "email": "E-Mail-Adresse",
+            "emailPlaceholder": "max@beispiel.de",
+            "subject": "Betreff",
+            "selectSubject": "Wählen Sie einen Betreff",
+            "message": "Nachricht",
+            "messagePlaceholder": "Wie können wir Ihnen helfen?",
+            "submit": "Nachricht senden",
+            "subjects": {
+                "sales": "Verkaufsanfrage",
+                "support": "Technischer Support",
+                "licensing": "Lizenzfrage",
+                "refund": "Rückerstattungsanfrage",
+                "other": "Sonstiges"
+            }
+        }
+    },
+    "legal": {
+        "refundPolicy": {
+            "title": "Rückerstattungsrichtlinie"
+        },
+        "privacyPolicy": {
+            "title": "Datenschutzerklärung"
+        },
+        "termsOfService": {
+            "title": "Nutzungsbedingungen"
+        },
+        "shippingPolicy": {
+            "title": "Versandrichtlinie"
+        }
     }
 }

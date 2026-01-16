@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils"
 import { products } from "@/lib/products"
 import { useCurrency } from "@/components/currency-provider"
 
-export function ProductModal() {
+export function ProductModal({ dict }: { dict?: any }) {
     const { isOpen, closeModal } = useModalStore()
     const items = useCartStore((state) => state.items)
     const addItem = useCartStore((state) => state.addItem)
@@ -70,9 +70,9 @@ export function ProductModal() {
                 <div className="flex items-center justify-between p-6 border-b border-gray-100">
                     <div className="flex items-center gap-3">
                         <ShoppingBag className="h-6 w-6 text-primary" />
-                        <h2 className="text-xl font-bold text-gray-900">Your Cart</h2>
+                        <h2 className="text-xl font-bold text-gray-900">{dict?.title || "Your Cart"}</h2>
                         <span className="bg-blue-100 text-blue-700 text-xs font-bold px-2 py-1 rounded-full">
-                            {items.length} items
+                            {items.length} {dict?.items || "items"}
                         </span>
                     </div>
                     <button
@@ -87,7 +87,7 @@ export function ProductModal() {
                 <div className="flex-1 overflow-y-auto p-6 space-y-6">
                     {items.length === 0 ? (
                         <div className="text-center py-8 text-gray-500">
-                            Your cart is empty
+                            {dict?.empty?.title || "Your cart is empty"}
                         </div>
                     ) : (
                         items.map((item) => (
@@ -108,7 +108,7 @@ export function ProductModal() {
                                         {symbol}{currencyPrice.toFixed(2)}
                                     </div>
                                     <div className="text-sm text-gray-500 mt-1">
-                                        Qty: {item.quantity}
+                                        {dict?.qty || "Qty"}: {item.quantity}
                                     </div>
                                 </div>
                             </div>
@@ -120,30 +120,30 @@ export function ProductModal() {
                 <div className="bg-gray-50 p-6 space-y-4 border-t border-gray-200">
                     <div className="space-y-2 text-sm">
                         <div className="flex justify-between text-gray-600">
-                            <span>Subtotal</span>
+                            <span>{dict?.summary?.subtotal || "Subtotal"}</span>
                             <span className="font-medium">{symbol}{displayTotal.toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between text-gray-600">
-                            <span>Shipping</span>
-                            <span className="font-medium text-green-600">Free</span>
+                            <span>{dict?.summary?.shipping || "Shipping"}</span>
+                            <span className="font-medium text-green-600">{dict?.summary?.free || "Free"}</span>
                         </div>
                     </div>
 
                     <div className="flex justify-between text-lg font-bold text-gray-900 pt-4 border-t border-gray-200">
-                        <span>Total</span>
+                        <span>{dict?.summary?.total || "Total"}</span>
                         <span>{symbol}{displayTotal.toFixed(2)}</span>
                     </div>
 
                     <Link href="/checkout" className="block w-full" onClick={closeModal}>
                         <button className="w-full bg-gradient-to-r from-primary to-red-700 hover:from-red-800 hover:to-red-900 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
                             <Lock className="h-5 w-5" />
-                            Secure Checkout
+                            {dict?.trust?.secure || "Secure Checkout"}
                         </button>
                     </Link>
 
                     <div className="flex items-center justify-center gap-2 text-xs text-gray-500">
                         <ShieldCheck className="h-3 w-3" />
-                        Guaranteed Safe & Secure Checkout
+                        {dict?.payment?.guarantee || "Guaranteed Safe & Secure Checkout"}
                     </div>
                 </div>
             </div>

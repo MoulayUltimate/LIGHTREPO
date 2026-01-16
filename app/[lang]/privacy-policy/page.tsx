@@ -1,7 +1,11 @@
 export const runtime = 'edge'
+import { getDictionary } from "@/lib/dictionary"
 import { Shield } from "lucide-react"
 
-export default function PrivacyPolicyPage() {
+export default async function PrivacyPolicyPage({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = await params
+  const dict = await getDictionary(lang)
+
   return (
     <div className="bg-bg min-h-screen py-12 md:py-16">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
@@ -10,7 +14,7 @@ export default function PrivacyPolicyPage() {
           <div className="inline-flex items-center justify-center h-16 w-16 rounded-full bg-primary/10 mb-6">
             <Shield className="h-8 w-8 text-primary" />
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Privacy Policy</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{dict.legal.privacyPolicy.title}</h1>
           <p className="text-gray-600">Last updated: January 2025</p>
         </div>
 

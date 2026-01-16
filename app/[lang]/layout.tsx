@@ -63,7 +63,7 @@ export default async function RootLayout({
                     <Header dict={dict.header} />
                     <main>{children}</main>
                     <Footer dict={dict.footer} />
-                    <ProductModal />
+                    <ProductModal dict={dict.cart} />
                 </CurrencyProvider>
             </body>
         </html>
