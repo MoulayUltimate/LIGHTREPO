@@ -66,8 +66,8 @@ export default function TermsPage() {
           <h2>9. Contact</h2>
           <p>
             For any questions regarding these terms, please contact us at{" "}
-            <a href="mailto:support@lightburn.store" className="text-primary hover:underline">
-              support@lightburn.store
+            <a href="mailto:contact@lightburntool.com" className="text-primary hover:underline">
+              contact@lightburntool.com
             </a>
             .
           </p>

@@ -64,8 +64,8 @@ export default function PrivacyPolicyPage() {
           <h2>7. Contact Us</h2>
           <p>
             If you have any questions about this Privacy Policy, please contact us at{" "}
-            <a href="mailto:support@lightburn.store" className="text-primary hover:underline">
-              support@lightburn.store
+            <a href="mailto:contact@lightburntool.com" className="text-primary hover:underline">
+              contact@lightburntool.com
             </a>
             .
           </p>

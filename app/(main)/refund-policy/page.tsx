@@ -26,8 +26,8 @@ export default function RefundPolicyPage() {
           <ol>
             <li>
               Email us at{" "}
-              <a href="mailto:support@lightburn.store" className="text-primary hover:underline">
-                support@lightburn.store
+              <a href="mailto:contact@lightburntool.com" className="text-primary hover:underline">
+                contact@lightburntool.com
               </a>
             </li>
             <li>Include your order number and the email used for purchase</li>
@@ -57,8 +57,8 @@ export default function RefundPolicyPage() {
           <h2>Questions?</h2>
           <p>
             If you have any questions about our refund policy, please don{"'"}t hesitate to contact us at{" "}
-            <a href="mailto:support@lightburn.store" className="text-primary hover:underline">
-              support@lightburn.store
+            <a href="mailto:contact@lightburntool.com" className="text-primary hover:underline">
+              contact@lightburntool.com
             </a>
             . We{"'"}re here to help!
           </p>
