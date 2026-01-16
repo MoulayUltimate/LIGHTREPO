@@ -17,10 +17,11 @@ export async function GET(req: Request) {
         let sessions = 0
         let activeCarts = 0
         let recentOrders: any[] = []
+        let recentPageViews: any[] = []
 
         // 1. Visitors right now (unique visitors in last 10 min)
         try {
-            const recentPageViews = await db
+            recentPageViews = await db
                 .select({ visitorId: pageViews.visitorId })
                 .from(pageViews)
                 .where(sql`${pageViews.createdAt} > ${tenMinutesAgoTimestamp}`)
@@ -76,16 +77,47 @@ export async function GET(req: Request) {
             .filter(o => o.status === 'paid')
             .reduce((sum, o) => sum + (o.amount || 0), 0) / 100 // Convert from cents
 
-        const totalOrders = recentOrders.length
+        const totalOrders = recentOrders.filter(o => o.status !== 'abandoned').length
+
+        // Active carts = people on checkout page OR abandoned orders (people who entered email)
+        const abandonedCarts = recentOrders.filter(o => o.status === 'abandoned').length
+        const totalActiveCarts = Math.max(activeCarts, abandonedCarts)
+
+        // 6. Get top countries from recent visitors
+        let topCountries: { country: string; count: number }[] = []
+        try {
+            const recentVisitorIds = new Set(recentPageViews.map(pv => pv.visitorId).filter(Boolean))
+            if (recentVisitorIds.size > 0) {
+                const recentVisitors = await db
+                    .select()
+                    .from(visitors)
+                    .where(sql`${visitors.id} IN (${Array.from(recentVisitorIds).map(id => `'${id}'`).join(',')})`)
+                    .all()
+
+                const countryMap = new Map<string, number>()
+                recentVisitors.forEach(v => {
+                    const country = v.country || 'Unknown'
+                    countryMap.set(country, (countryMap.get(country) || 0) + 1)
+                })
+
+                topCountries = Array.from(countryMap.entries())
+                    .map(([country, count]) => ({ country, count }))
+                    .sort((a, b) => b.count - a.count)
+                    .slice(0, 5)
+            }
+        } catch (e) {
+            console.error("Error fetching countries:", e)
+        }
 
         return NextResponse.json({
             visitorsNow: uniqueVisitors,
             sessions: sessions,
             totalSales: totalSales,
             totalOrders: totalOrders,
-            activeCarts: activeCarts,
+            activeCarts: totalActiveCarts,
             checkingOut: checkingOut,
             purchased: purchased,
+            topCountries: topCountries,
         })
     } catch (error) {
         console.error("Live Stats Error:", error)
@@ -98,6 +130,7 @@ export async function GET(req: Request) {
             activeCarts: 0,
             checkingOut: 0,
             purchased: 0,
+            topCountries: [],
         })
     }
 }

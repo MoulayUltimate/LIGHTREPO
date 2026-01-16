@@ -11,6 +11,7 @@ interface LiveStats {
     activeCarts: number
     checkingOut: number
     purchased: number
+    topCountries: { country: string; count: number }[]
 }
 
 export default function LiveViewPage() {
@@ -22,6 +23,7 @@ export default function LiveViewPage() {
         activeCarts: 0,
         checkingOut: 0,
         purchased: 0,
+        topCountries: [],
     })
     const [loading, setLoading] = useState(true)
     const [mounted, setMounted] = useState(false)
@@ -154,6 +156,25 @@ export default function LiveViewPage() {
                     </div>
                 </div>
             </div>
+
+            {/* Top Countries */}
+            {stats.topCountries.length > 0 && (
+                <div className="bg-white rounded-xl shadow-sm border border-gray-100 mt-6">
+                    <div className="p-6 border-b border-gray-100">
+                        <h2 className="text-lg font-semibold text-gray-900">Visitors by Country</h2>
+                    </div>
+                    <div className="p-6">
+                        <div className="space-y-3">
+                            {stats.topCountries.map((country, index) => (
+                                <div key={index} className="flex items-center justify-between">
+                                    <span className="text-sm font-medium text-gray-700">{country.country}</span>
+                                    <span className="text-sm text-gray-500">{country.count} visitor{country.count !== 1 ? 's' : ''}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {loading && (
                 <div className="fixed bottom-4 right-4 bg-gray-900 text-white px-4 py-2 rounded-lg text-sm">
