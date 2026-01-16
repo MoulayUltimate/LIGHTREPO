@@ -205,14 +205,14 @@ export default function CheckoutPage() {
 
                 <div className="grid lg:grid-cols-3 gap-8 lg:gap-12">
                     {/* Left Column - Forms */}
-                    <div className="lg:col-span-2">
+                    <div className="lg:col-span-2 order-2 lg:order-1">
                         <Elements stripe={stripePromise}>
                             <CheckoutForm />
                         </Elements>
                     </div>
 
                     {/* Right Column - Order Summary */}
-                    <div className="lg:col-span-1">
+                    <div className="lg:col-span-1 order-1 lg:order-2">
                         <div className="bg-white rounded-2xl shadow-sm p-6 sticky top-24">
                             <h2 className="text-lg font-bold text-gray-900 mb-6">Order Summary</h2>
 

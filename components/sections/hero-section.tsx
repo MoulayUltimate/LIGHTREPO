@@ -21,8 +21,8 @@ export function HeroSection() {
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-16 lg:py-20">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left Column - Image */}
-          <div className="relative order-2 lg:order-1">
-            <div className="relative order-2 lg:order-1 flex justify-center">
+          <div className="relative order-1 lg:order-1">
+            <div className="relative flex justify-center">
               <Image
                 src="/lightburn-software-screenshot.webp"
                 alt="LightBurn Pro Software Interface"
@@ -35,7 +35,7 @@ export function HeroSection() {
           </div>
 
           {/* Right Column - Content */}
-          <div className="space-y-6 order-1 lg:order-2">
+          <div className="space-y-6 order-2 lg:order-2">
             {/* Headline */}
             <div className="space-y-4">
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
