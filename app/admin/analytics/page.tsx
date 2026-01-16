@@ -6,8 +6,10 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 export default function AnalyticsDashboard() {
     const [data, setData] = useState<any>(null)
     const [loading, setLoading] = useState(true)
+    const [mounted, setMounted] = useState(false)
 
     useEffect(() => {
+        setMounted(true)
         fetch("/api/analytics/stats")
             .then((res) => res.json())
             .then((data) => {
@@ -20,6 +22,7 @@ export default function AnalyticsDashboard() {
             })
     }, [])
 
+    if (!mounted) return null
     if (loading) return <div className="p-8">Loading analytics...</div>
     if (!data) return <div className="p-8">Failed to load data</div>
 

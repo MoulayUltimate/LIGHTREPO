@@ -3,11 +3,6 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { LayoutDashboard, ShoppingCart, MessageSquare, LogOut, Settings } from "lucide-react"
-import { signOut } from "next-auth/react" // Client side signout
-// We need to handle signout. NextAuth v5 client side is tricky.
-// Usually we use a server action or just redirect to /api/auth/signout
-// Or use the `signOut` from `next-auth/react` if SessionProvider is used.
-// Since we didn't wrap app in SessionProvider, let's use a server action or simple link.
 
 export default function AdminLayout({
     children,
@@ -43,8 +38,8 @@ export default function AdminLayout({
                                 key={item.name}
                                 href={item.href}
                                 className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${isActive
-                                        ? "bg-indigo-50 text-indigo-600"
-                                        : "text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+                                    ? "bg-indigo-50 text-indigo-600"
+                                    : "text-gray-700 hover:bg-gray-50 hover:text-gray-900"
                                     }`}
                             >
                                 <item.icon className={`h-5 w-5 ${isActive ? "text-indigo-600" : "text-gray-400"}`} />
