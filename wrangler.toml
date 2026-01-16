@@ -2,3 +2,9 @@ name = "lightrepo"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = ".vercel/output/static"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "lightburn-db"
+database_id = "35af2dd1-9dd7-4454-875c-3321814b0015"
+migrations_dir = "drizzle"
