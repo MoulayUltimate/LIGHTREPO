@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { useModalStore } from "@/lib/modal-store"
 
-export function SaleBanner() {
+export function SaleBanner({ dict }: { dict?: any }) {
   const openModal = useModalStore((state) => state.openModal)
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -38,42 +38,42 @@ export function SaleBanner() {
   return (
     <section className="bg-gradient-to-r from-primary via-secondary to-primary py-8 px-4">
       <div className="mx-auto max-w-4xl text-center text-white">
-        <p className="text-sm font-medium mb-2">SALE ENDS IN:</p>
+        <p className="text-sm font-medium mb-2">{dict?.endsIn || "SALE ENDS IN:"}</p>
 
         {/* Countdown Timer */}
         <div className="flex items-center justify-center gap-4 mb-4">
           <div className="flex flex-col items-center">
             <span className="text-3xl md:text-4xl font-bold">{timeLeft.days}</span>
-            <span className="text-xs uppercase">Days</span>
+            <span className="text-xs uppercase">{dict?.time?.days || "Days"}</span>
           </div>
           <span className="text-2xl font-bold">:</span>
           <div className="flex flex-col items-center">
             <span className="text-3xl md:text-4xl font-bold">{timeLeft.hours}</span>
-            <span className="text-xs uppercase">Hours</span>
+            <span className="text-xs uppercase">{dict?.time?.hours || "Hours"}</span>
           </div>
           <span className="text-2xl font-bold">:</span>
           <div className="flex flex-col items-center">
             <span className="text-3xl md:text-4xl font-bold">{timeLeft.minutes}</span>
-            <span className="text-xs uppercase">Minutes</span>
+            <span className="text-xs uppercase">{dict?.time?.minutes || "Minutes"}</span>
           </div>
           <span className="text-2xl font-bold">:</span>
           <div className="flex flex-col items-center">
             <span className="text-3xl md:text-4xl font-bold">{timeLeft.seconds}</span>
-            <span className="text-xs uppercase">Seconds</span>
+            <span className="text-xs uppercase">{dict?.time?.seconds || "Seconds"}</span>
           </div>
         </div>
 
-        <p className="text-sm font-medium mb-2">APPLY THE CODE AT CHECKOUT</p>
+        <p className="text-sm font-medium mb-2">{dict?.applyCode || "APPLY THE CODE AT CHECKOUT"}</p>
 
         <h2 className="text-2xl md:text-3xl font-bold mb-4">
-          USE LIGHT10 FOR <span className="underline">10% OFF</span>
+          {dict?.useCode || "USE LIGHT10 FOR 10% OFF"}
         </h2>
 
         <button
           onClick={openModal}
           className="inline-block bg-white text-primary font-bold px-8 py-3 rounded-lg hover:bg-gray-100 transition-colors"
         >
-          Download now
+          {dict?.cta || "Download now"}
         </button>
       </div>
     </section>

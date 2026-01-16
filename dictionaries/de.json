@@ -1,11 +1,283 @@
 {
+    "header": {
+        "home": "Startseite",
+        "contact": "Kontakt",
+        "refundPolicy": "Rückgabe- und Erstattungsrichtlinien",
+        "login": "Anmelden / Registrieren",
+        "shop": "Shop",
+        "myAccount": "Mein Konto"
+    },
+    "footer": {
+        "company": {
+            "title": "LIGHTBURN",
+            "subtitle": "Bessere Software für Laserschneider",
+            "description": "Professionelle Lasergravur-Software. Einmaliger Kauf, lebenslange Aktivierung."
+        },
+        "quickLinks": {
+            "title": "Schnelllinks",
+            "shop": "Shop",
+            "myAccount": "Mein Konto",
+            "search": "Suche"
+        },
+        "legal": {
+            "title": "Rechtliches",
+            "privacy": "Datenschutzerklärung",
+            "terms": "Allgemeine Geschäftsbedingungen",
+            "refund": "Rückgaberichtlinie",
+            "delivery": "Lieferbedingungen"
+        },
+        "support": {
+            "title": "Support",
+            "contact": "Kontakt",
+            "available": "24/7 Kundensupport"
+        },
+        "copyright": "LightBurn Pro. Alle Rechte vorbehalten."
+    },
     "hero": {
         "title": "LightBurn ist Layout-, Bearbeitungs- und Steuerungssoftware für Ihren Laserschneider.",
         "subtitle": "LightBurn ist eine native Anwendung nur für Windows.",
         "oneTimePayment": "Einmalige Zahlung – Kein Abonnement erforderlich.",
         "buyNow": "Jetzt kaufen"
     },
+    "stats": {
+        "title": "Bessere Software für",
+        "highlight": "Laserschneider!",
+        "items": [
+            {
+                "title": "SOFORTIGE LIEFERUNG",
+                "subtitle": "1-30 Min"
+            },
+            {
+                "title": "KEINE ZUSATZKOSTEN",
+                "subtitle": "Keine Gebühren"
+            },
+            {
+                "title": "SICHERE ZAHLUNG",
+                "subtitle": "Kreditkarte"
+            },
+            {
+                "title": "24/7 SUPPORT",
+                "subtitle": "Rund um die Uhr verfügbar"
+            }
+        ]
+    },
+    "motivation": {
+        "title": "Layout-, Bearbeitungs- und Steuerungssoftware für Ihren Laserschneider mit",
+        "highlight": "LightBurn",
+        "subtitle": "LightBurn ist eine native Anwendung nur für Windows.",
+        "features": [
+            {
+                "title": "Grafiken importieren",
+                "description": "Importieren Sie Grafiken in einer Vielzahl gängiger Vektorgrafik- und Bildformate."
+            },
+            {
+                "title": "Bearbeiten & Erstellen",
+                "description": "Arrangieren, bearbeiten und erstellen Sie sogar neue Vektorformen im leistungsstarken Editor von LightBurn."
+            },
+            {
+                "title": "Einstellungen anwenden",
+                "description": "Wenden Sie Einstellungen wie Leistung, Geschwindigkeit, Anzahl der Durchgänge, Schnittreihenfolge, Helligkeit & Kontrast, Dithering-Modus und vieles mehr an!"
+            }
+        ]
+    },
+    "productShowcase": {
+        "tagline": "Bessere Software für Laserschneider",
+        "inStock": "Auf Lager - Sofortige Lieferung",
+        "cta": "Details anzeigen & In den Warenkorb"
+    },
+    "whyChoose": {
+        "title": "Warum",
+        "highlight": "LightBurn wählen?",
+        "ready": "Bereit, die Kontrolle über Ihren Laser zu übernehmen?",
+        "cta": "Jetzt loslegen",
+        "benefits": [
+            "Die beste Lasergravur-Software – Vertraut von Tausenden von Benutzern weltweit",
+            "Funktioniert für alle Länder",
+            "Schnelle und einfache Installation – In wenigen Minuten startklar",
+            "30 Tage kostenlose Testversion – Testen Sie vor dem Kauf",
+            "Sichere Zahlung – Zahlen Sie mit PayPal, Kreditkarte und mehr",
+            "100% Zufriedenheitsgarantie oder Geld zurück – Kaufen Sie mit Vertrauen"
+        ]
+    },
+    "faq": {
+        "title": "FAQ für",
+        "highlight": "LightBurn",
+        "items": [
+            {
+                "question": "Wie lange ist meine Lizenz gültig?",
+                "answer": "LightBurn funktioniert für immer, solange Sie Ihren Lizenzschlüssel haben. Nach einem Jahr müssen Sie jedoch die Wartung Ihrer Lizenz erneuern, um weiterhin die neuesten Funktionen und Updates zu erhalten."
+            },
+            {
+                "question": "Mit welchen Betriebssystemen funktioniert Ihre Software?",
+                "answer": "Windows 10+"
+            },
+            {
+                "question": "Ist LightBurn mit meiner Lasermaschine kompatibel?",
+                "answer": "LightBurn unterstützt: Ruida (CO2), GRBL (Dioden- und CO2-Laser), Smoothieboard, TopWisdom, EZCad2 & EZCad2-Lite (Galvo-Faser, CO2 und UV). Unsicher bezüglich der Kompatibilität? Laden Sie die kostenlose Testversion herunter und testen Sie sie direkt mit Ihrer Maschine."
+            },
+            {
+                "question": "Funktioniert LightBurn auf Windows, Mac und Linux?",
+                "answer": "Ja! LightBurn ist nur mit Windows kompatibel. Testen Sie es risikofrei – Laden Sie die 30-tägige kostenlose Testversion herunter und sehen Sie, wie es auf Ihrem Gerät funktioniert!"
+            },
+            {
+                "question": "Ist LightBurn ein Abonnement oder ein einmaliger Kauf?",
+                "answer": "LightBurn ist ein einmaliger Kauf – Kein monatliches Abonnement! Wenn Sie LightBurn kaufen, erhalten Sie lebenslangen Zugriff mit 12 Monaten kostenlosen Updates inklusive."
+            },
+            {
+                "question": "Was passiert nach 12 Monaten? Muss ich erneut bezahlen?",
+                "answer": "Nein, Sie müssen nicht erneut bezahlen. Nach 12 Monaten können Sie LightBurn mit der letzten erhaltenen Version unbegrenzt weiterverwenden. Wenn Sie nach dem ersten Jahr neue Updates erhalten möchten, können Sie Ihre Lizenz jederzeit erneuern, dies ist jedoch völlig optional."
+            },
+            {
+                "question": "Kann mein gesamtes Team die Software nutzen?",
+                "answer": "Ja, auch gewerbliche Unternehmen können dieselbe Aktivierung ohne zusätzliche Kosten für ihr gesamtes Team nutzen."
+            },
+            {
+                "question": "Wie kaufe ich die Software?",
+                "answer": "Es ist ganz einfach! Fügen Sie sie einfach Ihrem Warenkorb hinzu, geben Sie Ihre Daten ein, und Sie erhalten Ihren Download-Link direkt nach Abschluss Ihres Kaufs."
+            }
+        ]
+    },
+    "reviews": {
+        "title": "Bewertung 5/5",
+        "subtitle": "von verifizierten Benutzern",
+        "items": [
+            {
+                "name": "Sarah M.",
+                "role": "Verifizierter Kauf",
+                "text": "Der Bestellprozess war einfach, und mein Schlüssel kam sofort nach der Zahlung. LightBurn ist sehr benutzerfreundlich und bietet viele Funktionen, die meine Arbeit erleichtern. Top Service!"
+            },
+            {
+                "name": "James R.",
+                "role": "Verifizierter Kauf",
+                "title": "Perfekte Laser-Software – Einfach zu installieren & Lebenslanger Zugriff!",
+                "text": "LightBurn ist einfach fantastisch! Die Installation war schnell und mühelos, und innerhalb weniger Minuten war ich bereit zum Gravieren. Die Software ist unglaublich benutzerfreundlich, mit leistungsstarken Werkzeugen, die das Entwerfen und Steuern meines Lasers einfach machen."
+            },
+            {
+                "name": "Maria L.",
+                "role": "Designerin",
+                "title": "Hervorragende Laser-Software",
+                "text": "Es ist ein einmaliger Kauf mit lebenslanger Lizenz! Keine Abonnements, keine versteckten Gebühren – einfach einmal kaufen und für immer nutzen. Außerdem erhalten Sie 12 Monate kostenlose Updates, und auch danach funktioniert die Software perfekt weiter. LightBurn ist schnell, zuverlässig und arbeitet nahtlos mit meinem Laser zusammen."
+            }
+        ]
+    },
+    "cart": {
+        "empty": {
+            "title": "Ihr Warenkorb ist leer",
+            "message": "Es sieht so aus, als hätten Sie noch keine Artikel in Ihren Warenkorb gelegt. Beginnen Sie mit dem Einkaufen, um ihn zu füllen!"
+        },
+        "continueShopping": "Weiter einkaufen",
+        "title": "Warenkorb",
+        "clear": "Warenkorb leeren",
+        "summary": {
+            "title": "Bestellübersicht",
+            "subtotal": "Zwischensumme",
+            "save": "Sie sparen",
+            "total": "Gesamt",
+            "checkout": "Zur Kasse"
+        },
+        "trust": {
+            "official": "Offizielles Lizenzprodukt",
+            "secure": "Sicherer SSL-Checkout",
+            "payment": "Mehrere Zahlungsoptionen"
+        }
+    },
     "common": {
-        "useCode": "VERWENDEN SIE LIGHT10 FÜR 10% RABATT!"
+        "useCode": "VERWENDEN SIE LIGHT10 FÜR 10% RABATT!",
+        "buyNow": "Jetzt kaufen"
+    },
+    "trustedPartners": {
+        "title": "Vertraut von Lasergravur-Profis weltweit",
+        "items": [
+            {
+                "name": "Kompatibel mit Adobe",
+                "description": "Importieren Sie Vektordateien direkt in LightBurn"
+            },
+            {
+                "name": "Funktioniert mit CorelDRAW",
+                "description": "Reibungsloser Import-Workflow für Vektordesigns"
+            },
+            {
+                "name": "Autodesk-kompatibel",
+                "description": "Perfekte Unterstützung für DXF- und CAD-Zeichnungen"
+            },
+            {
+                "name": "Offizielles LightBurn Pro",
+                "description": "Original-Lizenz • Sofortige Lieferung"
+            },
+            {
+                "name": "Gesichert durch PayPal",
+                "description": "Sichere Zahlungen & Käuferschutz"
+            },
+            {
+                "name": "ISO 9001 zertifiziert",
+                "description": "Vertrauenswürdige Qualität für Business-Software"
+            }
+        ]
+    },
+    "productDetails": {
+        "whatYouGet": "Was Sie erhalten",
+        "compatibleControllers": "Kompatible Controller",
+        "features": [
+            "Sofortige Lieferung (1-30 Minuten)",
+            "Keine versteckten Kosten oder Gebühren",
+            "Sichere Zahlungen",
+            "24/7 Kundensupport",
+            "Lebenslange Aktivierung",
+            "12 Monate kostenlose Updates",
+            "30 Tage Geld-zurück-Garantie"
+        ]
+    },
+    "saleBanner": {
+        "endsIn": "ANGEBOT ENDET IN:",
+        "applyCode": "CODE AN DER KASSE ANWENDEN",
+        "useCode": "VERWENDEN SIE LIGHT10 FÜR 10% RABATT",
+        "cta": "Jetzt herunterladen",
+        "time": {
+            "days": "Tage",
+            "hours": "Stunden",
+            "minutes": "Minuten",
+            "seconds": "Sekunden"
+        }
+    },
+    "checkout": {
+        "title": "Kasse",
+        "backToStore": "Zurück zum Shop",
+        "empty": "Ihr Warenkorb ist leer.",
+        "continueShopping": "Weiter einkaufen",
+        "contact": {
+            "title": "Kontaktinformationen",
+            "email": "E-Mail-Adresse",
+            "note": "Ihre Produktlizenz wird an diese E-Mail gesendet."
+        },
+        "personal": {
+            "title": "Persönliche Daten",
+            "firstName": "Vorname",
+            "lastName": "Nachname"
+        },
+        "payment": {
+            "title": "Zahlungsmethode",
+            "processing": "Verarbeitung...",
+            "paySecurely": "Sicher bezahlen",
+            "guarantee": "Garantiert sicherer Checkout"
+        },
+        "summary": {
+            "title": "Bestellübersicht",
+            "subtotal": "Zwischensumme",
+            "discount": "Rabatt",
+            "shipping": "Versand",
+            "free": "Kostenlos",
+            "total": "Gesamt"
+        },
+        "coupon": {
+            "placeholder": "Gutscheincode",
+            "apply": "Anwenden",
+            "applied": "Angewendet",
+            "success": "Gutschein erfolgreich angewendet!"
+        },
+        "trust": {
+            "secure": "Sichere Zahlung",
+            "ssl": "SSL-verschlüsselt",
+            "protection": "Käuferschutz"
+        }
     }
 }

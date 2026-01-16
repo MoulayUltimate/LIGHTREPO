@@ -1,17 +1,26 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-const locales = ['en', 'de']
+const locales = ['en', 'de', 'fr', 'es', 'it']
 const defaultLocale = 'en'
 
 function getLocale(request: NextRequest) {
     // Check cf-ipcountry
     const country = request.headers.get('cf-ipcountry')
     if (country === 'DE' || country === 'AT' || country === 'CH') return 'de'
+    if (country === 'FR' || country === 'BE' || country === 'LU') return 'fr'
+    if (country === 'ES') return 'es'
+    if (country === 'IT') return 'it'
 
     // Check accept-language
     const acceptLanguage = request.headers.get('accept-language')
-    if (acceptLanguage?.toLowerCase().includes('de')) return 'de'
+    if (acceptLanguage) {
+        const lower = acceptLanguage.toLowerCase()
+        if (lower.includes('de')) return 'de'
+        if (lower.includes('fr')) return 'fr'
+        if (lower.includes('es')) return 'es'
+        if (lower.includes('it')) return 'it'
+    }
 
     return defaultLocale
 }

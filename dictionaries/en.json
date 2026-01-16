@@ -1,11 +1,283 @@
 {
+    "header": {
+        "home": "Home",
+        "contact": "Contact Us",
+        "refundPolicy": "Refund and Returns Policy",
+        "login": "Login / Register",
+        "shop": "Shop",
+        "myAccount": "My Account"
+    },
+    "footer": {
+        "company": {
+            "title": "LIGHTBURN",
+            "subtitle": "Better Software For Laser Cutters",
+            "description": "Professional-grade laser engraving software. One-time purchase, lifetime activation."
+        },
+        "quickLinks": {
+            "title": "Quick Links",
+            "shop": "Shop",
+            "myAccount": "My Account",
+            "search": "Search"
+        },
+        "legal": {
+            "title": "Legal",
+            "privacy": "Privacy Policy",
+            "terms": "Terms & Conditions",
+            "refund": "Refund Policy",
+            "delivery": "Delivery Policy"
+        },
+        "support": {
+            "title": "Support",
+            "contact": "Contact Us",
+            "available": "24/7 Customer Support"
+        },
+        "copyright": "LightBurn Pro. All rights reserved."
+    },
     "hero": {
         "title": "LightBurn is layout, editing, and control software for your laser cutter.",
         "subtitle": "LightBurn is a native application written for Windows Only.",
         "oneTimePayment": "One-time payment – No subscription required.",
         "buyNow": "Buy Now"
     },
+    "stats": {
+        "title": "Better Software For",
+        "highlight": "Laser Cutters!",
+        "items": [
+            {
+                "title": "INSTANT DELIVERY",
+                "subtitle": "1-30 min"
+            },
+            {
+                "title": "NO EXTRA CHARGES",
+                "subtitle": "No fees"
+            },
+            {
+                "title": "SAFE PAYMENTS",
+                "subtitle": "Credit card"
+            },
+            {
+                "title": "24/7 SUPPORT",
+                "subtitle": "Available 24/7"
+            }
+        ]
+    },
+    "motivation": {
+        "title": "Layout, editing, and control software for your laser cutter with",
+        "highlight": "LightBurn",
+        "subtitle": "LightBurn is a native application written for Windows.",
+        "features": [
+            {
+                "title": "Import Artwork",
+                "description": "Import artwork in a variety of common vector graphic and image formats."
+            },
+            {
+                "title": "Edit & Create",
+                "description": "Arrange, edit, and even create new vector shapes within LightBurn's powerful editor."
+            },
+            {
+                "title": "Apply Settings",
+                "description": "Apply settings like power, speed, number of passes, cut order, brightness & contrast, dithering mode, and many more!"
+            }
+        ]
+    },
+    "productShowcase": {
+        "tagline": "Better Software for Laser Cutters",
+        "inStock": "In stock - Instant Delivery",
+        "cta": "View Details & Add to Cart"
+    },
+    "whyChoose": {
+        "title": "Why Choose",
+        "highlight": "LightBurn",
+        "ready": "Ready to take control of your laser?",
+        "cta": "Get Started Now",
+        "benefits": [
+            "The Best Laser Engraving Software – Trusted by thousands of users worldwide",
+            "Work For All Countries",
+            "Quick and Easy Installation – Get started in minutes",
+            "30-Day Free Trial – Try it before you buy",
+            "Secure Payment – Pay with PayPal, credit card, and more",
+            "100% Satisfaction Guarantee or Your Money Back – Buy with confidence"
+        ]
+    },
+    "faq": {
+        "title": "FAQ For",
+        "highlight": "LightBurn",
+        "items": [
+            {
+                "question": "How long does my license last?",
+                "answer": "LightBurn will work forever as long as you have your license key, but after a year you will need to renew the maintenance on your license to keep getting the latest features and updates."
+            },
+            {
+                "question": "What operating systems does your software work with?",
+                "answer": "Windows 10+"
+            },
+            {
+                "question": "Is LightBurn Compatible with My Laser Machine?",
+                "answer": "LightBurn supports: Ruida (CO2), GRBL (Diode and CO2 lasers), Smoothieboard, TopWisdom, EZCad2 & EZCad2-Lite (Galvo fiber, CO2, and UV). Not sure about compatibility? Download the free trial and test it directly with your machine."
+            },
+            {
+                "question": "Does LightBurn Work on Windows, Mac, and Linux?",
+                "answer": "Yes! LightBurn is compatible with Windows only, allowing you to use it on your preferred operating system. Try it risk-free – Download the 30-day free trial and see how it works on your device!"
+            },
+            {
+                "question": "Is LightBurn a Subscription or a One-Time Purchase?",
+                "answer": "LightBurn is a One-Time Purchase – No Monthly Subscription! When you buy LightBurn, you get lifetime access with 12 months of free updates included."
+            },
+            {
+                "question": "What Happens After 12 Months? Do I Need to Pay Again?",
+                "answer": "No, you do not need to pay again. After 12 months, you can continue using LightBurn indefinitely with the last version you received. If you want to receive new updates after the first year, you can renew your license at any time, but this is completely optional."
+            },
+            {
+                "question": "Can my whole team use the software?",
+                "answer": "Yes, even commercial businesses can use the same Activation across their entire team without additional costs."
+            },
+            {
+                "question": "How do I buy the software?",
+                "answer": "It's easy! Just add it to your cart, fill in your details, and you'll get your Download Link right after completing your purchase."
+            }
+        ]
+    },
+    "reviews": {
+        "title": "Rating 5/5",
+        "subtitle": "from Verified Users",
+        "items": [
+            {
+                "name": "Sarah M.",
+                "role": "Verified Purchase",
+                "text": "The ordering process was easy, and my key arrived immediately after payment. LightBurn is very user-friendly and offers many features that make my work easier. Top service!"
+            },
+            {
+                "name": "James R.",
+                "role": "Verified Purchase",
+                "title": "Perfect Laser Software – Easy to Install & Lifetime Access!",
+                "text": "LightBurn is simply amazing! The installation was fast and effortless, and within minutes, I was ready to start engraving. The software is incredibly user-friendly, with powerful tools that make designing and controlling my laser easy."
+            },
+            {
+                "name": "Maria L.",
+                "role": "Designer",
+                "title": "Outstanding Laser Software",
+                "text": "It's a one-time purchase with a lifetime license! No subscriptions, no hidden fees—just buy it once and use it forever. Plus, you get 12 months of free updates, and even after that, the software continues to work perfectly. LightBurn is fast, reliable, and works seamlessly with my laser."
+            }
+        ]
+    },
+    "cart": {
+        "empty": {
+            "title": "Your cart is empty",
+            "message": "Looks like you haven't added any items to your cart yet. Start shopping to fill it up!"
+        },
+        "continueShopping": "Continue Shopping",
+        "title": "Shopping Cart",
+        "clear": "Clear Cart",
+        "summary": {
+            "title": "Order Summary",
+            "subtotal": "Subtotal",
+            "save": "You Save",
+            "total": "Total",
+            "checkout": "Proceed to Checkout"
+        },
+        "trust": {
+            "official": "Official Licensed Product",
+            "secure": "Secure SSL Checkout",
+            "payment": "Multiple Payment Options"
+        }
+    },
     "common": {
-        "useCode": "USE LIGHT10 FOR 10% OFF!"
+        "useCode": "USE LIGHT10 FOR 10% OFF!",
+        "buyNow": "Buy Now"
+    },
+    "trustedPartners": {
+        "title": "Trusted by Laser Engraving Professionals Worldwide",
+        "items": [
+            {
+                "name": "Compatible with Adobe",
+                "description": "Import vector files directly into LightBurn"
+            },
+            {
+                "name": "Works with CorelDRAW",
+                "description": "Smooth vector design import workflow"
+            },
+            {
+                "name": "Autodesk Compatible",
+                "description": "Perfect support for DXF and CAD drawings"
+            },
+            {
+                "name": "Official LightBurn Pro",
+                "description": "Genuine License • Instant Delivery"
+            },
+            {
+                "name": "Secured by PayPal",
+                "description": "Safe payments & buyer protection"
+            },
+            {
+                "name": "ISO 9001 Certified",
+                "description": "Trusted quality for business-grade software"
+            }
+        ]
+    },
+    "productDetails": {
+        "whatYouGet": "What You Get",
+        "compatibleControllers": "Compatible Controllers",
+        "features": [
+            "Instant delivery (1-30 minutes)",
+            "No extra charges or hidden fees",
+            "Safe and secure payments",
+            "24/7 customer support",
+            "Lifetime activation",
+            "12 months free updates",
+            "30-day money-back guarantee"
+        ]
+    },
+    "saleBanner": {
+        "endsIn": "SALE ENDS IN:",
+        "applyCode": "APPLY THE CODE AT CHECKOUT",
+        "useCode": "USE LIGHT10 FOR 10% OFF",
+        "cta": "Download now",
+        "time": {
+            "days": "Days",
+            "hours": "Hours",
+            "minutes": "Minutes",
+            "seconds": "Seconds"
+        }
+    },
+    "checkout": {
+        "title": "Checkout",
+        "backToStore": "Back to Store",
+        "empty": "Your cart is empty.",
+        "continueShopping": "Continue Shopping",
+        "contact": {
+            "title": "Contact Information",
+            "email": "Email Address",
+            "note": "Your product license will be sent to this email."
+        },
+        "personal": {
+            "title": "Personal Details",
+            "firstName": "First Name",
+            "lastName": "Last Name"
+        },
+        "payment": {
+            "title": "Payment Method",
+            "processing": "Processing...",
+            "paySecurely": "Pay Securely",
+            "guarantee": "Guaranteed Safe & Secure Checkout"
+        },
+        "summary": {
+            "title": "Order Summary",
+            "subtotal": "Subtotal",
+            "discount": "Discount",
+            "shipping": "Shipping",
+            "free": "Free",
+            "total": "Total"
+        },
+        "coupon": {
+            "placeholder": "Coupon code",
+            "apply": "Apply",
+            "applied": "Applied",
+            "success": "Coupon applied successfully!"
+        },
+        "trust": {
+            "secure": "Secure Payment",
+            "ssl": "SSL Encrypted",
+            "protection": "Buyer Protection"
+        }
     }
 }

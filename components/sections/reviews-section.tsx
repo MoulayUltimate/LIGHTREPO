@@ -25,23 +25,25 @@ const reviews = [
   },
 ]
 
-export function ReviewsSection() {
+export function ReviewsSection({ dict }: { dict?: any }) {
+  const items = dict?.items || reviews
+
   return (
     <section className="py-16 md:py-20 lg:py-24 border-b border-gray-200">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-2">
-            Rating 5/5
+            {dict?.title || "Rating 5/5"}
           </h2>
           <p className="text-2xl md:text-3xl font-bold text-gray-700">
-            from Verified Users
+            {dict?.subtitle || "from Verified Users"}
           </p>
         </div>
 
         {/* Reviews Grid */}
         <div className="grid md:grid-cols-3 gap-6">
-          {reviews.map((review, index) => (
+          {items.map((review: any, index: number) => (
             <div
               key={index}
               className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow"
@@ -61,7 +63,7 @@ export function ReviewsSection() {
               {/* Author Info at Bottom */}
               <div className="flex items-center gap-3 pt-4 border-t border-gray-100">
                 <Image
-                  src={review.avatar || "/placeholder.svg"}
+                  src={reviews[index]?.avatar || "/placeholder.svg"} // Use original avatars based on index
                   alt={review.name}
                   width={48}
                   height={48}

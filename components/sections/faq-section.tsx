@@ -46,20 +46,21 @@ const faqs = [
   },
 ]
 
-export function FAQSection() {
+export function FAQSection({ dict }: { dict?: any }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
+  const items = dict?.items || faqs
 
   return (
     <section className="py-16 md:py-20 lg:py-24 bg-bg border-b border-gray-200" id="faq">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            FAQ For <span className="text-primary">LightBurn</span> Pro
+            {dict?.title || "FAQ For"} <span className="text-primary">{dict?.highlight || "LightBurn"}</span> Pro
           </h2>
         </div>
 
         <div className="space-y-4">
-          {faqs.map((faq, index) => (
+          {items.map((faq: any, index: number) => (
             <div key={index} className="bg-white rounded-xl shadow-sm overflow-hidden">
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}

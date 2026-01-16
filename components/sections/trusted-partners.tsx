@@ -35,20 +35,22 @@ const partners = [
   },
 ]
 
-export function TrustedPartners() {
+export function TrustedPartners({ dict }: { dict?: any }) {
+  const items = dict?.items || partners
+
   return (
     <section className="py-16 md:py-20 border-b border-gray-200">
       <div className="mx-auto max-w-7xl px-5">
         <div className="group flex items-center gap-3.5 mb-8">
           <Shield className="w-7 h-7 text-gray-900" />
           <h3 className="relative text-2xl font-bold text-gray-900 pb-1.5">
-            Trusted by Laser Engraving Professionals Worldwide
+            {dict?.title || "Trusted by Laser Engraving Professionals Worldwide"}
             <span className="absolute left-0 -bottom-1.5 h-1 bg-primary rounded transition-all duration-500 w-0 group-hover:w-full" />
           </h3>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {partners.map((partner) => (
+          {items.map((partner: any, index: number) => (
             <div
               key={partner.name}
               className="group relative bg-white rounded-2xl p-8 flex items-start gap-5 border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-[0_8px_22px_rgba(136,34,51,0.26)] hover:-translate-y-1 min-h-[140px]"
@@ -57,7 +59,7 @@ export function TrustedPartners() {
 
               <div className="flex-shrink-0 w-20 h-20 flex items-center justify-center">
                 <Image
-                  src={partner.logo || "/placeholder.svg"}
+                  src={partners[index]?.logo || "/placeholder.svg"}
                   alt={`${partner.name} logo`}
                   width={64}
                   height={64}

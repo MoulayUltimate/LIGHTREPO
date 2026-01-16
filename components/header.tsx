@@ -8,7 +8,7 @@ import { useCartStore } from "@/lib/cart-store"
 import { useModalStore } from "@/lib/modal-store"
 import { CURRENCY_SYMBOL } from "@/lib/products"
 
-export function Header() {
+export function Header({ dict }: { dict?: any }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const [mounted, setMounted] = useState(false)
@@ -59,26 +59,26 @@ export function Header() {
                 href="/"
                 className="text-sm font-medium text-gray-700 hover:text-primary transition-colors"
               >
-                Home
+                {dict?.home || "Home"}
               </Link>
               <Link
                 href="/contact"
                 className="text-sm font-medium text-gray-700 hover:text-primary transition-colors"
               >
-                Contact Us
+                {dict?.contact || "Contact Us"}
               </Link>
               <Link
                 href="/refund-policy"
                 className="text-sm font-medium text-gray-700 hover:text-primary transition-colors"
               >
-                Refund and Returns Policy
+                {dict?.refundPolicy || "Refund and Returns Policy"}
               </Link>
             </nav>
 
             {/* Right Side Actions */}
             <div className="flex items-center gap-4">
               <Link href="#" className="hidden sm:flex text-gray-600 hover:text-primary transition-colors text-sm">
-                Login / Register
+                {dict?.login || "Login / Register"}
               </Link>
               <button
                 onClick={openModal}
@@ -108,7 +108,7 @@ export function Header() {
                 className="block py-2 text-gray-700 hover:text-primary font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Home
+                {dict?.home || "Home"}
               </Link>
               <button
                 onClick={() => {
@@ -117,21 +117,21 @@ export function Header() {
                 }}
                 className="block w-full text-left py-2 text-gray-700 hover:text-primary font-medium"
               >
-                Shop
+                {dict?.shop || "Shop"}
               </button>
               <Link
                 href="#"
                 className="block py-2 text-gray-700 hover:text-primary font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
-                My Account
+                {dict?.myAccount || "My Account"}
               </Link>
               <Link
                 href="/contact"
                 className="block py-2 text-gray-700 hover:text-primary font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Contact
+                {dict?.contact || "Contact"}
               </Link>
             </div>
           </div>

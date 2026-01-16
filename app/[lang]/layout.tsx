@@ -31,6 +31,8 @@ export const viewport: Viewport = {
     initialScale: 1,
 }
 
+import { getDictionary } from "@/lib/dictionary"
+
 export default async function RootLayout({
     children,
     params,
@@ -41,7 +43,15 @@ export default async function RootLayout({
     const { lang } = await params
     const headersList = await headers()
     const country = headersList.get("cf-ipcountry")
-    const currency = getCurrencyFromCountry(country)
+    let currency = getCurrencyFromCountry(country)
+
+    // If language is an EU language and currency defaulted to USD (e.g. no country detected or non-EU IP), force EUR
+    const EU_LANGS = ['de', 'fr', 'es', 'it', 'nl', 'pt']
+    if (EU_LANGS.includes(lang) && currency === 'USD') {
+        currency = 'EUR'
+    }
+
+    const dict = await getDictionary(lang)
 
     return (
         <html lang={lang}>
@@ -50,9 +60,9 @@ export default async function RootLayout({
                     <Suspense fallback={null}>
                         <AnalyticsTracker />
                     </Suspense>
-                    <Header />
+                    <Header dict={dict.header} />
                     <main>{children}</main>
-                    <Footer />
+                    <Footer dict={dict.footer} />
                     <ProductModal />
                 </CurrencyProvider>
             </body>

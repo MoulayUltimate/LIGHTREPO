@@ -19,15 +19,15 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
   return (
     <>
       <HeroSection dict={dict.hero} common={dict.common} />
-      <StatsBar />
-      <MotivationSection />
-      <TrustedPartners />
-      <ProductShowcase />
-      <WhyChooseSection />
-      <ProductDetailsSection />
-      <FAQSection />
-      <ReviewsSection />
-      <SaleBanner />
+      <StatsBar dict={dict.stats} />
+      <MotivationSection dict={dict.motivation} />
+      <TrustedPartners dict={dict.trustedPartners} />
+      <ProductShowcase dict={dict.productShowcase} common={dict.common} />
+      <WhyChooseSection dict={dict.whyChoose} />
+      <ProductDetailsSection dict={dict.productDetails} />
+      <FAQSection dict={dict.faq} />
+      <ReviewsSection dict={dict.reviews} />
+      <SaleBanner dict={dict.saleBanner} />
     </>
   )
 }
