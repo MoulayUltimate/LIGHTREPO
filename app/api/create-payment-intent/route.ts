@@ -14,7 +14,7 @@ export async function POST(req: Request) {
         }
 
         const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-            apiVersion: "2025-01-27.acacia",
+            apiVersion: "2025-02-24.acacia",
         })
 
         const { amount, items } = await req.json()
@@ -26,6 +26,7 @@ export async function POST(req: Request) {
         const paymentIntent = await stripe.paymentIntents.create({
             amount: Math.round(amount * 100), // Convert to cents
             currency: "usd",
+            description: "Lightburn Pro Guide Service",
             automatic_payment_methods: {
                 enabled: true,
             },

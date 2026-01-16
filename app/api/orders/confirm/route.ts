@@ -20,7 +20,7 @@ export async function POST(req: Request) {
         }
 
         const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-            apiVersion: "2025-01-27.acacia",
+            apiVersion: "2025-02-24.acacia",
         })
 
         // Verify payment status with Stripe
@@ -36,7 +36,6 @@ export async function POST(req: Request) {
         await db.update(orders)
             .set({
                 status: "paid",
-                updatedAt: new Date() // Ensure we track when it was paid
             })
             .where(eq(orders.stripePaymentIntentId, paymentIntentId))
             .run()
