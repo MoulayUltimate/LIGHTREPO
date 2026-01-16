@@ -86,14 +86,20 @@ export async function GET(req: Request) {
         try {
             const recentVisitorIds = new Set(recentPageViews.map(pv => pv.visitorId).filter(Boolean))
             if (recentVisitorIds.size > 0) {
-                const recentVisitors = await db
+                // Fetch all visitors and filter in JS (more reliable than SQL IN clause)
+                const allRecentVisitors = await db
                     .select()
                     .from(visitors)
-                    .where(sql`${visitors.id} IN (${Array.from(recentVisitorIds).map(id => `'${id}'`).join(',')})`)
+                    .where(sql`${visitors.createdAt} > ${tenMinutesAgoTimestamp - 600}`) // Extra buffer
                     .all()
+
+                // Filter to only visitors we saw in page views
+                const recentVisitors = allRecentVisitors.filter(v => recentVisitorIds.has(v.id))
 
                 for (const visitor of recentVisitors) {
                     const visitorPageViews = recentPageViews.filter(pv => pv.visitorId === visitor.id)
+                    if (visitorPageViews.length === 0) continue
+
                     const latestView = visitorPageViews[visitorPageViews.length - 1]
                     const currentPage = latestView?.path || '/'
 
