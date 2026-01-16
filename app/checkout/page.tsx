@@ -176,7 +176,13 @@ export default function CheckoutPage() {
     const totalPrice = getTotalPrice()
     const finalPrice = totalPrice - discount
 
+    const [error, setError] = useState<string | null>(null)
+
     useEffect(() => {
+        if (items.length === 0) {
+            return
+        }
+
         if (finalPrice > 0) {
             // Create PaymentIntent as soon as the page loads
             fetch("/api/create-payment-intent", {
@@ -184,10 +190,19 @@ export default function CheckoutPage() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ amount: finalPrice }),
             })
-                .then((res) => res.json())
+                .then((res) => {
+                    if (!res.ok) {
+                        throw new Error("Failed to initialize payment")
+                    }
+                    return res.json()
+                })
                 .then((data) => setClientSecret(data.clientSecret))
+                .catch((err) => {
+                    console.error("Error fetching payment intent:", err)
+                    setError("Failed to load payment system. Please try again.")
+                })
         }
-    }, [finalPrice])
+    }, [finalPrice, items.length])
 
     if (!mounted) return null
 
@@ -233,7 +248,24 @@ export default function CheckoutPage() {
                 <div className="grid lg:grid-cols-3 gap-8 lg:gap-12">
                     {/* Left Column - Forms */}
                     <div className="lg:col-span-2 order-2 lg:order-1">
-                        {clientSecret ? (
+                        {items.length === 0 ? (
+                            <div className="bg-white p-8 rounded-2xl shadow-sm text-center">
+                                <p className="text-gray-500 mb-4">Your cart is empty.</p>
+                                <Link href="/" className="text-primary hover:underline font-medium">
+                                    Continue Shopping
+                                </Link>
+                            </div>
+                        ) : error ? (
+                            <div className="bg-red-50 p-6 rounded-2xl border border-red-100 text-center text-red-600">
+                                <p>{error}</p>
+                                <button
+                                    onClick={() => window.location.reload()}
+                                    className="mt-4 text-sm underline hover:text-red-800"
+                                >
+                                    Reload Page
+                                </button>
+                            </div>
+                        ) : clientSecret ? (
                             <Elements options={options as any} stripe={stripePromise}>
                                 <CheckoutForm amount={finalPrice} />
                             </Elements>
