@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { format } from "date-fns"
 import { Mail, MessageSquare, Inbox, Send } from "lucide-react"
 
 export default function MessagesPage() {
@@ -40,6 +39,18 @@ export default function MessagesPage() {
         total: messages.length,
         new: messages.filter(m => m.status === 'new').length,
         replied: messages.filter(m => m.status === 'replied').length,
+    }
+
+    const formatDate = (dateString: string) => {
+        if (!dateString) return '-'
+        const date = new Date(dateString)
+        return date.toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        })
     }
 
     return (
@@ -146,7 +157,7 @@ export default function MessagesPage() {
                                         {msg.status === 'new' ? 'New' : 'Replied'}
                                     </span>
                                     <p className="text-xs text-gray-400 mt-2">
-                                        {msg.createdAt ? format(new Date(msg.createdAt), "MMM d, yyyy HH:mm") : "-"}
+                                        {formatDate(msg.createdAt)}
                                     </p>
                                 </div>
                             </div>

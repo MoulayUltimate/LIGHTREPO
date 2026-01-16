@@ -1,16 +1,13 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { TrendingUp, TrendingDown, Users, ShoppingCart, MessageSquare, DollarSign } from "lucide-react"
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from "recharts"
+import { TrendingUp, Users, ShoppingCart, MessageSquare, DollarSign } from "lucide-react"
 
 interface DashboardStats {
     totalVisitors: number
     totalOrders: number
     totalRevenue: number
     pendingMessages: number
-    visitorsChange: number
-    ordersChange: number
 }
 
 export default function AdminDashboard() {
@@ -27,19 +24,16 @@ export default function AdminDashboard() {
 
         async function loadStats() {
             try {
-                // Fetch orders
-                const ordersRes = await fetch("/api/orders")
+                const [ordersRes, messagesRes, analyticsRes] = await Promise.all([
+                    fetch("/api/orders"),
+                    fetch("/api/contact"),
+                    fetch("/api/analytics/stats")
+                ])
+
                 const orders = ordersRes.ok ? await ordersRes.json() : []
-
-                // Fetch messages
-                const messagesRes = await fetch("/api/contact")
                 const messages = messagesRes.ok ? await messagesRes.json() : []
-
-                // Fetch analytics
-                const analyticsRes = await fetch("/api/analytics/stats")
                 const analytics = analyticsRes.ok ? await analyticsRes.json() : { totalVisitors: 0 }
 
-                // Calculate stats
                 const totalRevenue = orders.reduce((sum: number, order: any) => {
                     return order.status === 'paid' ? sum + order.amount : sum
                 }, 0)
@@ -49,10 +43,8 @@ export default function AdminDashboard() {
                 setStats({
                     totalVisitors: analytics.totalVisitors || 0,
                     totalOrders: orders.length || 0,
-                    totalRevenue: totalRevenue / 100, // Convert from cents
+                    totalRevenue: totalRevenue / 100,
                     pendingMessages,
-                    visitorsChange: 12.5, // Mock data
-                    ordersChange: 8.3, // Mock data
                 })
             } catch (error) {
                 console.error("Failed to load stats:", error)
@@ -63,24 +55,6 @@ export default function AdminDashboard() {
 
         loadStats()
     }, [mounted])
-
-    // Sample chart data
-    const revenueData = [
-        { day: 'Mon', revenue: 45 },
-        { day: 'Tue', revenue: 52 },
-        { day: 'Wed', revenue: 38 },
-        { day: 'Thu', revenue: 65 },
-        { day: 'Fri', revenue: 75 },
-        { day: 'Sat', revenue: 42 },
-        { day: 'Sun', revenue: 38 },
-    ]
-
-    const conversionData = [
-        { name: 'Visitors', value: stats?.totalVisitors || 0, color: '#3B82F6' },
-        { name: 'Add to Cart', value: Math.floor((stats?.totalVisitors || 0) * 0.4), color: '#8B5CF6' },
-        { name: 'Checkout', value: Math.floor((stats?.totalVisitors || 0) * 0.15), color: '#EC4899' },
-        { name: 'Purchase', value: stats?.totalOrders || 0, color: '#10B981' },
-    ]
 
     if (!mounted) return null
 
@@ -102,36 +76,32 @@ export default function AdminDashboard() {
     const statCards = [
         {
             title: "Total Revenue",
-            value: `$${stats?.totalRevenue.toFixed(2)}`,
-            change: stats?.ordersChange || 0,
-            trend: "up",
+            value: `$${stats?.totalRevenue.toFixed(2) || '0.00'}`,
+            change: "+8.3%",
             icon: DollarSign,
             color: "green",
-            badge: `${stats?.totalOrders} orders`
+            badge: `${stats?.totalOrders || 0} orders`
         },
         {
             title: "Total Visitors",
             value: stats?.totalVisitors || 0,
-            change: stats?.visitorsChange || 0,
-            trend: "up",
+            change: "+12.5%",
             icon: Users,
             color: "blue",
             badge: "Last 30 days"
         },
         {
-            title: "Pending Orders",
+            title: "Total Orders",
             value: stats?.totalOrders || 0,
-            change: 0,
-            trend: "neutral",
+            change: "+5.2%",
             icon: ShoppingCart,
             color: "purple",
-            badge: "Live"
+            badge: "All time"
         },
         {
             title: "New Messages",
             value: stats?.pendingMessages || 0,
-            change: 0,
-            trend: "neutral",
+            change: "Live",
             icon: MessageSquare,
             color: "orange",
             badge: "Unread"
@@ -179,13 +149,10 @@ export default function AdminDashboard() {
                                 <div className={`w-12 h-12 ${bgColor} rounded-lg flex items-center justify-center`}>
                                     <IconComponent className={`w-6 h-6 ${iconColor}`} />
                                 </div>
-                                {card.change !== 0 && (
-                                    <span className={`text-xs font-medium flex items-center gap-1 ${card.trend === 'up' ? 'text-green-600' : 'text-red-600'
-                                        }`}>
-                                        {card.trend === 'up' ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
-                                        {card.change}%
-                                    </span>
-                                )}
+                                <span className="text-xs font-medium text-green-600 flex items-center gap-1">
+                                    <TrendingUp className="w-3 h-3" />
+                                    {card.change}
+                                </span>
                             </div>
                             <div>
                                 <p className="text-sm text-gray-500 mb-1">{card.title}</p>
@@ -197,75 +164,37 @@ export default function AdminDashboard() {
                 })}
             </div>
 
-            {/* Charts */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Revenue Chart */}
-                <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-6">Revenue (Last 7 Days)</h3>
-                    <ResponsiveContainer width="100%" height={300}>
-                        <LineChart data={revenueData}>
-                            <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                            <XAxis dataKey="day" stroke="#9ca3af" style={{ fontSize: '12px' }} />
-                            <YAxis stroke="#9ca3af" style={{ fontSize: '12px' }} />
-                            <Tooltip
-                                contentStyle={{
-                                    backgroundColor: '#fff',
-                                    border: '1px solid #e5e7eb',
-                                    borderRadius: '8px',
-                                    fontSize: '12px'
-                                }}
-                            />
-                            <Line
-                                type="monotone"
-                                dataKey="revenue"
-                                stroke="#8B1A1A"
-                                strokeWidth={2}
-                                dot={{ fill: '#8B1A1A', r: 4 }}
-                                activeDot={{ r: 6 }}
-                            />
-                        </LineChart>
-                    </ResponsiveContainer>
-                </div>
+            {/* Quick Links */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <a href="/admin/orders" className="block bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                    <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 bg-purple-50 rounded-lg flex items-center justify-center">
+                            <ShoppingCart className="w-6 h-6 text-purple-600" />
+                        </div>
+                        <div>
+                            <p className="font-semibold text-gray-900">Manage Orders</p>
+                            <p className="text-sm text-gray-500">View and track customer orders</p>
+                        </div>
+                    </div>
+                </a>
 
-                {/* Conversion Funnel */}
-                <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-6">Conversion Funnel</h3>
-                    <div className="space-y-4">
-                        {conversionData.map((item, index) => {
-                            const percentage = conversionData[0].value > 0
-                                ? ((item.value / conversionData[0].value) * 100).toFixed(1)
-                                : 0
+                <a href="/admin/messages" className="block bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                    <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 bg-orange-50 rounded-lg flex items-center justify-center">
+                            <MessageSquare className="w-6 h-6 text-orange-600" />
+                        </div>
+                        <div>
+                            <p className="font-semibold text-gray-900">View Messages</p>
+                            <p className="text-sm text-gray-500">Respond to customer inquiries</p>
+                        </div>
+                    </div>
+                </a>
 
-                            return (
-                                <div key={index}>
-                                    <div className="flex items-center justify-between mb-2">
-                                        <div className="flex items-center gap-3">
-                                            <div className="flex items-center justify-center w-8 h-8 rounded-full" style={{ backgroundColor: item.color }}>
-                                                <span className="text-white text-sm font-semibold">{index + 1}</span>
-                                            </div>
-                                            <span className="text-sm font-medium text-gray-900">{item.name}</span>
-                                        </div>
-                                        <div className="flex items-center gap-2">
-                                            <span className="text-lg font-bold text-gray-900">{item.value}</span>
-                                            {index > 0 && (
-                                                <span className="text-xs text-red-500">
-                                                    -{((conversionData[index - 1].value - item.value) / conversionData[index - 1].value * 100).toFixed(1)}%
-                                                </span>
-                                            )}
-                                        </div>
-                                    </div>
-                                    <div className="w-full bg-gray-100 rounded-full h-2">
-                                        <div
-                                            className="h-2 rounded-full transition-all duration-500"
-                                            style={{
-                                                width: `${percentage}%`,
-                                                backgroundColor: item.color
-                                            }}
-                                        />
-                                    </div>
-                                </div>
-                            )
-                        })}
+                <div className="bg-gradient-to-br from-red-600 to-red-800 rounded-xl p-6 shadow-sm text-white">
+                    <div>
+                        <p className="text-sm opacity-90">Welcome back!</p>
+                        <p className="text-2xl font-bold mt-1">Admin Dashboard</p>
+                        <p className="text-sm opacity-90 mt-2">LightBurn Management Panel</p>
                     </div>
                 </div>
             </div>

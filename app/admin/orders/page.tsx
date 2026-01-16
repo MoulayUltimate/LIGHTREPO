@@ -1,8 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Search, Filter, Download, Eye, Package } from "lucide-react"
-import { format } from "date-fns"
+import { Search, Filter, Package } from "lucide-react"
 
 export default function OrdersPage() {
     const [orders, setOrders] = useState<any[]>([])
@@ -47,6 +46,12 @@ export default function OrdersPage() {
         paid: orders.filter(o => o.status === 'paid').length,
         pending: orders.filter(o => o.status === 'pending').length,
         revenue: orders.reduce((sum, o) => o.status === 'paid' ? sum + o.amount : sum, 0) / 100
+    }
+
+    const formatDate = (dateString: string) => {
+        if (!dateString) return '-'
+        const date = new Date(dateString)
+        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
     }
 
     return (
@@ -123,12 +128,12 @@ export default function OrdersPage() {
                         <table className="w-full">
                             <thead>
                                 <tr className="bg-gray-50 border-b border-gray-100">
-                                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Order ID</th>
-                                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Date</th>
-                                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Customer</th>
-                                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Amount</th>
-                                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
-                                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Items</th>
+                                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Order ID</th>
+                                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Date</th>
+                                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Customer</th>
+                                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Amount</th>
+                                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Status</th>
+                                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Items</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100">
@@ -144,7 +149,7 @@ export default function OrdersPage() {
                                                 #{order.id.slice(0, 8)}
                                             </td>
                                             <td className="px-6 py-4 text-sm text-gray-900">
-                                                {order.createdAt ? format(new Date(order.createdAt), "MMM d, yyyy") : "-"}
+                                                {formatDate(order.createdAt)}
                                             </td>
                                             <td className="px-6 py-4">
                                                 <div className="text-sm font-medium text-gray-900">{order.customerEmail || "Unknown"}</div>
