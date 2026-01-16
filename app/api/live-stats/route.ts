@@ -101,9 +101,17 @@ export async function GET(req: Request) {
 
                     // Find order for this visitor by email or timing
                     const visitorOrder = recentOrders.find(o => {
-                        const orderTime = o.createdAt as any
+                        const orderTime = o.createdAt
                         const visitorTime = latestView?.createdAt || visitor.createdAt
-                        return Math.abs(orderTime - (visitorTime as any)) < 300
+
+                        // Check if times exist and are valid
+                        if (!orderTime || !visitorTime) return false
+
+                        // Calculate difference in milliseconds (since Drizzle returns Date objects)
+                        const diff = Math.abs((orderTime as Date).getTime() - (visitorTime as Date).getTime())
+
+                        // Match if within 5 minutes (300,000 ms)
+                        return diff < 5 * 60 * 1000
                     })
 
                     let status = 'browsing'
@@ -111,9 +119,16 @@ export async function GET(req: Request) {
                         status = 'checking_out'
                     }
                     if (visitorOrder) {
-                        if (visitorOrder.status === 'paid') status = 'paid'
-                        else if (visitorOrder.status === 'abandoned') status = 'abandoned'
-                        else if (visitorOrder.status === 'pending') status = 'checking_out'
+                        if (visitorOrder.status === 'paid') {
+                            status = 'paid'
+                        } else if (visitorOrder.status === 'abandoned') {
+                            // Only show abandoned if they are NOT currently checking out
+                            if (status !== 'checking_out') {
+                                status = 'abandoned'
+                            }
+                        } else if (visitorOrder.status === 'pending') {
+                            status = 'checking_out'
+                        }
                     }
 
                     visitorDetails.push({
