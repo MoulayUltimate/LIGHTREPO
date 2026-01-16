@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { LayoutDashboard, ShoppingCart, MessageSquare, LogOut } from "lucide-react"
+import { LayoutDashboard, ShoppingCart, MessageSquare, LogOut, Activity } from "lucide-react"
 import { useState, useEffect } from "react"
 
 export default function AdminLayout({
@@ -43,8 +43,10 @@ export default function AdminLayout({
     }
 
     const navigation = [
+        { name: "Live View", href: "/admin/live", icon: Activity },
         { name: "Dashboard", href: "/admin", icon: LayoutDashboard, exact: true },
         { name: "Orders", href: "/admin/orders", icon: ShoppingCart },
+        { name: "Missed", href: "/admin/missed", icon: ShoppingCart },
         { name: "Messages", href: "/admin/messages", icon: MessageSquare },
     ]
 
@@ -79,8 +81,8 @@ export default function AdminLayout({
                                     key={item.name}
                                     href={item.href}
                                     className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${active
-                                            ? "bg-red-50 text-red-700"
-                                            : "text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+                                        ? "bg-red-50 text-red-700"
+                                        : "text-gray-700 hover:bg-gray-50 hover:text-gray-900"
                                         }`}
                                 >
                                     <item.icon className={`h-5 w-5 ${active ? "text-red-700" : "text-gray-400"}`} />

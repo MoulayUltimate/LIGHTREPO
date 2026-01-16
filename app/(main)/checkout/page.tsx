@@ -72,6 +72,26 @@ function CheckoutForm({ amount, clientSecret }: { amount: number, clientSecret: 
         }
     }
 
+    const handleEmailBlur = async () => {
+        if (email && email.includes("@") && clientSecret) {
+            try {
+                await fetch("/api/orders/abandoned", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        paymentIntentId: clientSecret.split("_secret")[0],
+                        email: email,
+                        amount: amount,
+                        items: items,
+                        name: `${firstName} ${lastName}`.trim()
+                    }),
+                })
+            } catch (err) {
+                console.error("Failed to capture abandoned order", err)
+            }
+        }
+    }
+
     return (
         <form onSubmit={handleSubmit} className="space-y-6">
             {/* Contact Information */}
@@ -91,6 +111,7 @@ function CheckoutForm({ amount, clientSecret }: { amount: number, clientSecret: 
                             required
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            onBlur={handleEmailBlur}
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
                             placeholder="you@example.com"
                         />

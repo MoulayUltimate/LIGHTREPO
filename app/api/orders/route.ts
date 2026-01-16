@@ -23,7 +23,6 @@ export async function POST(req: Request) {
             status: "pending",
             metadata: JSON.stringify(items),
             customerEmail: email,
-            name: name || "",
         })
 
         return NextResponse.json({ success: true })
