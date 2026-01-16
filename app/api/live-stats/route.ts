@@ -71,7 +71,6 @@ export async function GET(req: Request) {
         }
 
         // 5. Calculate stats from orders
-        const checkingOut = recentOrders.filter(o => o.status === 'pending').length
         const purchased = recentOrders.filter(o => o.status === 'paid').length
         const totalSales = recentOrders
             .filter(o => o.status === 'paid')
@@ -79,9 +78,12 @@ export async function GET(req: Request) {
 
         const totalOrders = recentOrders.filter(o => o.status !== 'abandoned').length
 
-        // Active carts = people on checkout page OR abandoned orders (people who entered email)
+        // Checking out = live visitors on /checkout page (real-time tracking)
+        const checkingOut = activeCarts
+
+        // Active carts = people who abandoned (entered email but didn't complete)
         const abandonedCarts = recentOrders.filter(o => o.status === 'abandoned').length
-        const totalActiveCarts = Math.max(activeCarts, abandonedCarts)
+        const totalActiveCarts = abandonedCarts
 
         // 6. Get top countries from recent visitors
         let topCountries: { country: string; count: number }[] = []
