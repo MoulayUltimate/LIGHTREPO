@@ -1,0 +1,11 @@
+{
+    "hero": {
+        "title": "LightBurn is layout, editing, and control software for your laser cutter.",
+        "subtitle": "LightBurn is a native application written for Windows Only.",
+        "oneTimePayment": "One-time payment – No subscription required.",
+        "buyNow": "Buy Now"
+    },
+    "common": {
+        "useCode": "USE LIGHT10 FOR 10% OFF!"
+    }
+}

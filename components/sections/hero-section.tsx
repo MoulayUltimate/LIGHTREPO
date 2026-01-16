@@ -7,7 +7,7 @@ import { products } from "@/lib/products"
 import { useModalStore } from "@/lib/modal-store"
 import { useCurrency } from "@/components/currency-provider"
 
-export function HeroSection() {
+export function HeroSection({ dict, common }: { dict?: any, common?: any }) {
   const product = products[0]
   const openModal = useModalStore((state) => state.openModal)
   const { price, symbol } = useCurrency()
@@ -41,29 +41,31 @@ export function HeroSection() {
             {/* Headline */}
             <div className="space-y-4">
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
-                LightBurn is layout, editing, and control software for your laser cutter.
+                {dict?.title || "LightBurn is layout, editing, and control software for your laser cutter."}
               </h1>
               <p className="text-lg text-gray-600 leading-relaxed">
-                LightBurn is a native application written for Windows Only.
+                {dict?.subtitle || "LightBurn is a native application written for Windows Only."}
               </p>
-              <p className="text-lg font-semibold text-primary">One-time payment – No subscription required.</p>
+              <p className="text-lg font-semibold text-primary">
+                {dict?.oneTimePayment || "One-time payment – No subscription required."}
+              </p>
             </div>
 
             {/* Promo Code */}
             <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-lg text-sm font-bold">
-              USE LIGHT10 FOR 10% OFF!
+              {common?.useCode || "USE LIGHT10 FOR 10% OFF!"}
             </div>
 
             {/* Price */}
             <div className="flex items-baseline gap-3">
               <span className="text-5xl md:text-6xl font-bold text-gray-900">
-                {price.toFixed(2)} {symbol}
+                {symbol}{price.toFixed(2)}
               </span>
             </div>
 
             {/* CTA */}
             <ProductButton size="lg" variant="primary" className="px-8" onClick={openModal}>
-              Buy Now
+              {dict?.buyNow || "Buy Now"}
             </ProductButton>
           </div>
         </div>

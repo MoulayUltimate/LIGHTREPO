@@ -1,5 +1,5 @@
-export const runtime = 'edge'
 "use client"
+export const runtime = 'edge'
 
 import Link from "next/link"
 import { CheckCircle2, Loader2, XCircle } from "lucide-react"

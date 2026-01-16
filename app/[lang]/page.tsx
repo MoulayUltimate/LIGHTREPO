@@ -1,5 +1,6 @@
 export const runtime = 'edge'
 
+import { getDictionary } from "@/lib/dictionary"
 import { HeroSection } from "@/components/sections/hero-section"
 import { StatsBar } from "@/components/sections/stats-bar"
 import { MotivationSection } from "@/components/sections/motivation-section"
@@ -11,10 +12,13 @@ import { FAQSection } from "@/components/sections/faq-section"
 import { ReviewsSection } from "@/components/sections/reviews-section"
 import { SaleBanner } from "@/components/sections/sale-banner"
 
-export default function HomePage() {
+export default async function HomePage({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = await params
+  const dict = await getDictionary(lang)
+
   return (
     <>
-      <HeroSection />
+      <HeroSection dict={dict.hero} common={dict.common} />
       <StatsBar />
       <MotivationSection />
       <TrustedPartners />

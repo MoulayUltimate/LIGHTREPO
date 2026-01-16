@@ -1,0 +1,11 @@
+{
+    "hero": {
+        "title": "LightBurn ist Layout-, Bearbeitungs- und Steuerungssoftware für Ihren Laserschneider.",
+        "subtitle": "LightBurn ist eine native Anwendung nur für Windows.",
+        "oneTimePayment": "Einmalige Zahlung – Kein Abonnement erforderlich.",
+        "buyNow": "Jetzt kaufen"
+    },
+    "common": {
+        "useCode": "VERWENDEN SIE LIGHT10 FÜR 10% RABATT!"
+    }
+}
