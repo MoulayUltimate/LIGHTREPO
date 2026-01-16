@@ -2,10 +2,12 @@
 
 import { useState } from "react"
 import { authenticate } from "@/lib/actions"
+import { useRouter } from "next/navigation"
 
 export default function LoginPage() {
     const [errorMessage, setErrorMessage] = useState<string | undefined>("")
     const [isPending, setIsPending] = useState(false)
+    const router = useRouter()
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -13,19 +15,23 @@ export default function LoginPage() {
         setErrorMessage("")
 
         const formData = new FormData(event.currentTarget)
-        const result = await authenticate(undefined, formData)
+        try {
+            const result = await authenticate(undefined, formData)
 
-        if (result) {
-            setErrorMessage(result)
+            if (typeof result === "object" && result.success) {
+                router.push("/admin")
+                router.refresh() // Ensure session is updated
+            } else if (typeof result === "string") {
+                setErrorMessage(result)
+                setIsPending(false)
+            } else {
+                setErrorMessage("An unexpected error occurred.")
+                setIsPending(false)
+            }
+        } catch (error) {
+            console.error("Login error:", error)
+            setErrorMessage("An unexpected error occurred.")
             setIsPending(false)
-        } else {
-            // Redirect handled by server action or middleware? 
-            // Actually authenticate action calls signIn which throws redirect.
-            // So if we get here, it might be weird unless signIn didn't redirect.
-            // But signIn usually throws.
-            // Let's assume if it returns, it's an error string or undefined.
-            // If it throws Redirect, this catch block won't catch it unless we wrap it.
-            // But we are calling a server action.
         }
     }
 
