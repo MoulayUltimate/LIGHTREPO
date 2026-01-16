@@ -11,26 +11,35 @@ export default function LoginPage() {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
+        console.log("🖱️ Form submitted")
         setIsPending(true)
         setErrorMessage("")
 
         const formData = new FormData(event.currentTarget)
+        console.log("📋 FormData created")
+
         try {
+            console.log("🌐 Calling authenticate...")
             const result = await authenticate(undefined, formData)
+            console.log("📦 Result received:", result)
 
             if (typeof result === "object" && result.success) {
+                console.log("✨ Login successful, redirecting...")
                 router.push("/admin")
                 router.refresh() // Ensure session is updated
             } else if (typeof result === "string") {
+                console.log("⚠️ Error message:", result)
                 setErrorMessage(result)
                 setIsPending(false)
             } else {
+                console.log("❓ Unexpected result type:", typeof result, result)
                 setErrorMessage("An unexpected error occurred.")
                 setIsPending(false)
             }
         } catch (error) {
-            console.error("Login error:", error)
-            setErrorMessage("An unexpected error occurred.")
+            console.error("🔥 Client-side error:", error)
+            console.error("Error details:", error instanceof Error ? error.message : String(error))
+            setErrorMessage("An unexpected error occurred: " + (error instanceof Error ? error.message : String(error)))
             setIsPending(false)
         }
     }
