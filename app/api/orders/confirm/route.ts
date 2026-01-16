@@ -40,7 +40,11 @@ export async function POST(req: Request) {
             .where(eq(orders.stripePaymentIntentId, paymentIntentId))
             .run()
 
-        return NextResponse.json({ success: true })
+        return NextResponse.json({
+            success: true,
+            amount: paymentIntent.amount / 100, // Convert back to main unit
+            currency: paymentIntent.currency.toUpperCase()
+        })
     } catch (error) {
         console.error("Confirm Order Error:", error)
         return NextResponse.json({ error: "Failed to confirm order" }, { status: 500 })

@@ -5,12 +5,14 @@ import { CheckCircle2, Loader2, XCircle } from "lucide-react"
 import { useEffect, useState, Suspense } from "react"
 import { useSearchParams } from "next/navigation"
 import { useCartStore } from "@/lib/cart-store"
+import Script from "next/script"
 
 function SuccessContent({ dict }: { dict: any }) {
     const searchParams = useSearchParams()
     const paymentIntentId = searchParams.get("payment_intent")
     const { clearCart } = useCartStore()
     const [status, setStatus] = useState<"loading" | "success" | "error">("loading")
+    const [orderDetails, setOrderDetails] = useState<{ amount: number, currency: string } | null>(null)
 
     useEffect(() => {
         if (!paymentIntentId) {
@@ -24,8 +26,13 @@ function SuccessContent({ dict }: { dict: any }) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ paymentIntentId }),
         })
-            .then((res) => {
-                if (res.ok) {
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.success) {
+                    setOrderDetails({
+                        amount: data.amount,
+                        currency: data.currency
+                    })
                     setStatus("success")
                     clearCart()
                 } else {
@@ -71,6 +78,18 @@ function SuccessContent({ dict }: { dict: any }) {
 
     return (
         <div className="text-center">
+            {orderDetails && (
+                <Script id="google-ads-conversion" strategy="afterInteractive">
+                    {`
+                        gtag('event', 'conversion', {
+                            'send_to': 'AW-17873403949/qWP_COO15OYbEK2A2spC',
+                            'value': ${orderDetails.amount},
+                            'currency': '${orderDetails.currency}',
+                            'transaction_id': '${paymentIntentId}'
+                        });
+                    `}
+                </Script>
+            )}
             <div className="flex justify-center mb-6">
                 <div className="h-20 w-20 bg-green-100 rounded-full flex items-center justify-center">
                     <CheckCircle2 className="h-10 w-10 text-green-600" />

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowLeft, ShieldCheck, Lock, CreditCard, Mail, User } from "lucide-react"
+import { ArrowLeft, ShieldCheck, Lock, CreditCard, Mail, User, Loader2 } from "lucide-react"
 import { useCartStore } from "@/lib/cart-store"
 import { loadStripe } from "@stripe/stripe-js"
 import { Elements, PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js"
@@ -12,17 +12,27 @@ import { useCurrency } from "@/components/currency-provider"
 // Initialize Stripe
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
-function CheckoutForm({ amount, clientSecret, dict }: { amount: number, clientSecret: string, dict: any }) {
+function PaymentForm({
+    amount,
+    clientSecret,
+    dict,
+    email,
+    name,
+    items,
+    currencyPrice
+}: {
+    amount: number,
+    clientSecret: string,
+    dict: any,
+    email: string,
+    name: string,
+    items: any[],
+    currencyPrice: number
+}) {
     const stripe = useStripe()
     const elements = useElements()
-    const [email, setEmail] = useState("")
-    const [firstName, setFirstName] = useState("")
-    const [lastName, setLastName] = useState("")
     const [isLoading, setIsLoading] = useState(false)
     const [message, setMessage] = useState<string | null>(null)
-    const clearCart = useCartStore((state) => state.clearCart)
-    const items = useCartStore((state) => state.items)
-    const { price: currencyPrice } = useCurrency()
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -41,7 +51,7 @@ function CheckoutForm({ amount, clientSecret, dict }: { amount: number, clientSe
                 body: JSON.stringify({
                     paymentIntentId: clientSecret.split("_secret")[0], // Extract PI ID from client secret
                     email: email,
-                    name: `${firstName} ${lastName}`,
+                    name: name,
                     amount: amount,
                     items: items.map(item => ({ ...item, product: { ...item.product, price: currencyPrice } }))
                 }),
@@ -57,7 +67,7 @@ function CheckoutForm({ amount, clientSecret, dict }: { amount: number, clientSe
                 return_url: `${window.location.origin}/checkout/success`,
                 payment_method_data: {
                     billing_details: {
-                        name: `${firstName} ${lastName}`,
+                        name: name,
                         email: email,
                     },
                 },
@@ -68,101 +78,12 @@ function CheckoutForm({ amount, clientSecret, dict }: { amount: number, clientSe
             setMessage(error.message || "An unexpected error occurred.")
             setIsLoading(false)
         } else {
-            // Your customer will be redirected to your `return_url`. For some payment
-            // methods like iDEAL, your customer will be redirected to an intermediate
-            // site first to authorize the payment, then redirected to the `return_url`.
-        }
-    }
-
-    const handleEmailBlur = async () => {
-        if (email && email.includes("@") && clientSecret) {
-            try {
-                await fetch("/api/orders/abandoned", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        paymentIntentId: clientSecret.split("_secret")[0],
-                        email: email,
-                        amount: amount,
-                        items: items.map(item => ({ ...item, product: { ...item.product, price: currencyPrice } })),
-                        name: `${firstName} ${lastName}`.trim()
-                    }),
-                })
-            } catch (err) {
-                console.error("Failed to capture abandoned order", err)
-            }
+            // Your customer will be redirected to your `return_url`.
         }
     }
 
     return (
         <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Contact Information */}
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                    <Mail className="h-5 w-5 text-gray-500" />
-                    {dict?.contact?.title || "Contact Information"}
-                </h2>
-                <div className="space-y-4">
-                    <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                            {dict?.contact?.email || "Email Address"}
-                        </label>
-                        <input
-                            type="email"
-                            id="email"
-                            required
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            onBlur={handleEmailBlur}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
-                            placeholder="you@example.com"
-                        />
-                        <p className="text-xs text-gray-500 mt-1">
-                            {dict?.contact?.note || "Your product license will be sent to this email."}
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            {/* Personal Details */}
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                    <User className="h-5 w-5 text-gray-500" />
-                    {dict?.personal?.title || "Personal Details"}
-                </h2>
-                <div className="grid grid-cols-2 gap-4">
-                    <div>
-                        <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">
-                            {dict?.personal?.firstName || "First Name"}
-                        </label>
-                        <input
-                            type="text"
-                            id="firstName"
-                            required
-                            value={firstName}
-                            onChange={(e) => setFirstName(e.target.value)}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
-                            placeholder="John"
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">
-                            {dict?.personal?.lastName || "Last Name"}
-                        </label>
-                        <input
-                            type="text"
-                            id="lastName"
-                            required
-                            value={lastName}
-                            onChange={(e) => setLastName(e.target.value)}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
-                            placeholder="Doe"
-                        />
-                    </div>
-                </div>
-            </div>
-
-            {/* Payment Details */}
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                 <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
                     <CreditCard className="h-5 w-5 text-gray-500" />
@@ -211,51 +132,19 @@ export function CheckoutClient({ dict }: { dict: any }) {
     const [isCouponApplied, setIsCouponApplied] = useState(false)
     const [clientSecret, setClientSecret] = useState("")
 
+    // Form State
+    const [email, setEmail] = useState("")
+    const [firstName, setFirstName] = useState("")
+    const [lastName, setLastName] = useState("")
+    const [isInitializingPayment, setIsInitializingPayment] = useState(false)
+    const [error, setError] = useState<string | null>(null)
+
     useEffect(() => {
         setMounted(true)
     }, [])
 
     const totalPrice = items.reduce((acc, item) => acc + item.quantity, 0) * currencyPrice
     const finalPrice = totalPrice - discount
-
-    const [error, setError] = useState<string | null>(null)
-
-    useEffect(() => {
-        if (items.length === 0) {
-            return
-        }
-
-        if (finalPrice > 0) {
-            // Create PaymentIntent as soon as the page loads
-            fetch("/api/create-payment-intent", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    amount: finalPrice,
-                    currency: currency.toLowerCase(),
-                    items: items.map(item => ({
-                        id: item.product.id,
-                        name: item.product.name,
-                        quantity: item.quantity,
-                        price: currencyPrice
-                    }))
-                }),
-            })
-                .then((res) => {
-                    if (!res.ok) {
-                        throw new Error("Failed to initialize payment")
-                    }
-                    return res.json()
-                })
-                .then((data) => setClientSecret(data.clientSecret))
-                .catch((err) => {
-                    console.error("Error fetching payment intent:", err)
-                    setError("Failed to load payment system. Please try again.")
-                })
-        }
-    }, [finalPrice, items.length])
-
-    if (!mounted) return null
 
     const handleApplyCoupon = () => {
         if (couponCode.toUpperCase() === "LIGHT10") {
@@ -269,6 +158,74 @@ export function CheckoutClient({ dict }: { dict: any }) {
             setIsCouponApplied(false)
         }
     }
+
+    const handleContinueToPayment = async () => {
+        if (!email || !firstName || !lastName) {
+            setError("Please fill in all fields")
+            return
+        }
+        if (!email.includes("@")) {
+            setError("Please enter a valid email address")
+            return
+        }
+
+        // Track Begin Checkout Conversion
+        if (typeof window !== 'undefined' && (window as any).gtag) {
+            (window as any).gtag('event', 'conversion', {
+                'send_to': 'AW-17873403949/qIXACPWe5OYbEK2A2spC',
+                'value': finalPrice,
+                'currency': currency.toUpperCase()
+            });
+        }
+
+        setIsInitializingPayment(true)
+        setError(null)
+
+        try {
+            const res = await fetch("/api/create-payment-intent", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    amount: finalPrice,
+                    currency: currency.toLowerCase(),
+                    items: items.map(item => ({
+                        id: item.product.id,
+                        name: item.product.name,
+                        quantity: item.quantity,
+                        price: currencyPrice
+                    }))
+                }),
+            })
+
+            if (!res.ok) {
+                throw new Error("Failed to initialize payment")
+            }
+
+            const data = await res.json()
+            setClientSecret(data.clientSecret)
+
+            // Capture abandoned order immediately after creating intent
+            await fetch("/api/orders/abandoned", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    paymentIntentId: data.clientSecret.split("_secret")[0],
+                    email: email,
+                    amount: finalPrice,
+                    items: items.map(item => ({ ...item, product: { ...item.product, price: currencyPrice } })),
+                    name: `${firstName} ${lastName}`.trim()
+                }),
+            }).catch(err => console.error("Failed to capture abandoned order", err))
+
+        } catch (err) {
+            console.error("Error fetching payment intent:", err)
+            setError("Failed to load payment system. Please try again.")
+        } finally {
+            setIsInitializingPayment(false)
+        }
+    }
+
+    if (!mounted) return null
 
     const appearance = {
         theme: 'stripe',
@@ -298,7 +255,7 @@ export function CheckoutClient({ dict }: { dict: any }) {
 
                 <div className="grid lg:grid-cols-3 gap-8 lg:gap-12">
                     {/* Left Column - Forms */}
-                    <div className="lg:col-span-2 order-2 lg:order-1">
+                    <div className="lg:col-span-2 order-2 lg:order-1 space-y-6">
                         {items.length === 0 ? (
                             <div className="bg-white p-8 rounded-2xl shadow-sm text-center">
                                 <p className="text-gray-500 mb-4">{dict?.empty || "Your cart is empty."}</p>
@@ -306,24 +263,111 @@ export function CheckoutClient({ dict }: { dict: any }) {
                                     {dict?.continueShopping || "Continue Shopping"}
                                 </Link>
                             </div>
-                        ) : error ? (
-                            <div className="bg-red-50 p-6 rounded-2xl border border-red-100 text-center text-red-600">
-                                <p>{error}</p>
-                                <button
-                                    onClick={() => window.location.reload()}
-                                    className="mt-4 text-sm underline hover:text-red-800"
-                                >
-                                    Reload Page
-                                </button>
-                            </div>
-                        ) : clientSecret ? (
-                            <Elements options={options as any} stripe={stripePromise}>
-                                <CheckoutForm amount={finalPrice} clientSecret={clientSecret} dict={dict} />
-                            </Elements>
                         ) : (
-                            <div className="flex justify-center items-center h-64">
-                                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
-                            </div>
+                            <>
+                                {/* Contact Information */}
+                                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                                    <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                                        <Mail className="h-5 w-5 text-gray-500" />
+                                        {dict?.contact?.title || "Contact Information"}
+                                    </h2>
+                                    <div className="space-y-4">
+                                        <div>
+                                            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                                                {dict?.contact?.email || "Email Address"}
+                                            </label>
+                                            <input
+                                                type="email"
+                                                id="email"
+                                                required
+                                                value={email}
+                                                onChange={(e) => setEmail(e.target.value)}
+                                                disabled={!!clientSecret}
+                                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all disabled:bg-gray-50 disabled:text-gray-500"
+                                                placeholder="you@example.com"
+                                            />
+                                            <p className="text-xs text-gray-500 mt-1">
+                                                {dict?.contact?.note || "Your product license will be sent to this email."}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Personal Details */}
+                                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                                    <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                                        <User className="h-5 w-5 text-gray-500" />
+                                        {dict?.personal?.title || "Personal Details"}
+                                    </h2>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">
+                                                {dict?.personal?.firstName || "First Name"}
+                                            </label>
+                                            <input
+                                                type="text"
+                                                id="firstName"
+                                                required
+                                                value={firstName}
+                                                onChange={(e) => setFirstName(e.target.value)}
+                                                disabled={!!clientSecret}
+                                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all disabled:bg-gray-50 disabled:text-gray-500"
+                                                placeholder="John"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">
+                                                {dict?.personal?.lastName || "Last Name"}
+                                            </label>
+                                            <input
+                                                type="text"
+                                                id="lastName"
+                                                required
+                                                value={lastName}
+                                                onChange={(e) => setLastName(e.target.value)}
+                                                disabled={!!clientSecret}
+                                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all disabled:bg-gray-50 disabled:text-gray-500"
+                                                placeholder="Doe"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {error && (
+                                    <div className="p-4 rounded-lg bg-red-50 text-red-700 font-medium">
+                                        {error}
+                                    </div>
+                                )}
+
+                                {!clientSecret ? (
+                                    <button
+                                        onClick={handleContinueToPayment}
+                                        disabled={isInitializingPayment}
+                                        className="w-full bg-gray-900 hover:bg-black text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                    >
+                                        {isInitializingPayment ? (
+                                            <>
+                                                <Loader2 className="h-5 w-5 animate-spin" />
+                                                <span>{dict?.payment?.processing || "Processing..."}</span>
+                                            </>
+                                        ) : (
+                                            <span>Continue to Payment</span>
+                                        )}
+                                    </button>
+                                ) : (
+                                    <Elements options={options as any} stripe={stripePromise}>
+                                        <PaymentForm
+                                            amount={finalPrice}
+                                            clientSecret={clientSecret}
+                                            dict={dict}
+                                            email={email}
+                                            name={`${firstName} ${lastName}`}
+                                            items={items}
+                                            currencyPrice={currencyPrice}
+                                        />
+                                    </Elements>
+                                )}
+                            </>
                         )}
                     </div>
 
@@ -370,11 +414,11 @@ export function CheckoutClient({ dict }: { dict: any }) {
                                         onChange={(e) => setCouponCode(e.target.value)}
                                         placeholder={dict?.coupon?.placeholder || "Coupon code"}
                                         className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
-                                        disabled={isCouponApplied}
+                                        disabled={isCouponApplied || !!clientSecret}
                                     />
                                     <button
                                         onClick={handleApplyCoupon}
-                                        disabled={!couponCode || isCouponApplied}
+                                        disabled={!couponCode || isCouponApplied || !!clientSecret}
                                         className="bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                                     >
                                         {isCouponApplied ? (dict?.coupon?.applied || "Applied") : (dict?.coupon?.apply || "Apply")}
