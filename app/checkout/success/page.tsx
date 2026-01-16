@@ -1,13 +1,10 @@
-"use client"
-
 import Link from "next/link"
 import { CheckCircle2 } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { useEffect } from "react"
-import { useCart } from "@/lib/store"
+import { useCartStore } from "@/lib/cart-store"
 
 export default function SuccessPage() {
-    const { clearCart } = useCart()
+    const { clearCart } = useCartStore()
 
     useEffect(() => {
         clearCart()
@@ -29,9 +26,9 @@ export default function SuccessPage() {
 
                 <div className="space-y-4">
                     <Link href="/">
-                        <Button className="w-full bg-primary hover:bg-primary/90 text-white h-12 text-lg rounded-xl">
+                        <button className="w-full bg-primary hover:bg-primary/90 text-white h-12 text-lg rounded-xl font-medium transition-colors">
                             Continue Shopping
-                        </Button>
+                        </button>
                     </Link>
                 </div>
             </div>
