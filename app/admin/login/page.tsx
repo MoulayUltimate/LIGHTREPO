@@ -2,9 +2,6 @@
 
 import { useActionState } from "react"
 import { authenticate } from "@/lib/actions"
-import { Button } from "@/components/ui/button" // We need to fix this import or use standard button
-import { Input } from "@/components/ui/input" // Assuming this exists or I'll use standard input
-import { Label } from "@/components/ui/label" // Assuming this exists
 
 export default function LoginPage() {
     const [errorMessage, dispatch] = useActionState(authenticate, undefined)

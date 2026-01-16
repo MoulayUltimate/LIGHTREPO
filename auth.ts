@@ -16,10 +16,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     const { email, password } = parsedCredentials.data
 
                     // TEMPORARY: Hardcoded admin for initial access
-                    if (email === "admin@lightburn.com" && password === "admin123") {
+                    if (email === "admin@lightburnos.com" && password === "admin123") {
                         return {
                             id: "1",
-                            email: "admin@lightburn.com",
+                            email: "admin@lightburnos.com",
                             name: "Admin User",
                             role: "admin"
                         }
