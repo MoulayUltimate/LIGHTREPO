@@ -34,7 +34,9 @@ export async function POST(req: Request) {
             }
         })
 
-        // Create order in DB
+        // Create order in DB - REMOVED to prevent pending orders on page load
+        // We will create the order when the user submits the form instead.
+        /*
         try {
             const db = drizzle(process.env.DB as D1Database)
             await db.insert(orders).values({
@@ -46,8 +48,8 @@ export async function POST(req: Request) {
             })
         } catch (dbError) {
             console.error("Failed to create order in DB:", dbError)
-            // Continue even if DB fails, so user can still pay (we can reconcile later)
         }
+        */
 
         return NextResponse.json({ clientSecret: paymentIntent.client_secret })
     } catch (error) {

@@ -6,6 +6,33 @@ import { auth } from "@/auth"
 
 export const runtime = "edge"
 
+export async function POST(req: Request) {
+    try {
+        const { paymentIntentId, amount, items, email, name } = await req.json()
+
+        if (!paymentIntentId || !amount || !email) {
+            return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
+        }
+
+        const db = drizzle(process.env.DB as D1Database)
+
+        await db.insert(orders).values({
+            id: crypto.randomUUID(),
+            stripePaymentIntentId: paymentIntentId,
+            amount: Math.round(amount * 100),
+            status: "pending",
+            metadata: JSON.stringify(items),
+            customerEmail: email,
+            name: name || "",
+        })
+
+        return NextResponse.json({ success: true })
+    } catch (error) {
+        console.error("Create Order Error:", error)
+        return NextResponse.json({ error: "Failed to create order" }, { status: 500 })
+    }
+}
+
 export async function GET(req: Request) {
     try {
         // const session = await auth()

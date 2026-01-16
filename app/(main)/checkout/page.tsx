@@ -20,6 +20,7 @@ function CheckoutForm({ amount, clientSecret }: { amount: number, clientSecret: 
     const [isLoading, setIsLoading] = useState(false)
     const [message, setMessage] = useState<string | null>(null)
     const clearCart = useCartStore((state) => state.clearCart)
+    const items = useCartStore((state) => state.items)
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -30,19 +31,21 @@ function CheckoutForm({ amount, clientSecret }: { amount: number, clientSecret: 
 
         setIsLoading(true)
 
-        // Update order with customer details
+        // Create order with customer details
         try {
             await fetch("/api/orders", {
-                method: "PUT",
+                method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     paymentIntentId: clientSecret.split("_secret")[0], // Extract PI ID from client secret
                     email: email,
-                    name: `${firstName} ${lastName}`
+                    name: `${firstName} ${lastName}`,
+                    amount: amount,
+                    items: items
                 }),
             })
         } catch (err) {
-            console.error("Failed to update order details", err)
+            console.error("Failed to create order", err)
             // Continue with payment anyway
         }
 
