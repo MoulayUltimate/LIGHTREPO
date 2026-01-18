@@ -67,8 +67,9 @@ function PaymentForm({
                 return_url: `${window.location.origin}/checkout/success`,
                 payment_method_data: {
                     billing_details: {
-                        name: name,
                         email: email,
+                        // We let Stripe collect the name and address (country) via the Payment Element
+                        // This ensures "Cardholder Name" matches exactly what the bank expects
                     },
                 },
             },
@@ -90,7 +91,14 @@ function PaymentForm({
                     {dict?.payment?.title || "Payment Method"}
                 </h2>
 
-                <PaymentElement />
+                <PaymentElement options={{
+                    fields: {
+                        billingDetails: {
+                            name: 'auto', // Explicitly ask for Cardholder Name
+                            email: 'never', // We already collected email
+                        }
+                    }
+                }} />
             </div>
 
             <button
