@@ -47,6 +47,30 @@ export function CheckoutClient({ dict }: { dict: any }) {
         setIsRedirecting(true)
         setError(null)
 
+        try {
+            // Capture abandoned checkout before redirecting
+            await fetch("/api/orders/abandoned", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email: email,
+                    name: `${firstName} ${lastName}`.trim(),
+                    amount: totalPrice,
+                    items: items.map(item => ({
+                        product: {
+                            id: item.product.id,
+                            name: item.product.name,
+                            price: currencyPrice
+                        },
+                        quantity: item.quantity
+                    }))
+                }),
+            }).catch(err => console.error("Failed to capture abandoned checkout", err))
+        } catch (err) {
+            console.error("Error capturing abandoned checkout:", err)
+            // Continue with redirect even if tracking fails
+        }
+
         // Redirect to Stripe Payment Link
         window.location.href = "https://t.co/1sBBzxKg9O"
     }
