@@ -3,8 +3,10 @@ import Credentials from "next-auth/providers/credentials"
 import { z } from "zod"
 import { authConfig } from "./auth.config"
 
+const { providers, ...authConfigRest } = authConfig
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
-    ...authConfig,
+    ...authConfigRest,
     providers: [
         Credentials({
             async authorize(credentials) {
