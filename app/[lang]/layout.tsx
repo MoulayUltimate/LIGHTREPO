@@ -60,6 +60,20 @@ export default async function RootLayout({
             <body className="font-sans antialiased">
                 <Script
                     async
+                    src="https://www.googletagmanager.com/gtag/js?id=GT-WVGM2MHR"
+                    strategy="afterInteractive"
+                />
+                <Script id="google-tag-gt" strategy="afterInteractive">
+                    {`
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments);}
+                        gtag('js', new Date());
+
+                        gtag('config', 'GT-WVGM2MHR');
+                    `}
+                </Script>
+                <Script
+                    async
                     src="https://www.googletagmanager.com/gtag/js?id=AW-17873403949"
                     strategy="afterInteractive"
                 />
