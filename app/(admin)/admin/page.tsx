@@ -112,108 +112,107 @@ export default function AdminDashboard() {
             color: "orange",
             badge: "Unread"
         },
-        badge: "Unread"
-        },
-{
-    title: "Initiated Checkout",
-        value: stats?.externalClicks || 0,
+
+        {
+            title: "Initiated Checkout",
+            value: stats?.externalClicks || 0,
             change: "Live",
-                icon: ShoppingCart,
-                    color: "green",
-                        badge: "Clicks"
-},
+            icon: ShoppingCart,
+            color: "green",
+            badge: "Clicks"
+        },
     ]
 
-return (
-    <div className="p-8">
-        {/* Header */}
-        <div className="mb-8">
-            <div className="flex items-center justify-between">
-                <div>
-                    <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-                    <p className="text-sm text-gray-500 mt-1">Real-time analytics and visitor tracking</p>
-                </div>
-                <div className="flex items-center gap-2">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                        ● LIVE
-                    </span>
+    return (
+        <div className="p-8">
+            {/* Header */}
+            <div className="mb-8">
+                <div className="flex items-center justify-between">
+                    <div>
+                        <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+                        <p className="text-sm text-gray-500 mt-1">Real-time analytics and visitor tracking</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                            ● LIVE
+                        </span>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            {statCards.map((card, index) => {
-                const IconComponent = card.icon
-                const bgColor = {
-                    green: "bg-green-50",
-                    blue: "bg-blue-50",
-                    purple: "bg-purple-50",
-                    orange: "bg-orange-50"
-                }[card.color]
+            {/* Stats Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                {statCards.map((card, index) => {
+                    const IconComponent = card.icon
+                    const bgColor = {
+                        green: "bg-green-50",
+                        blue: "bg-blue-50",
+                        purple: "bg-purple-50",
+                        orange: "bg-orange-50"
+                    }[card.color]
 
-                const iconColor = {
-                    green: "text-green-600",
-                    blue: "text-blue-600",
-                    purple: "text-purple-600",
-                    orange: "text-orange-600"
-                }[card.color]
+                    const iconColor = {
+                        green: "text-green-600",
+                        blue: "text-blue-600",
+                        purple: "text-purple-600",
+                        orange: "text-orange-600"
+                    }[card.color]
 
-                return (
-                    <div key={index} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-                        <div className="flex items-center justify-between mb-4">
-                            <div className={`w-12 h-12 ${bgColor} rounded-lg flex items-center justify-center`}>
-                                <IconComponent className={`w-6 h-6 ${iconColor}`} />
+                    return (
+                        <div key={index} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                            <div className="flex items-center justify-between mb-4">
+                                <div className={`w-12 h-12 ${bgColor} rounded-lg flex items-center justify-center`}>
+                                    <IconComponent className={`w-6 h-6 ${iconColor}`} />
+                                </div>
+                                <span className="text-xs font-medium text-green-600 flex items-center gap-1">
+                                    <TrendingUp className="w-3 h-3" />
+                                    {card.change}
+                                </span>
                             </div>
-                            <span className="text-xs font-medium text-green-600 flex items-center gap-1">
-                                <TrendingUp className="w-3 h-3" />
-                                {card.change}
-                            </span>
+                            <div>
+                                <p className="text-sm text-gray-500 mb-1">{card.title}</p>
+                                <p className="text-3xl font-bold text-gray-900">{card.value}</p>
+                                <p className="text-xs text-green-600 mt-2">↑ {card.badge}</p>
+                            </div>
+                        </div>
+                    )
+                })}
+            </div>
+
+            {/* Quick Links */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <a href="/admin/orders" className="block bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                    <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 bg-purple-50 rounded-lg flex items-center justify-center">
+                            <ShoppingCart className="w-6 h-6 text-purple-600" />
                         </div>
                         <div>
-                            <p className="text-sm text-gray-500 mb-1">{card.title}</p>
-                            <p className="text-3xl font-bold text-gray-900">{card.value}</p>
-                            <p className="text-xs text-green-600 mt-2">↑ {card.badge}</p>
+                            <p className="font-semibold text-gray-900">Manage Orders</p>
+                            <p className="text-sm text-gray-500">View and track customer orders</p>
                         </div>
                     </div>
-                )
-            })}
-        </div>
+                </a>
 
-        {/* Quick Links */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <a href="/admin/orders" className="block bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-purple-50 rounded-lg flex items-center justify-center">
-                        <ShoppingCart className="w-6 h-6 text-purple-600" />
+                <a href="/admin/messages" className="block bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                    <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 bg-orange-50 rounded-lg flex items-center justify-center">
+                            <MessageSquare className="w-6 h-6 text-orange-600" />
+                        </div>
+                        <div>
+                            <p className="font-semibold text-gray-900">View Messages</p>
+                            <p className="text-sm text-gray-500">Respond to customer inquiries</p>
+                        </div>
                     </div>
+                </a>
+
+                <div className="bg-gradient-to-br from-red-600 to-red-800 rounded-xl p-6 shadow-sm text-white">
                     <div>
-                        <p className="font-semibold text-gray-900">Manage Orders</p>
-                        <p className="text-sm text-gray-500">View and track customer orders</p>
+                        <p className="text-sm opacity-90">Welcome back!</p>
+                        <p className="text-2xl font-bold mt-1">Admin Dashboard</p>
+                        <p className="text-sm opacity-90 mt-2">LightBurn Management Panel</p>
                     </div>
-                </div>
-            </a>
-
-            <a href="/admin/messages" className="block bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-orange-50 rounded-lg flex items-center justify-center">
-                        <MessageSquare className="w-6 h-6 text-orange-600" />
-                    </div>
-                    <div>
-                        <p className="font-semibold text-gray-900">View Messages</p>
-                        <p className="text-sm text-gray-500">Respond to customer inquiries</p>
-                    </div>
-                </div>
-            </a>
-
-            <div className="bg-gradient-to-br from-red-600 to-red-800 rounded-xl p-6 shadow-sm text-white">
-                <div>
-                    <p className="text-sm opacity-90">Welcome back!</p>
-                    <p className="text-2xl font-bold mt-1">Admin Dashboard</p>
-                    <p className="text-sm opacity-90 mt-2">LightBurn Management Panel</p>
                 </div>
             </div>
         </div>
-    </div>
-)
+    )
 }
