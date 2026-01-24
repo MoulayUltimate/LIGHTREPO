@@ -3,6 +3,8 @@ import { db } from "@/lib/db";
 import { externalClicks } from "@/db/schema";
 import { sendTelegramMessage } from "@/lib/telegram";
 
+export const runtime = "edge";
+
 export async function POST(req: Request) {
     try {
         const body = await req.json();
