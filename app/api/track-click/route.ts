@@ -14,19 +14,24 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
         }
 
-        // Track in DB
-        await db.insert(externalClicks).values({
-            linkUrl,
-            location,
-        });
-
-        // Send Telegram notification
-        // Using a more robust message format
         const message = `🚀 <b>Initiated Checkout</b>\n\n🔗 <b>Link:</b> ${linkUrl}\n📍 <b>Location:</b> ${location}`;
 
-        // Fire and forget telegram message to not block response too much, 
-        // though await is safer for serverless functions to ensure execution.
-        await sendTelegramMessage(message);
+        // Run concurrently, but don't let DB failure stop the response or notification logging
+        const [dbResult, telegramResult] = await Promise.allSettled([
+            db.insert(externalClicks).values({
+                linkUrl,
+                location,
+            }),
+            sendTelegramMessage(message)
+        ]);
+
+        if (dbResult.status === 'rejected') {
+            console.error("Tracking DB Error:", dbResult.reason);
+        }
+
+        if (telegramResult.status === 'rejected') {
+            console.error("Telegram Error:", telegramResult.reason);
+        }
 
         return NextResponse.json({ success: true });
     } catch (error) {
