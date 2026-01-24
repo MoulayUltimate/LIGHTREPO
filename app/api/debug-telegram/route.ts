@@ -1,40 +1,39 @@
-import { NextResponse } from "next/server"
+import { NextResponse } from "next/server";
+import { sendTelegramMessage } from "@/lib/telegram";
 
-export const runtime = 'edge'
+export const runtime = "edge";
 
 export async function GET() {
-    const token = process.env.TELEGRAM_BOT_TOKEN
-    const chatId = process.env.TELEGRAM_CHAT_ID
-
-    const debug = {
-        tokenExists: !!token,
-        chatIdExists: !!chatId,
-        tokenPreview: token ? token.substring(0, 10) + "..." : null,
-        chatIdPreview: chatId ? chatId.substring(0, 3) + "..." : null,
-        telegramResponse: null as any,
-        error: null as any,
-    }
-
-    if (!token || !chatId) {
-        return NextResponse.json(debug)
-    }
-
     try {
-        const url = `https://api.telegram.org/bot${token}/sendMessage`
-        const res = await fetch(url, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                chat_id: chatId,
-                text: "🧪 Test message from your website!",
-                parse_mode: "HTML",
-            }),
-        })
+        const token = process.env.TELEGRAM_BOT_TOKEN;
+        const chatId = process.env.TELEGRAM_CHAT_ID;
 
-        debug.telegramResponse = await res.json()
+        const results = {
+            hasToken: !!token,
+            hasChatId: !!chatId,
+            tokenStart: token ? token.substring(0, 5) + "..." : "missing",
+            chatId: chatId ? "present" : "missing"
+        };
+
+        if (!token || !chatId) {
+            return NextResponse.json({
+                success: false,
+                error: "Missing credentials",
+                debug: results
+            }, { status: 500 });
+        }
+
+        await sendTelegramMessage(`🛠️ <b>Debug Test</b>\n\nChecking Telegram integration.`);
+
+        return NextResponse.json({
+            success: true,
+            message: "Sent test message",
+            debug: results
+        });
     } catch (error) {
-        debug.error = String(error)
+        return NextResponse.json({
+            success: false,
+            error: String(error)
+        }, { status: 500 });
     }
-
-    return NextResponse.json(debug)
 }
