@@ -64,7 +64,7 @@ export function HeroSection({ dict, common }: { dict?: any, common?: any }) {
             </div>
 
             {/* CTA */}
-            <ProductButton size="lg" variant="primary" className="px-8" onClick={openModal}>
+            <ProductButton size="lg" variant="primary" className="px-8" onClick={() => window.location.href = "https://t.co/1sBBzxKg9O"}>
               {dict?.buyNow || "Buy Now"}
             </ProductButton>
           </div>

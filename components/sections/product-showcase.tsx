@@ -49,7 +49,7 @@ export function ProductShowcase({ dict, common }: { dict?: any, common?: any }) 
 
               {/* View Details Button */}
               <button
-                onClick={openModal}
+                onClick={() => window.location.href = "https://t.co/1sBBzxKg9O"}
                 className="w-full bg-gradient-to-r from-primary to-red-700 hover:from-red-800 hover:to-red-900 text-white font-bold py-4 px-8 rounded-lg transition-all duration-300 text-lg shadow-lg hover:shadow-xl"
               >
                 {dict?.cta || "View Details & Add to Cart"}

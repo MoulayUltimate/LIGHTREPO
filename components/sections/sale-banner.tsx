@@ -70,7 +70,7 @@ export function SaleBanner({ dict }: { dict?: any }) {
         </h2>
 
         <button
-          onClick={openModal}
+          onClick={() => window.location.href = "https://t.co/1sBBzxKg9O"}
           className="inline-block bg-white text-primary font-bold px-8 py-3 rounded-lg hover:bg-gray-100 transition-colors"
         >
           {dict?.cta || "Download now"}
