@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { drizzle } from "drizzle-orm/d1"
+import { db } from "@/lib/db"
 import { orders } from "@/db/schema"
 import { desc, eq } from "drizzle-orm"
 import { auth } from "@/auth"
@@ -14,7 +14,7 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
         }
 
-        const db = drizzle(process.env.DB as D1Database)
+        // const db = drizzle(process.env.DB as D1Database)
 
         await db.insert(orders).values({
             id: crypto.randomUUID(),
@@ -39,7 +39,7 @@ export async function GET(req: Request) {
         //     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
         // }
 
-        const db = drizzle(process.env.DB as D1Database)
+        // const db = drizzle(process.env.DB as D1Database)
         const allOrders = await db.select().from(orders).orderBy(desc(orders.createdAt)).all()
 
         return NextResponse.json(allOrders)
@@ -57,7 +57,7 @@ export async function PUT(req: Request) {
             return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
         }
 
-        const db = drizzle(process.env.DB as D1Database)
+        // const db = drizzle(process.env.DB as D1Database)
 
         // Update the order with customer details
         await db.update(orders)

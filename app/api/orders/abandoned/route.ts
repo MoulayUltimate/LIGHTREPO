@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { drizzle } from "drizzle-orm/d1"
+import { db } from "@/lib/db"
 import { orders } from "@/db/schema"
 import { sendTelegramMessage } from "@/lib/telegram"
 
@@ -13,7 +13,7 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
         }
 
-        const db = drizzle(process.env.DB as D1Database)
+        // const db = drizzle(process.env.DB as D1Database)
 
         // Generate unique order ID
         const orderId = crypto.randomUUID()

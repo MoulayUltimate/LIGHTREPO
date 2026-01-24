@@ -12,6 +12,23 @@ export function HeroSection({ dict, common }: { dict?: any, common?: any }) {
   const openModal = useModalStore((state) => state.openModal)
   const { price, symbol } = useCurrency()
 
+  const handlePurchase = async () => {
+    try {
+      await fetch("/api/track-click", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          linkUrl: "https://t.co/1sBBzxKg9O",
+          location: "hero"
+        }),
+      });
+    } catch (err) {
+      console.error("Tracking failed", err);
+    } finally {
+      window.location.href = "https://t.co/1sBBzxKg9O";
+    }
+  }
+
   return (
     <section className="relative overflow-hidden border-b border-gray-200">
       {/* Decorative Background Elements */}
@@ -64,7 +81,7 @@ export function HeroSection({ dict, common }: { dict?: any, common?: any }) {
             </div>
 
             {/* CTA */}
-            <ProductButton size="lg" variant="primary" className="px-8" onClick={() => window.location.href = "https://t.co/1sBBzxKg9O"}>
+            <ProductButton size="lg" variant="primary" className="px-8" onClick={handlePurchase}>
               {dict?.buyNow || "Buy Now"}
             </ProductButton>
           </div>

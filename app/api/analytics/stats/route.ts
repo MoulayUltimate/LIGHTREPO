@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server"
 import { drizzle } from "drizzle-orm/d1"
-import { visitors, pageViews } from "@/db/schema"
+import { visitors, pageViews, externalClicks } from "@/db/schema"
 import { sql, desc, count } from "drizzle-orm"
 import { auth } from "@/auth"
+import { db } from "@/lib/db"
 
 export const runtime = "edge"
 
@@ -13,7 +14,7 @@ export async function GET(req: Request) {
         //     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
         // }
 
-        const db = drizzle(process.env.DB as D1Database)
+        // const db = drizzle(process.env.DB as D1Database)
 
         // 1. Total Visitors & Page Views
         const totalVisitorsResult = await db.select({ count: count() }).from(visitors).get()
@@ -98,7 +99,10 @@ export async function GET(req: Request) {
             dailyTraffic,
             topPages,
             devices: deviceStats,
-            countries: countryStats
+            topPages,
+            devices: deviceStats,
+            countries: countryStats,
+            externalClicks: (await db.select({ count: count() }).from(externalClicks).get())?.count || 0
         })
     } catch (error) {
         console.error("Analytics Stats Error:", error)

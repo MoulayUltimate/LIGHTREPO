@@ -48,3 +48,11 @@ export const contactMessages = sqliteTable("contact_messages", {
     status: text("status").default("new"), // new, read, replied
     createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(strftime('%s', 'now'))`),
 });
+
+export const externalClicks = sqliteTable("external_clicks", {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    visitorId: text("visitor_id"), // Optional: link to visitors table if available
+    linkUrl: text("link_url").notNull(),
+    location: text("location").notNull(), // 'hero', 'showcase', 'banner', etc.
+    createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(strftime('%s', 'now'))`),
+});

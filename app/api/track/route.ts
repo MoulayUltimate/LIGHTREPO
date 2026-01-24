@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { drizzle } from "drizzle-orm/d1"
+import { db } from "@/lib/db"
 import { visitors, pageViews } from "@/db/schema"
 import { UAParser } from "ua-parser-js"
 import { eq } from "drizzle-orm"
@@ -14,7 +14,7 @@ export async function POST(req: Request) {
         // But since we are using Drizzle, we need to get the binding.
         // In Next.js on Cloudflare, bindings are usually available on process.env
         // or passed via context. For now, we'll try process.env.DB
-        const db = drizzle(process.env.DB as D1Database)
+        // const db = drizzle(process.env.DB as D1Database)
 
         const userAgent = req.headers.get("user-agent") || ""
         const parser = new UAParser(userAgent)

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { drizzle } from "drizzle-orm/d1"
+import { db } from "@/lib/db"
 import { visitors, pageViews, orders } from "@/db/schema"
 import { sql, count, inArray } from "drizzle-orm"
 
@@ -7,7 +7,7 @@ export const runtime = "edge"
 
 export async function GET(req: Request) {
     try {
-        const db = drizzle(process.env.DB as D1Database)
+        // const db = drizzle(process.env.DB as D1Database)
 
         // Calculate 10 minutes ago timestamp
         const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000)
