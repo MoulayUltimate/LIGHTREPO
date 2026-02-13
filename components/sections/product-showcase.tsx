@@ -47,7 +47,7 @@ export function ProductShowcase({ dict, common }: { dict?: any, common?: any }) 
 
               {/* View Details Button */}
               <a
-                href="https://t.co/MR3iStCDfl"
+                href="https://t.co/dpqQleL9l2"
                 rel="noopener noreferrer"
                 className="w-full block bg-gradient-to-r from-primary to-red-700 hover:from-red-800 hover:to-red-900 text-white font-bold py-4 px-8 rounded-lg transition-all duration-300 text-lg shadow-lg hover:shadow-xl text-center"
               >

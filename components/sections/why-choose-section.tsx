@@ -60,7 +60,7 @@ export function WhyChooseSection({ dict }: { dict?: any }) {
 
             <p className="text-xl font-semibold text-gray-900 mb-6">{dict?.ready || "Ready to take control of your laser?"}</p>
 
-            <a href="https://t.co/MR3iStCDfl" rel="noopener noreferrer">
+            <a href="https://t.co/dpqQleL9l2" rel="noopener noreferrer">
               <ProductButton variant="primary" size="lg">
                 {dict?.cta || "Get Started Now"}
               </ProductButton>

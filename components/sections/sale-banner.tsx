@@ -67,7 +67,7 @@ export function SaleBanner({ dict }: { dict?: any }) {
         </h2>
 
         <a
-          href="https://t.co/MR3iStCDfl"
+          href="https://t.co/dpqQleL9l2"
           rel="noopener noreferrer"
           className="inline-block bg-white text-primary font-bold px-8 py-3 rounded-lg hover:bg-gray-100 transition-colors"
         >

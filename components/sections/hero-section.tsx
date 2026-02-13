@@ -62,7 +62,7 @@ export function HeroSection({ dict, common }: { dict?: any, common?: any }) {
             </div>
 
             {/* CTA */}
-            <a href="https://t.co/MR3iStCDfl" rel="noopener noreferrer">
+            <a href="https://t.co/dpqQleL9l2" rel="noopener noreferrer">
               <ProductButton size="lg" variant="primary" className="px-8">
                 {dict?.buyNow || "Buy Now"}
               </ProductButton>

@@ -165,7 +165,7 @@ export function CartClient({ dict }: { dict: any }) {
                                 </div>
                             </div>
 
-                            <a href="https://t.co/MR3iStCDfl" className="w-full block" rel="noopener noreferrer">
+                            <a href="https://t.co/dpqQleL9l2" className="w-full block" rel="noopener noreferrer">
                                 <ProductButton variant="secondary" size="lg" className="w-full mb-4">
                                     {dict?.summary?.checkout || "Proceed to Checkout"}
                                 </ProductButton>

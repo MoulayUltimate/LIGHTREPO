@@ -81,7 +81,7 @@ export function Header({ dict }: { dict?: any }) {
                 {dict?.login || "Login / Register"}
               </Link>
               <a
-                href="https://t.co/MR3iStCDfl"
+                href="https://t.co/dpqQleL9l2"
                 rel="noopener noreferrer"
                 className="relative flex items-center gap-2 p-2 text-gray-600 hover:text-primary transition-colors"
               >
@@ -112,7 +112,7 @@ export function Header({ dict }: { dict?: any }) {
                 {dict?.home || "Home"}
               </Link>
               <a
-                href="https://t.co/MR3iStCDfl"
+                href="https://t.co/dpqQleL9l2"
                 rel="noopener noreferrer"
                 className="block w-full text-left py-2 text-gray-700 hover:text-primary font-medium"
                 onClick={() => setIsMenuOpen(false)}

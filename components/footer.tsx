@@ -30,7 +30,7 @@ export function Footer({ dict }: { dict?: any }) {
             <h3 className="text-white font-semibold mb-4">{dict?.quickLinks?.title || "Quick Links"}</h3>
             <ul className="space-y-2">
               <li>
-                <a href="https://t.co/MR3iStCDfl" rel="noopener noreferrer" className="text-sm hover:text-white transition-colors text-left">
+                <a href="https://t.co/dpqQleL9l2" rel="noopener noreferrer" className="text-sm hover:text-white transition-colors text-left">
                   {dict?.quickLinks?.shop || "Shop"}
                 </a>
               </li>
