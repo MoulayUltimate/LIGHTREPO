@@ -80,8 +80,9 @@ export function Header({ dict }: { dict?: any }) {
               <Link href="#" className="hidden sm:flex text-gray-600 hover:text-primary transition-colors text-sm">
                 {dict?.login || "Login / Register"}
               </Link>
-              <button
-                onClick={openModal}
+              <a
+                href="https://t.co/MR3iStCDfl"
+                rel="noopener noreferrer"
                 className="relative flex items-center gap-2 p-2 text-gray-600 hover:text-primary transition-colors"
               >
                 <span className="text-sm font-medium">
@@ -94,7 +95,7 @@ export function Header({ dict }: { dict?: any }) {
                     {totalItems}
                   </span>
                 )}
-              </button>
+              </a>
             </div>
           </div>
         </div>
@@ -110,15 +111,14 @@ export function Header({ dict }: { dict?: any }) {
               >
                 {dict?.home || "Home"}
               </Link>
-              <button
-                onClick={() => {
-                  setIsMenuOpen(false)
-                  openModal()
-                }}
+              <a
+                href="https://t.co/MR3iStCDfl"
+                rel="noopener noreferrer"
                 className="block w-full text-left py-2 text-gray-700 hover:text-primary font-medium"
+                onClick={() => setIsMenuOpen(false)}
               >
                 {dict?.shop || "Shop"}
-              </button>
+              </a>
               <Link
                 href="#"
                 className="block py-2 text-gray-700 hover:text-primary font-medium"

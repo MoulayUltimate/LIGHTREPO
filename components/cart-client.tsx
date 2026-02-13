@@ -165,11 +165,11 @@ export function CartClient({ dict }: { dict: any }) {
                                 </div>
                             </div>
 
-                            <Link href="/checkout" className="w-full block">
+                            <a href="https://t.co/MR3iStCDfl" className="w-full block" rel="noopener noreferrer">
                                 <ProductButton variant="secondary" size="lg" className="w-full mb-4">
                                     {dict?.summary?.checkout || "Proceed to Checkout"}
                                 </ProductButton>
-                            </Link>
+                            </a>
 
                             {/* Trust Badges */}
                             <div className="space-y-3 pt-4 border-t">

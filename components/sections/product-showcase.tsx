@@ -2,30 +2,11 @@
 
 import Image from "next/image"
 import { products } from "@/lib/products"
-import { useModalStore } from "@/lib/modal-store"
 import { useCurrency } from "@/components/currency-provider"
 
 export function ProductShowcase({ dict, common }: { dict?: any, common?: any }) {
-  const openModal = useModalStore((state) => state.openModal)
   const product = products[0]
   const { price, originalPrice, symbol } = useCurrency()
-
-  const handlePurchase = async () => {
-    try {
-      await fetch("/api/track-click", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          linkUrl: "https://t.co/1sBBzxKg9O",
-          location: "showcase"
-        }),
-      });
-    } catch (err) {
-      console.error("Tracking failed", err);
-    } finally {
-      window.location.href = "https://t.co/1sBBzxKg9O";
-    }
-  }
 
   return (
     <>
@@ -65,12 +46,13 @@ export function ProductShowcase({ dict, common }: { dict?: any, common?: any }) 
               <p className="text-green-600 font-medium mb-8">{dict?.inStock || "In stock - Instant Delivery"}</p>
 
               {/* View Details Button */}
-              <button
-                onClick={handlePurchase}
-                className="w-full bg-gradient-to-r from-primary to-red-700 hover:from-red-800 hover:to-red-900 text-white font-bold py-4 px-8 rounded-lg transition-all duration-300 text-lg shadow-lg hover:shadow-xl"
+              <a
+                href="https://t.co/MR3iStCDfl"
+                rel="noopener noreferrer"
+                className="w-full block bg-gradient-to-r from-primary to-red-700 hover:from-red-800 hover:to-red-900 text-white font-bold py-4 px-8 rounded-lg transition-all duration-300 text-lg shadow-lg hover:shadow-xl text-center"
               >
                 {dict?.cta || "View Details & Add to Cart"}
-              </button>
+              </a>
             </div>
           </div>
         </div>

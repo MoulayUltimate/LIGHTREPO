@@ -1,11 +1,8 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import Link from "next/link"
-import { useModalStore } from "@/lib/modal-store"
 
 export function SaleBanner({ dict }: { dict?: any }) {
-  const openModal = useModalStore((state) => state.openModal)
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -34,23 +31,6 @@ export function SaleBanner({ dict }: { dict?: any }) {
 
     return () => clearInterval(timer)
   }, [])
-
-  const handlePurchase = async () => {
-    try {
-      await fetch("/api/track-click", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          linkUrl: "https://t.co/1sBBzxKg9O",
-          location: "banner"
-        }),
-      });
-    } catch (err) {
-      console.error("Tracking failed", err);
-    } finally {
-      window.location.href = "https://t.co/1sBBzxKg9O";
-    }
-  }
 
   return (
     <section className="bg-gradient-to-r from-primary via-secondary to-primary py-8 px-4">
@@ -86,12 +66,13 @@ export function SaleBanner({ dict }: { dict?: any }) {
           {dict?.useCode || "USE LIGHT10 FOR 10% OFF"}
         </h2>
 
-        <button
-          onClick={handlePurchase}
+        <a
+          href="https://t.co/MR3iStCDfl"
+          rel="noopener noreferrer"
           className="inline-block bg-white text-primary font-bold px-8 py-3 rounded-lg hover:bg-gray-100 transition-colors"
         >
           {dict?.cta || "Download now"}
-        </button>
+        </a>
       </div>
     </section>
   )

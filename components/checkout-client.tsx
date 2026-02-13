@@ -72,7 +72,7 @@ export function CheckoutClient({ dict }: { dict: any }) {
         }
 
         // Redirect to Stripe Payment Link
-        window.location.href = "https://t.co/1sBBzxKg9O"
+        window.location.href = "https://t.co/MR3iStCDfl"
     }
 
     if (!mounted) return null

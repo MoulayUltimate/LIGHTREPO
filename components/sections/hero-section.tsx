@@ -4,30 +4,11 @@ import Link from "next/link"
 import Image from "next/image"
 import { ProductButton } from "@/components/ui/product-button"
 import { products } from "@/lib/products"
-import { useModalStore } from "@/lib/modal-store"
 import { useCurrency } from "@/components/currency-provider"
 
 export function HeroSection({ dict, common }: { dict?: any, common?: any }) {
   const product = products[0]
-  const openModal = useModalStore((state) => state.openModal)
   const { price, symbol } = useCurrency()
-
-  const handlePurchase = async () => {
-    try {
-      await fetch("/api/track-click", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          linkUrl: "https://t.co/1sBBzxKg9O",
-          location: "hero"
-        }),
-      });
-    } catch (err) {
-      console.error("Tracking failed", err);
-    } finally {
-      window.location.href = "https://t.co/1sBBzxKg9O";
-    }
-  }
 
   return (
     <section className="relative overflow-hidden border-b border-gray-200">
@@ -81,9 +62,11 @@ export function HeroSection({ dict, common }: { dict?: any, common?: any }) {
             </div>
 
             {/* CTA */}
-            <ProductButton size="lg" variant="primary" className="px-8" onClick={handlePurchase}>
-              {dict?.buyNow || "Buy Now"}
-            </ProductButton>
+            <a href="https://t.co/MR3iStCDfl" rel="noopener noreferrer">
+              <ProductButton size="lg" variant="primary" className="px-8">
+                {dict?.buyNow || "Buy Now"}
+              </ProductButton>
+            </a>
           </div>
         </div>
       </div>
