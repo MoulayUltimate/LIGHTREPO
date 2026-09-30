@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import { LocaleLink } from "@/components/ui/locale-link"
-import { ShoppingCart, Trash2, Minus, Plus, ArrowLeft, ShieldCheck, Lock, CreditCard } from "lucide-react"
+import { ShoppingCart, Trash2, ArrowLeft, ShieldCheck, Lock, CreditCard } from "lucide-react"
 import { ProductButton } from "@/components/ui/product-button"
 import { useCartStore } from "@/lib/cart-store"
 import { useModalStore } from "@/lib/modal-store"
@@ -14,7 +14,6 @@ export function CartClient({ dict }: { dict: any }) {
     const [mounted, setMounted] = useState(false)
     const items = useCartStore((state) => state.items)
     const removeItem = useCartStore((state) => state.removeItem)
-    const updateQuantity = useCartStore((state) => state.updateQuantity)
     const clearCart = useCartStore((state) => state.clearCart)
     const openModal = useModalStore((state) => state.openModal)
     const { price, originalPrice, symbol, currency } = useCurrency()
@@ -115,24 +114,7 @@ export function CartClient({ dict }: { dict: any }) {
                                             </span>
                                         </div>
 
-                                        {/* Quantity Controls */}
-                                        <div className="flex items-center justify-between mt-4">
-                                            <div className="flex items-center border border-gray-200 rounded-lg">
-                                                <button
-                                                    onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
-                                                    className="p-2 hover:bg-gray-50 transition-colors"
-                                                >
-                                                    <Minus className="h-4 w-4" />
-                                                </button>
-                                                <span className="px-3 font-medium">{item.quantity}</span>
-                                                <button
-                                                    onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
-                                                    className="p-2 hover:bg-gray-50 transition-colors"
-                                                >
-                                                    <Plus className="h-4 w-4" />
-                                                </button>
-                                            </div>
-
+                                        <div className="flex items-center justify-end mt-4">
                                             <button
                                                 onClick={() => removeItem(item.product.id)}
                                                 className="p-2 text-gray-400 hover:text-red-500 transition-colors"

@@ -70,7 +70,7 @@ export function HeroSection({ dict, common }: { dict?: any, common?: any }) {
             <div className="flex flex-col sm:flex-row gap-3 pt-4">
               <button
                 onClick={() => {
-                  addItem(product, 1)
+                  addItem(product)
                   openModal()
                 }}
                 className="flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-red-700 hover:from-red-800 hover:to-red-900 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl w-full sm:w-auto"

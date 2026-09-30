@@ -21,7 +21,7 @@ export function ProductModal({ dict }: { dict?: any }) {
     // Auto-add default product if cart is empty when opening
     useEffect(() => {
         if (isOpen && items.length === 0) {
-            addItem(products[0], 1)
+            addItem(products[0])
         }
     }, [isOpen, items.length, addItem])
 

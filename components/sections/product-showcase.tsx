@@ -52,7 +52,7 @@ export function ProductShowcase({ dict, common }: { dict?: any, common?: any }) 
               <div className="flex flex-col gap-3 sm:flex-row">
                 <button
                   onClick={() => {
-                    addItem(product, 1)
+                    addItem(product)
                     openModal()
                   }}
                   className="flex w-full flex-1 basis-0 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-red-700 px-4 py-4 text-center text-sm font-bold leading-tight text-white shadow-lg transition-all duration-300 hover:from-red-800 hover:to-red-900 hover:shadow-xl lg:px-6 lg:text-base"

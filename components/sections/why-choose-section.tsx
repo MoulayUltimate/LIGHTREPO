@@ -48,7 +48,7 @@ export function WhyChooseSection({ dict }: { dict?: any }) {
           </p>
           <button
             onClick={() => {
-              addItem(product, 1)
+              addItem(product)
               openModal()
             }}
             className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-8 py-4 font-bold text-white shadow-lg transition-all duration-300 hover:bg-primary-dark hover:shadow-xl"

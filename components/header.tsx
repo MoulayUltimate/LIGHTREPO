@@ -108,7 +108,7 @@ export function Header({ dict }: { dict?: any }) {
 
               <button
                 onClick={() => {
-                  addItem(products[0], 1)
+                  addItem(products[0])
                   openModal()
                 }}
                 className="flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-primary-dark"

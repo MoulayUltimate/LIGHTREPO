@@ -18,7 +18,7 @@ export function SalesHeroSection({ dict, common }: { dict?: any; common?: any })
   const benefits: string[] = dict?.benefits || product.features
 
   const handleAddToCart = () => {
-    addItem(product, 1)
+    addItem(product)
     openModal()
   }
 

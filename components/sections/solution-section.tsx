@@ -57,7 +57,7 @@ export function SolutionSection({ dict }: { dict?: any }) {
 
             <button
               onClick={() => {
-                addItem(product, 1)
+                addItem(product)
                 openModal()
               }}
               className="group mt-10 inline-flex items-center gap-3 rounded-xl bg-primary px-7 py-4 font-semibold text-white shadow-lg transition-all hover:bg-primary-dark hover:shadow-xl"
