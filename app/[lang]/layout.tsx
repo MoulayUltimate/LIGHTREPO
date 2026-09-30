@@ -71,10 +71,10 @@ export default async function RootLayout({
     return (
         <html lang={lang}>
             <body className="font-sans antialiased">
-                {/* Google tag (gtag.js) — loaded once, then one config per destination */}
+                {/* Google tag (gtag.js) */}
                 <Script
                     async
-                    src="https://www.googletagmanager.com/gtag/js?id=GT-WVGM2MHR"
+                    src="https://www.googletagmanager.com/gtag/js?id=AW-18484535885"
                     strategy="afterInteractive"
                 />
                 <Script id="google-tag" strategy="afterInteractive">
@@ -83,8 +83,6 @@ export default async function RootLayout({
                         function gtag(){dataLayer.push(arguments);}
                         gtag('js', new Date());
 
-                        gtag('config', 'GT-WVGM2MHR');
-                        gtag('config', 'AW-17873403949');
                         gtag('config', 'AW-18484535885');
                     `}
                 </Script>
