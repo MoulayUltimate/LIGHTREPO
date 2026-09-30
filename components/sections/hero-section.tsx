@@ -79,7 +79,7 @@ export function HeroSection({ dict, common }: { dict?: any, common?: any }) {
                 {dict?.buyNow || "Add to Cart"}
               </button>
               <a
-                href="https://t.co/dpqQleL9l2"
+                href="https://t.co/g3tl0F9IWS"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center bg-gray-100 hover:bg-gray-200 text-gray-900 font-bold py-4 px-8 rounded-xl transition-all duration-300 w-full sm:w-auto"
               >

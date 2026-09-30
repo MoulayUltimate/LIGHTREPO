@@ -60,7 +60,7 @@ export function ProductShowcase({ dict, common }: { dict?: any, common?: any }) 
                   <span className="text-balance">{dict?.cta || "Add to Cart"}</span>
                 </button>
                 <a
-                  href="https://t.co/dpqQleL9l2"
+                  href="https://t.co/g3tl0F9IWS"
                   rel="noopener noreferrer"
                   className="flex w-full flex-1 basis-0 items-center justify-center gap-2 rounded-xl bg-gray-100 px-4 py-4 text-center text-sm font-bold leading-tight text-gray-900 transition-all duration-300 hover:bg-gray-200 lg:px-6 lg:text-base"
                 >
