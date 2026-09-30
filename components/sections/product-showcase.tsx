@@ -22,14 +22,11 @@ export function ProductShowcase({ dict, common }: { dict?: any, common?: any }) 
             <div className="flex flex-col items-center">
               {/* Dragon Icon */}
               <div className="mb-8">
-                <Image src="/logo-icon.webp" alt="LightBurn" width={280} height={280} className="rounded-2xl shadow-lg" />
+                <Image src="/logo-icon.webp" alt="LightBurn" width={280} height={280} className="h-auto" />
               </div>
 
-              {/* Wordmark with Tagline */}
-              <div className="flex flex-col items-center">
-                <Image src="/logo-wordmark.webp" alt="LightBurn" width={320} height={60} className="h-auto" />
-                <p className="mt-2 text-sm tracking-[0.2em] text-gray-600 uppercase">{dict?.tagline || "Better Software for Laser Cutters"}</p>
-              </div>
+              {/* Wordmark — the asset already carries the tagline */}
+              <Image src="/logo-wordmark.webp" alt="LightBurn" width={320} height={60} className="h-auto" />
             </div>
 
             {/* Right - Product Details */}

@@ -28,13 +28,13 @@ export function SalesHeroSection({ dict, common }: { dict?: any; common?: any })
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           {/* Product visual */}
           <div className="relative">
-            <div className="flex min-h-[320px] items-center justify-center rounded-2xl border border-gray-100 bg-gradient-to-br from-gray-50 to-red-50/60 p-10 shadow-sm md:min-h-[420px]">
+            <div className="flex min-h-[320px] items-center justify-center p-4 md:min-h-[420px]">
               <Image
                 src="/logo-icon.webp"
                 alt={product.name}
                 width={320}
                 height={320}
-                className="h-auto w-full max-w-[260px] rounded-2xl shadow-lg"
+                className="h-auto w-full max-w-[280px]"
                 priority
               />
             </div>
