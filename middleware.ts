@@ -40,9 +40,11 @@ export function middleware(request: NextRequest) {
         return NextResponse.next()
     }
 
-    // Admin paths
-    if (pathname.startsWith('/admin')) {
-        return NextResponse.next()
+    // Admin panel is English-only, so send bare /admin to /en/admin rather
+    // than letting it follow the visitor's detected language.
+    if (pathname === '/admin' || pathname.startsWith('/admin/')) {
+        request.nextUrl.pathname = `/${defaultLocale}${pathname}`
+        return NextResponse.redirect(request.nextUrl)
     }
 
     // Check if pathname already has locale

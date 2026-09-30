@@ -1,9 +1,6 @@
 import type { Metadata, Viewport } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import "../globals.css"
-import { Header } from "@/components/header"
-import { Footer } from "@/components/footer"
-import { ProductModal } from "@/components/product-modal"
 import { AnalyticsTracker } from "@/components/analytics-tracker"
 import { Suspense } from "react"
 import { headers } from "next/headers"
@@ -66,8 +63,6 @@ export default async function RootLayout({
         currency = 'EUR'
     }
 
-    const dict = await getDictionary(lang)
-
     return (
         <html lang={lang}>
             <body className="font-sans antialiased">
@@ -90,10 +85,7 @@ export default async function RootLayout({
                     <Suspense fallback={null}>
                         <AnalyticsTracker />
                     </Suspense>
-                    <Header dict={dict.header} />
-                    <main>{children}</main>
-                    <Footer dict={dict.footer} />
-                    <ProductModal dict={dict.cart} />
+                    {children}
                 </CurrencyProvider>
             </body>
         </html>

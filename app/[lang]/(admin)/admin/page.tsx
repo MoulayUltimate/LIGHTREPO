@@ -1,6 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { usePathname } from "next/navigation"
+import { localeFromPathname } from "@/lib/i18n"
 import { TrendingUp, Users, ShoppingCart, MessageSquare, DollarSign } from "lucide-react"
 
 interface DashboardStats {
@@ -12,6 +14,8 @@ interface DashboardStats {
 }
 
 export default function AdminDashboard() {
+    const pathname = usePathname()
+    const base = `/${localeFromPathname(pathname)}/admin`
     const [stats, setStats] = useState<DashboardStats | null>(null)
     const [loading, setLoading] = useState(true)
     const [mounted, setMounted] = useState(false)
@@ -181,7 +185,7 @@ export default function AdminDashboard() {
 
             {/* Quick Links */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <a href="/admin/orders" className="block bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                <a href={`${base}/orders`} className="block bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
                     <div className="flex items-center gap-4">
                         <div className="w-12 h-12 bg-purple-50 rounded-lg flex items-center justify-center">
                             <ShoppingCart className="w-6 h-6 text-purple-600" />
@@ -193,7 +197,7 @@ export default function AdminDashboard() {
                     </div>
                 </a>
 
-                <a href="/admin/messages" className="block bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                <a href={`${base}/messages`} className="block bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
                     <div className="flex items-center gap-4">
                         <div className="w-12 h-12 bg-orange-50 rounded-lg flex items-center justify-center">
                             <MessageSquare className="w-6 h-6 text-orange-600" />

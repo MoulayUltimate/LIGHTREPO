@@ -1,12 +1,14 @@
 "use client"
 
 import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { useRouter, usePathname } from "next/navigation"
+import { localeFromPathname } from "@/lib/i18n"
 
 export default function LoginPage() {
     const [errorMessage, setErrorMessage] = useState<string | undefined>("")
     const [isPending, setIsPending] = useState(false)
     const router = useRouter()
+    const pathname = usePathname()
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -37,7 +39,7 @@ export default function LoginPage() {
                 console.log("✨ Login successful!")
                 sessionStorage.setItem("admin_session", JSON.stringify({ email: data.email }))
                 console.log("📍 Redirecting...")
-                router.push("/admin")
+                router.push(`/${localeFromPathname(pathname)}/admin`)
             } else {
                 console.log("⚠️ Login failed:", data.error)
                 setErrorMessage(data.error || "Login failed")

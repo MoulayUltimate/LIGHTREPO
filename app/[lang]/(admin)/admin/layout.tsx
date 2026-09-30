@@ -4,6 +4,7 @@ import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { LayoutDashboard, ShoppingCart, MessageSquare, LogOut, Activity } from "lucide-react"
 import { useState, useEffect } from "react"
+import { localeFromPathname } from "@/lib/i18n"
 
 export default function AdminLayout({
     children,
@@ -14,11 +15,16 @@ export default function AdminLayout({
     const router = useRouter()
     const [userEmail, setUserEmail] = useState("")
 
+    // The panel now lives under a locale segment (e.g. /en/admin), so every
+    // path below is built from the locale in the current URL.
+    const base = `/${localeFromPathname(pathname)}/admin`
+    const loginPath = `${base}/login`
+
     useEffect(() => {
         // Check session
         const session = sessionStorage.getItem("admin_session")
-        if (!session && pathname !== "/admin/login") {
-            router.push("/admin/login")
+        if (!session && pathname !== loginPath) {
+            router.push(loginPath)
             return
         }
 
@@ -30,24 +36,24 @@ export default function AdminLayout({
                 console.error("Session parse error:", e)
             }
         }
-    }, [pathname, router])
+    }, [pathname, router, loginPath])
 
     // Don't show layout on login page
-    if (pathname === "/admin/login") {
+    if (pathname === loginPath) {
         return <>{children}</>
     }
 
     const handleSignOut = () => {
         sessionStorage.removeItem("admin_session")
-        router.push("/admin/login")
+        router.push(loginPath)
     }
 
     const navigation = [
-        { name: "Live View", href: "/admin/live", icon: Activity },
-        { name: "Dashboard", href: "/admin", icon: LayoutDashboard, exact: true },
-        { name: "Orders", href: "/admin/orders", icon: ShoppingCart },
-        { name: "Missed", href: "/admin/missed", icon: ShoppingCart },
-        { name: "Messages", href: "/admin/messages", icon: MessageSquare },
+        { name: "Live View", href: `${base}/live`, icon: Activity },
+        { name: "Dashboard", href: base, icon: LayoutDashboard, exact: true },
+        { name: "Orders", href: `${base}/orders`, icon: ShoppingCart },
+        { name: "Missed", href: `${base}/missed`, icon: ShoppingCart },
+        { name: "Messages", href: `${base}/messages`, icon: MessageSquare },
     ]
 
     const isActive = (href: string, exact = false) => {
