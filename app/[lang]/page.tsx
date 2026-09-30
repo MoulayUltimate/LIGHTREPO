@@ -1,16 +1,12 @@
 export const runtime = 'edge'
 
 import { getDictionary } from "@/lib/dictionary"
-import { HeroSection } from "@/components/sections/hero-section"
+import { SalesHeroSection } from "@/components/sections/sales-hero-section"
 import { StatsBar } from "@/components/sections/stats-bar"
-import { MotivationSection } from "@/components/sections/motivation-section"
-import { TrustedPartners } from "@/components/sections/trusted-partners"
-import { ProductShowcase } from "@/components/sections/product-showcase"
 import { ProductDetailsSection } from "@/components/sections/product-details-section"
-import { WhyChooseSection } from "@/components/sections/why-choose-section"
 import { FAQSection } from "@/components/sections/faq-section"
 import { ReviewsSection } from "@/components/sections/reviews-section"
-import { SaleBanner } from "@/components/sections/sale-banner"
+import { TrustedPartners } from "@/components/sections/trusted-partners"
 
 export default async function HomePage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params
@@ -18,16 +14,23 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
 
   return (
     <>
-      <HeroSection dict={dict.hero} common={dict.common} />
+      {/* Main Sales Hero - focused conversion section */}
+      <SalesHeroSection dict={dict.hero} common={dict.common} />
+
+      {/* Stats Bar - quick value props */}
       <StatsBar dict={dict.stats} />
-      <MotivationSection dict={dict.motivation} />
-      <TrustedPartners dict={dict.trustedPartners} />
-      <ProductShowcase dict={dict.productShowcase} common={dict.common} />
-      <WhyChooseSection dict={dict.whyChoose} />
+
+      {/* Product Details - features & compatibility */}
       <ProductDetailsSection dict={dict.productDetails} />
-      <FAQSection dict={dict.faq} />
+
+      {/* Trusted Partners - social proof */}
+      <TrustedPartners dict={dict.trustedPartners} />
+
+      {/* Reviews - customer testimonials */}
       <ReviewsSection dict={dict.reviews} />
-      <SaleBanner dict={dict.saleBanner} />
+
+      {/* FAQ - address objections */}
+      <FAQSection dict={dict.faq} />
     </>
   )
 }
