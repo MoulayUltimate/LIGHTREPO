@@ -1,8 +1,11 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { useCurrency } from "@/components/currency-provider"
+import { reportBeginCheckout } from "@/lib/gtag"
 
 export function SaleBanner({ dict }: { dict?: any }) {
+  const { price, currency } = useCurrency()
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -69,6 +72,14 @@ export function SaleBanner({ dict }: { dict?: any }) {
         <a
           href="https://t.co/g3tl0F9IWS"
           rel="noopener noreferrer"
+          onClick={(e) => {
+            e.preventDefault()
+            reportBeginCheckout({
+              url: "https://t.co/g3tl0F9IWS",
+              value: price,
+              currency,
+            })
+          }}
           className="inline-block bg-white text-primary font-bold px-8 py-3 rounded-lg hover:bg-gray-100 transition-colors"
         >
           {dict?.cta || "Download now"}

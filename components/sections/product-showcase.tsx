@@ -3,13 +3,14 @@
 import Image from "next/image"
 import { products } from "@/lib/products"
 import { useCurrency } from "@/components/currency-provider"
+import { reportBeginCheckout } from "@/lib/gtag"
 import { useCartStore } from "@/lib/cart-store"
 import { useModalStore } from "@/lib/modal-store"
 import { ShoppingCart, ExternalLink } from "lucide-react"
 
 export function ProductShowcase({ dict, common }: { dict?: any, common?: any }) {
   const product = products[0]
-  const { price, originalPrice, symbol } = useCurrency()
+  const { price, originalPrice, symbol, currency } = useCurrency()
   const addItem = useCartStore((state) => state.addItem)
   const openModal = useModalStore((state) => state.openModal)
 
@@ -62,6 +63,14 @@ export function ProductShowcase({ dict, common }: { dict?: any, common?: any }) 
                 <a
                   href="https://t.co/g3tl0F9IWS"
                   rel="noopener noreferrer"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    reportBeginCheckout({
+                      url: "https://t.co/g3tl0F9IWS",
+                      value: price,
+                      currency,
+                    })
+                  }}
                   className="flex w-full flex-1 basis-0 items-center justify-center gap-2 rounded-xl bg-gray-100 px-4 py-4 text-center text-sm font-bold leading-tight text-gray-900 transition-all duration-300 hover:bg-gray-200 lg:px-6 lg:text-base"
                 >
                   <ExternalLink className="h-4 w-4 flex-shrink-0" />

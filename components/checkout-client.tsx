@@ -6,6 +6,7 @@ import Image from "next/image"
 import { ArrowLeft, ShieldCheck, Lock, CreditCard, Mail, User, Loader2 } from "lucide-react"
 import { useCartStore } from "@/lib/cart-store"
 import { useCurrency } from "@/components/currency-provider"
+import { reportBeginCheckout } from "@/lib/gtag"
 
 export function CheckoutClient({ dict }: { dict: any }) {
     const items = useCartStore((state) => state.items)
@@ -35,15 +36,6 @@ export function CheckoutClient({ dict }: { dict: any }) {
             return
         }
 
-        // Track Begin Checkout Conversion
-        if (typeof window !== 'undefined' && (window as any).gtag) {
-            (window as any).gtag('event', 'conversion', {
-                'send_to': 'AW-17873403949/qIXACPWe5OYbEK2A2spC',
-                'value': totalPrice,
-                'currency': currency.toUpperCase()
-            });
-        }
-
         setIsRedirecting(true)
         setError(null)
 
@@ -71,8 +63,12 @@ export function CheckoutClient({ dict }: { dict: any }) {
             // Continue with redirect even if tracking fails
         }
 
-        // Redirect to Stripe Payment Link
-        window.location.href = "https://t.co/g3tl0F9IWS"
+        // Report the begin-checkout conversion, then hand off to Stripe
+        reportBeginCheckout({
+            url: "https://t.co/g3tl0F9IWS",
+            value: totalPrice,
+            currency,
+        })
     }
 
     if (!mounted) return null

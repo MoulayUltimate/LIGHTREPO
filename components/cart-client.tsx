@@ -8,6 +8,7 @@ import { ProductButton } from "@/components/ui/product-button"
 import { useCartStore } from "@/lib/cart-store"
 import { useModalStore } from "@/lib/modal-store"
 import { useCurrency } from "@/components/currency-provider"
+import { reportBeginCheckout } from "@/lib/gtag"
 
 export function CartClient({ dict }: { dict: any }) {
     const [mounted, setMounted] = useState(false)
@@ -16,7 +17,7 @@ export function CartClient({ dict }: { dict: any }) {
     const updateQuantity = useCartStore((state) => state.updateQuantity)
     const clearCart = useCartStore((state) => state.clearCart)
     const openModal = useModalStore((state) => state.openModal)
-    const { price, originalPrice, symbol } = useCurrency()
+    const { price, originalPrice, symbol, currency } = useCurrency()
 
     useEffect(() => {
         setMounted(true)
@@ -165,7 +166,19 @@ export function CartClient({ dict }: { dict: any }) {
                                 </div>
                             </div>
 
-                            <a href="https://t.co/g3tl0F9IWS" className="w-full block" rel="noopener noreferrer">
+                            <a
+                                href="https://t.co/g3tl0F9IWS"
+                                className="w-full block"
+                                rel="noopener noreferrer"
+                                onClick={(e) => {
+                                    e.preventDefault()
+                                    reportBeginCheckout({
+                                        url: "https://t.co/g3tl0F9IWS",
+                                        value: totalPrice,
+                                        currency,
+                                    })
+                                }}
+                            >
                                 <ProductButton variant="secondary" size="lg" className="w-full mb-4">
                                     {dict?.summary?.checkout || "Proceed to Checkout"}
                                 </ProductButton>

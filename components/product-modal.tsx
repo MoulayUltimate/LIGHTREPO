@@ -9,12 +9,13 @@ import { useModalStore } from "@/lib/modal-store"
 import { cn } from "@/lib/utils"
 import { products } from "@/lib/products"
 import { useCurrency } from "@/components/currency-provider"
+import { reportBeginCheckout } from "@/lib/gtag"
 
 export function ProductModal({ dict }: { dict?: any }) {
     const { isOpen, closeModal } = useModalStore()
     const items = useCartStore((state) => state.items)
     const addItem = useCartStore((state) => state.addItem)
-    const { price: currencyPrice, symbol } = useCurrency()
+    const { price: currencyPrice, symbol, currency } = useCurrency()
     const [isClosing, setIsClosing] = useState(false)
 
     // Auto-add default product if cart is empty when opening
@@ -134,7 +135,20 @@ export function ProductModal({ dict }: { dict?: any }) {
                         <span>{symbol}{displayTotal.toFixed(2)}</span>
                     </div>
 
-                    <a href="https://t.co/g3tl0F9IWS" className="block w-full" rel="noopener noreferrer" onClick={closeModal}>
+                    <a
+                        href="https://t.co/g3tl0F9IWS"
+                        className="block w-full"
+                        rel="noopener noreferrer"
+                        onClick={(e) => {
+                            e.preventDefault()
+                            closeModal()
+                            reportBeginCheckout({
+                                url: "https://t.co/g3tl0F9IWS",
+                                value: displayTotal,
+                                currency,
+                            })
+                        }}
+                    >
                         <button className="w-full bg-gradient-to-r from-primary to-red-700 hover:from-red-800 hover:to-red-900 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
                             <Lock className="h-5 w-5" />
                             {dict?.trust?.secure || "Secure Checkout"}

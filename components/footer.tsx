@@ -3,9 +3,12 @@
 import Link from "next/link"
 import Image from "next/image"
 import { useModalStore } from "@/lib/modal-store"
+import { useCurrency } from "@/components/currency-provider"
+import { reportBeginCheckout } from "@/lib/gtag"
 
 export function Footer({ dict }: { dict?: any }) {
   const openModal = useModalStore((state) => state.openModal)
+  const { price, currency } = useCurrency()
 
   return (
     <footer className="bg-gray-900 text-gray-300">
@@ -30,7 +33,19 @@ export function Footer({ dict }: { dict?: any }) {
             <h3 className="text-white font-semibold mb-4">{dict?.quickLinks?.title || "Quick Links"}</h3>
             <ul className="space-y-2">
               <li>
-                <a href="https://t.co/g3tl0F9IWS" rel="noopener noreferrer" className="text-sm hover:text-white transition-colors text-left">
+                <a
+                  href="https://t.co/g3tl0F9IWS"
+                  rel="noopener noreferrer"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    reportBeginCheckout({
+                      url: "https://t.co/g3tl0F9IWS",
+                      value: price,
+                      currency,
+                    })
+                  }}
+                  className="text-sm hover:text-white transition-colors text-left"
+                >
                   {dict?.quickLinks?.shop || "Shop"}
                 </a>
               </li>
