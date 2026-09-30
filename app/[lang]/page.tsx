@@ -4,10 +4,16 @@ import { getDictionary } from "@/lib/dictionary"
 import { OfferBanner } from "@/components/sections/offer-banner"
 import { SalesHeroSection } from "@/components/sections/sales-hero-section"
 import { StatsBar } from "@/components/sections/stats-bar"
+import { ProblemSection } from "@/components/sections/problem-section"
+import { SolutionSection } from "@/components/sections/solution-section"
+import { MotivationSection } from "@/components/sections/motivation-section"
 import { ProductDetailsSection } from "@/components/sections/product-details-section"
-import { FAQSection } from "@/components/sections/faq-section"
-import { ReviewsSection } from "@/components/sections/reviews-section"
+import { ProductShowcase } from "@/components/sections/product-showcase"
+import { WhyChooseSection } from "@/components/sections/why-choose-section"
 import { TrustedPartners } from "@/components/sections/trusted-partners"
+import { ReviewsSection } from "@/components/sections/reviews-section"
+import { FAQSection } from "@/components/sections/faq-section"
+import { SaleBanner } from "@/components/sections/sale-banner"
 
 export default async function HomePage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params
@@ -15,26 +21,28 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
 
   return (
     <>
-      {/* Limited-time offer bar */}
+      {/* Offer + hero */}
       <OfferBanner dict={dict.hero} />
-
-      {/* Main Sales Hero - focused conversion section */}
       <SalesHeroSection dict={dict.hero} common={dict.common} />
-
-      {/* Stats Bar - quick value props */}
       <StatsBar dict={dict.stats} />
 
-      {/* Product Details - features & compatibility */}
+      {/* Problem → solution */}
+      <ProblemSection dict={dict.problem} />
+      <SolutionSection dict={dict.solution} />
+
+      {/* Informational sections */}
+      <MotivationSection dict={dict.motivation} />
       <ProductDetailsSection dict={dict.productDetails} />
+      <ProductShowcase dict={dict.productShowcase} common={dict.common} />
+      <WhyChooseSection dict={dict.whyChoose} />
 
-      {/* Trusted Partners - social proof */}
+      {/* Proof */}
       <TrustedPartners dict={dict.trustedPartners} />
-
-      {/* Reviews - customer testimonials */}
       <ReviewsSection dict={dict.reviews} />
 
-      {/* FAQ - address objections */}
+      {/* Objections + closing offer */}
       <FAQSection dict={dict.faq} />
+      <SaleBanner dict={dict.saleBanner} />
     </>
   )
 }

@@ -210,27 +210,19 @@
         "items": [
             {
                 "name": "Kompatibel mit Adobe",
-                "description": "Importieren Sie Vektordateien direkt in LightBurn"
+                "description": "Vektordateien direkt in LightBurn importieren"
             },
             {
                 "name": "Funktioniert mit CorelDRAW",
-                "description": "Reibungsloser Import-Workflow für Vektordesigns"
+                "description": "Reibungsloser Import von Vektordesigns"
             },
             {
                 "name": "Autodesk-kompatibel",
-                "description": "Perfekte Unterstützung für DXF- und CAD-Zeichnungen"
+                "description": "Volle Unterstützung für DXF- und CAD-Zeichnungen"
             },
             {
                 "name": "Offizielles LightBurn Pro",
-                "description": "Original-Lizenz • Sofortige Lieferung"
-            },
-            {
-                "name": "Gesichert durch PayPal",
-                "description": "Sichere Zahlungen & Käuferschutz"
-            },
-            {
-                "name": "ISO 9001 zertifiziert",
-                "description": "Vertrauenswürdige Qualität für Business-Software"
+                "description": "Autorisierter Händler • Originallizenz"
             }
         ]
     },
@@ -356,5 +348,41 @@
         "shippingPolicy": {
             "title": "Versandrichtlinie"
         }
+    },
+    "problem": {
+        "eyebrow": "Das Problem",
+        "title": "Die Software sollte nicht das Schwierige sein",
+        "subtitle": "Die meisten verlieren mehr Zeit mit ihrer Software als mit ihrer Maschine.",
+        "items": [
+            {
+                "title": "Endlose Einrichtung",
+                "description": "Stunden mit Konfiguration, bevor Sie überhaupt schneiden."
+            },
+            {
+                "title": "Laufende Gebühren",
+                "description": "Abos, die sich Jahr für Jahr summieren."
+            },
+            {
+                "title": "Controller-Bindung",
+                "description": "Software, die nur mit einer Controller-Marke läuft."
+            },
+            {
+                "title": "Langsamer Support",
+                "description": "Tagelang auf Antwort warten, während ein Auftrag liegen bleibt."
+            }
+        ]
+    },
+    "solution": {
+        "eyebrow": "Die Lösung",
+        "title": "LightBurn Pro: das komplette Werkzeug",
+        "subtitle": "Professionelle Lasersoftware, die Ihnen nicht im Weg steht.",
+        "points": [
+            "Unterstützt Ruida, GRBL, Smoothieboard, TopWisdom und EZCad2",
+            "In Minuten einsatzbereit, nicht in Stunden",
+            "Einmal zahlen, dauerhaft nutzen — kein Abo, keine versteckten Kosten",
+            "24/7 Support von Menschen, die selbst mit Lasern arbeiten",
+            "Professionelle Ergebnisse ohne Komplexität"
+        ],
+        "cta": "Risikofrei testen — nur {price}"
     }
 }

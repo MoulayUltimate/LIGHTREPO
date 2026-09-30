@@ -210,27 +210,19 @@
         "items": [
             {
                 "name": "Compatible avec Adobe",
-                "description": "Importez des fichiers vectoriels directement dans LightBurn"
+                "description": "Importez vos fichiers vectoriels directement dans LightBurn"
             },
             {
                 "name": "Fonctionne avec CorelDRAW",
-                "description": "Flux de travail d'importation de conception vectorielle fluide"
+                "description": "Import fluide de vos créations vectorielles"
             },
             {
                 "name": "Compatible Autodesk",
-                "description": "Support parfait pour les dessins DXF et CAD"
+                "description": "Prise en charge complète des fichiers DXF et CAO"
             },
             {
-                "name": "LightBurn Pro Officiel",
-                "description": "Licence authentique • Livraison instantanée"
-            },
-            {
-                "name": "Sécurisé par PayPal",
-                "description": "Paiements sécurisés & protection des acheteurs"
-            },
-            {
-                "name": "Certifié ISO 9001",
-                "description": "Qualité de confiance pour les logiciels de qualité professionnelle"
+                "name": "LightBurn Pro officiel",
+                "description": "Revendeur agréé • Licence authentique"
             }
         ]
     },
@@ -356,5 +348,41 @@
         "shippingPolicy": {
             "title": "Politique d'expédition"
         }
+    },
+    "problem": {
+        "eyebrow": "Le problème",
+        "title": "Le logiciel ne devrait pas être le plus dur",
+        "subtitle": "La plupart des utilisateurs perdent plus de temps avec leur logiciel qu’avec leur machine.",
+        "items": [
+            {
+                "title": "Une installation interminable",
+                "description": "Des heures de configuration avant la moindre découpe."
+            },
+            {
+                "title": "Des frais récurrents",
+                "description": "Des abonnements qui s’accumulent année après année."
+            },
+            {
+                "title": "Dépendance au contrôleur",
+                "description": "Un logiciel limité à une seule marque de carte."
+            },
+            {
+                "title": "Support lent",
+                "description": "Des jours d’attente pendant qu’un travail reste en suspens."
+            }
+        ]
+    },
+    "solution": {
+        "eyebrow": "La solution",
+        "title": "LightBurn Pro : la solution complète",
+        "subtitle": "Un logiciel laser professionnel qui ne vous freine pas.",
+        "points": [
+            "Compatible Ruida, GRBL, Smoothieboard, TopWisdom et EZCad2",
+            "Prêt à découper en quelques minutes, pas en heures",
+            "Payez une fois, utilisez à vie — sans abonnement ni frais cachés",
+            "Support 24/7 assuré par des professionnels du laser",
+            "Des résultats professionnels sans la complexité"
+        ],
+        "cta": "Essayez sans risque — seulement {price}"
     }
 }

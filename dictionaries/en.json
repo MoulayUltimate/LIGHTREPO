@@ -222,15 +222,7 @@
             },
             {
                 "name": "Official LightBurn Pro",
-                "description": "Genuine License • Instant Delivery"
-            },
-            {
-                "name": "Secured by PayPal",
-                "description": "Safe payments & buyer protection"
-            },
-            {
-                "name": "ISO 9001 Certified",
-                "description": "Trusted quality for business-grade software"
+                "description": "Authorized reseller • Genuine license"
             }
         ]
     },
@@ -356,5 +348,41 @@
         "shippingPolicy": {
             "title": "Shipping Policy"
         }
+    },
+    "problem": {
+        "eyebrow": "The problem",
+        "title": "Laser software shouldn’t be the hard part",
+        "subtitle": "Most people lose more time to their software than to their machine.",
+        "items": [
+            {
+                "title": "Setup that drags on",
+                "description": "Hours spent configuring before you cut anything."
+            },
+            {
+                "title": "Recurring fees",
+                "description": "Subscriptions that quietly add up year after year."
+            },
+            {
+                "title": "Controller lock-in",
+                "description": "Software tied to one brand of controller board."
+            },
+            {
+                "title": "Slow support",
+                "description": "Waiting days for an answer while a job sits unfinished."
+            }
+        ]
+    },
+    "solution": {
+        "eyebrow": "The solution",
+        "title": "LightBurn Pro: the complete toolkit",
+        "subtitle": "Professional laser software that stays out of your way.",
+        "points": [
+            "Runs Ruida, GRBL, Smoothieboard, TopWisdom and EZCad2 controllers",
+            "Ready to cut in minutes, not hours",
+            "Pay once, use forever — no subscription, no hidden fees",
+            "24/7 support from people who work with lasers",
+            "Professional results without the complexity"
+        ],
+        "cta": "Try LightBurn risk-free today — only {price}"
     }
 }

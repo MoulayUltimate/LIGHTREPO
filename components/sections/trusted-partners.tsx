@@ -20,18 +20,8 @@ const partners = [
   },
   {
     name: "Official LightBurn Pro",
-    description: "Authorized Reseller • Genuine License",
+    description: "Authorized reseller • Genuine license",
     logo: "/logo-icon.webp",
-  },
-  {
-    name: "30-Day Money Back",
-    description: "Risk-free purchase guarantee",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/7/7e/Visa_Card_Logo.svg",
-  },
-  {
-    name: "Instant Delivery",
-    description: "License key sent via email within minutes",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg",
   },
 ]
 
