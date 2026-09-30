@@ -2,9 +2,11 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { Check } from "lucide-react"
+import { Check, ShoppingCart } from "lucide-react"
 import { ProductButton } from "@/components/ui/product-button"
 import { useModalStore } from "@/lib/modal-store"
+import { useCartStore } from "@/lib/cart-store"
+import { products } from "@/lib/products"
 
 const benefits = [
   "The Best Laser Engraving Software – Trusted by thousands of users worldwide",
@@ -17,6 +19,8 @@ const benefits = [
 
 export function WhyChooseSection({ dict }: { dict?: any }) {
   const openModal = useModalStore((state) => state.openModal)
+  const addItem = useCartStore((state) => state.addItem)
+  const product = products[0]
   const benefits = dict?.benefits || [
     "The Best Laser Engraving Software – Trusted by thousands of users worldwide",
     "Work For All Countries",
@@ -60,11 +64,25 @@ export function WhyChooseSection({ dict }: { dict?: any }) {
 
             <p className="text-xl font-semibold text-gray-900 mb-6">{dict?.ready || "Ready to take control of your laser?"}</p>
 
-            <a href="https://t.co/dpqQleL9l2" rel="noopener noreferrer">
-              <ProductButton variant="primary" size="lg">
-                {dict?.cta || "Get Started Now"}
-              </ProductButton>
-            </a>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <button
+                onClick={() => {
+                  addItem(product, 1)
+                  openModal()
+                }}
+                className="flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-red-700 hover:from-red-800 hover:to-red-900 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl w-full sm:w-auto"
+              >
+                <ShoppingCart className="h-5 w-5" />
+                {dict?.cta || "Add to Cart"}
+              </button>
+              <a
+                href="https://t.co/dpqQleL9l2"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center bg-gray-100 hover:bg-gray-200 text-gray-900 font-bold py-4 px-8 rounded-xl transition-all duration-300 w-full sm:w-auto"
+              >
+                {dict?.viewMore || "View Details"}
+              </a>
+            </div>
           </div>
         </div>
       </div>

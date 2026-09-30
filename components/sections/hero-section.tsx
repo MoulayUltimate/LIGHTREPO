@@ -5,10 +5,15 @@ import Image from "next/image"
 import { ProductButton } from "@/components/ui/product-button"
 import { products } from "@/lib/products"
 import { useCurrency } from "@/components/currency-provider"
+import { useCartStore } from "@/lib/cart-store"
+import { useModalStore } from "@/lib/modal-store"
+import { ShoppingCart } from "lucide-react"
 
 export function HeroSection({ dict, common }: { dict?: any, common?: any }) {
   const product = products[0]
   const { price, symbol } = useCurrency()
+  const addItem = useCartStore((state) => state.addItem)
+  const openModal = useModalStore((state) => state.openModal)
 
   return (
     <section className="relative overflow-hidden border-b border-gray-200">
@@ -62,11 +67,25 @@ export function HeroSection({ dict, common }: { dict?: any, common?: any }) {
             </div>
 
             {/* CTA */}
-            <a href="https://t.co/dpqQleL9l2" rel="noopener noreferrer">
-              <ProductButton size="lg" variant="primary" className="px-8">
-                {dict?.buyNow || "Buy Now"}
-              </ProductButton>
-            </a>
+            <div className="flex flex-col sm:flex-row gap-3 pt-4">
+              <button
+                onClick={() => {
+                  addItem(product, 1)
+                  openModal()
+                }}
+                className="flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-red-700 hover:from-red-800 hover:to-red-900 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl w-full sm:w-auto"
+              >
+                <ShoppingCart className="h-5 w-5" />
+                {dict?.buyNow || "Add to Cart"}
+              </button>
+              <a
+                href="https://t.co/dpqQleL9l2"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center bg-gray-100 hover:bg-gray-200 text-gray-900 font-bold py-4 px-8 rounded-xl transition-all duration-300 w-full sm:w-auto"
+              >
+                {dict?.viewMore || "View in Store"}
+              </a>
+            </div>
           </div>
         </div>
       </div>

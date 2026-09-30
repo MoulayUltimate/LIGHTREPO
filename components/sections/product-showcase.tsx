@@ -3,10 +3,15 @@
 import Image from "next/image"
 import { products } from "@/lib/products"
 import { useCurrency } from "@/components/currency-provider"
+import { useCartStore } from "@/lib/cart-store"
+import { useModalStore } from "@/lib/modal-store"
+import { ShoppingCart, ExternalLink } from "lucide-react"
 
 export function ProductShowcase({ dict, common }: { dict?: any, common?: any }) {
   const product = products[0]
   const { price, originalPrice, symbol } = useCurrency()
+  const addItem = useCartStore((state) => state.addItem)
+  const openModal = useModalStore((state) => state.openModal)
 
   return (
     <>
@@ -45,14 +50,27 @@ export function ProductShowcase({ dict, common }: { dict?: any, common?: any }) 
               {/* Stock Status */}
               <p className="text-green-600 font-medium mb-8">{dict?.inStock || "In stock - Instant Delivery"}</p>
 
-              {/* View Details Button */}
-              <a
-                href="https://t.co/dpqQleL9l2"
-                rel="noopener noreferrer"
-                className="w-full block bg-gradient-to-r from-primary to-red-700 hover:from-red-800 hover:to-red-900 text-white font-bold py-4 px-8 rounded-lg transition-all duration-300 text-lg shadow-lg hover:shadow-xl text-center"
-              >
-                {dict?.cta || "View Details & Add to Cart"}
-              </a>
+              {/* Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3">
+                <button
+                  onClick={() => {
+                    addItem(product, 1)
+                    openModal()
+                  }}
+                  className="flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-red-700 hover:from-red-800 hover:to-red-900 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl w-full sm:flex-1"
+                >
+                  <ShoppingCart className="h-5 w-5" />
+                  {dict?.cta || "Add to Cart"}
+                </button>
+                <a
+                  href="https://t.co/dpqQleL9l2"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-900 font-bold py-4 px-8 rounded-xl transition-all duration-300 w-full sm:w-auto"
+                >
+                  <ExternalLink className="h-4 w-4" />
+                  {dict?.viewMore || "View Secure Checkout"}
+                </a>
+              </div>
             </div>
           </div>
         </div>
