@@ -13,16 +13,29 @@ import { CurrencyProvider } from "@/components/currency-provider"
 const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
-export const metadata: Metadata = {
-    title: "Lightburn Pro – Better Software For Laser Cutters",
-    description:
-        "Transform your laser cutting workflow with LightBurn Pro. One-time payment, instant delivery, trusted by 50,000+ professionals. Save 72% today!",
-    generator: "v0.app",
-    keywords: ["lightburn", "laser engraving", "laser cutting", "software", "CNC"],
-    icons: {
-        icon: "/logo-icon.webp",
-        apple: "/logo-icon.webp",
-    },
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ lang: string }>
+}): Promise<Metadata> {
+    const { lang } = await params
+    const dict = await getDictionary(lang)
+
+    return {
+        title: dict.meta.title,
+        description: dict.meta.description,
+        keywords: ["lightburn", "laser engraving", "laser cutting", "software", "CNC"],
+        icons: {
+            icon: "/logo-icon.webp",
+            apple: "/logo-icon.webp",
+        },
+        openGraph: {
+            title: dict.meta.title,
+            description: dict.meta.description,
+            type: "website",
+            locale: lang,
+        },
+    }
 }
 
 export const viewport: Viewport = {

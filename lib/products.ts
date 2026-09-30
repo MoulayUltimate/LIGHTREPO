@@ -14,7 +14,7 @@ export interface Product {
 export const products: Product[] = [
   {
     id: "lightburn-pro",
-    name: "LightBurn Pro Laser Engraving Software - Multilingual",
+    name: "LightBurn Pro 2.0 2026 - Laser Cutting Software",
     description:
       "LightBurn is layout, editing, and control software for your laser cutter. Import artwork in a variety of common vector graphic and image formats. Arrange, edit, and even create new vector shapes within LightBurn's powerful editor.",
     price: 57.72,
