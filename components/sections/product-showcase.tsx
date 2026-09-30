@@ -51,24 +51,24 @@ export function ProductShowcase({ dict, common }: { dict?: any, common?: any }) 
               <p className="text-green-600 font-medium mb-8">{dict?.inStock || "In stock - Instant Delivery"}</p>
 
               {/* Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3">
+              <div className="flex flex-col gap-3 sm:flex-row">
                 <button
                   onClick={() => {
                     addItem(product, 1)
                     openModal()
                   }}
-                  className="flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-red-700 hover:from-red-800 hover:to-red-900 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl w-full sm:flex-1"
+                  className="flex w-full flex-1 basis-0 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-red-700 px-4 py-4 text-center text-sm font-bold leading-tight text-white shadow-lg transition-all duration-300 hover:from-red-800 hover:to-red-900 hover:shadow-xl lg:px-6 lg:text-base"
                 >
-                  <ShoppingCart className="h-5 w-5" />
-                  {dict?.cta || "Add to Cart"}
+                  <ShoppingCart className="h-5 w-5 flex-shrink-0" />
+                  <span className="text-balance">{dict?.cta || "Add to Cart"}</span>
                 </button>
                 <a
                   href="https://t.co/dpqQleL9l2"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-900 font-bold py-4 px-8 rounded-xl transition-all duration-300 w-full sm:w-auto"
+                  className="flex w-full flex-1 basis-0 items-center justify-center gap-2 rounded-xl bg-gray-100 px-4 py-4 text-center text-sm font-bold leading-tight text-gray-900 transition-all duration-300 hover:bg-gray-200 lg:px-6 lg:text-base"
                 >
-                  <ExternalLink className="h-4 w-4" />
-                  {dict?.viewMore || "View Secure Checkout"}
+                  <ExternalLink className="h-4 w-4 flex-shrink-0" />
+                  <span className="text-balance">{dict?.viewMore || "View Secure Checkout"}</span>
                 </a>
               </div>
             </div>
