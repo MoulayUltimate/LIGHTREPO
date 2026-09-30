@@ -71,31 +71,21 @@ export default async function RootLayout({
     return (
         <html lang={lang}>
             <body className="font-sans antialiased">
+                {/* Google tag (gtag.js) — loaded once, then one config per destination */}
                 <Script
                     async
                     src="https://www.googletagmanager.com/gtag/js?id=GT-WVGM2MHR"
                     strategy="afterInteractive"
                 />
-                <Script id="google-tag-gt" strategy="afterInteractive">
+                <Script id="google-tag" strategy="afterInteractive">
                     {`
                         window.dataLayer = window.dataLayer || [];
                         function gtag(){dataLayer.push(arguments);}
                         gtag('js', new Date());
 
                         gtag('config', 'GT-WVGM2MHR');
-                    `}
-                </Script>
-                <Script
-                    async
-                    src="https://www.googletagmanager.com/gtag/js?id=AW-17873403949"
-                    strategy="afterInteractive"
-                />
-                <Script id="google-ads-tag" strategy="afterInteractive">
-                    {`
-                        window.dataLayer = window.dataLayer || [];
-                        function gtag(){dataLayer.push(arguments);}
-                        gtag('js', new Date());
                         gtag('config', 'AW-17873403949');
+                        gtag('config', 'AW-18484535885');
                     `}
                 </Script>
                 <CurrencyProvider initialCurrency={currency}>
