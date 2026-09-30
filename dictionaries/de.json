@@ -5,7 +5,10 @@
         "refundPolicy": "Rückgabe- und Erstattungsrichtlinien",
         "login": "Anmelden / Registrieren",
         "shop": "Shop",
-        "myAccount": "Mein Konto"
+        "myAccount": "Mein Konto",
+        "buyNow": "Jetzt kaufen",
+        "cart": "Warenkorb",
+        "announcement": "Sofortige Lieferung • 30 Tage Geld-zurück-Garantie • 24/7 Support"
     },
     "footer": {
         "company": {
@@ -35,9 +38,26 @@
     },
     "hero": {
         "title": "LightBurn ist Layout-, Bearbeitungs- und Steuerungssoftware für Ihren Laserschneider.",
-        "subtitle": "LightBurn ist eine native Anwendung nur für Windows.",
+        "subtitle": "Layout-, Bearbeitungs- und Steuerungssoftware für Ihren Laserschneider. Einmalige Zahlung, sofortige Lieferung, kein Abonnement. Nur für Windows.",
         "oneTimePayment": "Einmalige Zahlung – Kein Abonnement erforderlich.",
-        "buyNow": "Jetzt kaufen"
+        "buyNow": "Jetzt kaufen",
+        "titleStart": "LightBurn Pro",
+        "titleHighlight": "Software",
+        "titleEnd": "für Laserschneider",
+        "rating": "5/5 von verifizierten Kunden bewertet",
+        "instantAccess": "Sofortzugang",
+        "save": "{discount}% sparen",
+        "cta": "Jetzt sofort Zugang erhalten",
+        "secureCheckout": "Sicherer Checkout — 256-Bit-SSL-Verschlüsselung",
+        "offer": "Zeitlich begrenztes Angebot: heute {discount}% sparen — nur {price} (regulär {original})",
+        "benefits": [
+            "Sofortige Lieferung (1-30 Minuten)",
+            "Lebenslange Aktivierung",
+            "12 Monate kostenlose Updates",
+            "Keine versteckten Kosten oder Gebühren",
+            "24/7 Kundensupport",
+            "30 Tage Geld-zurück-Garantie"
+        ]
     },
     "stats": {
         "title": "Bessere Software für",

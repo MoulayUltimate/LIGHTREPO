@@ -5,7 +5,10 @@
         "refundPolicy": "Politique de remboursement",
         "login": "Connexion / Inscription",
         "shop": "Boutique",
-        "myAccount": "Mon compte"
+        "myAccount": "Mon compte",
+        "buyNow": "Acheter",
+        "cart": "Panier",
+        "announcement": "Livraison instantanée • Garantie 30 jours satisfait ou remboursé • Support 24/7"
     },
     "footer": {
         "company": {
@@ -35,9 +38,26 @@
     },
     "hero": {
         "title": "LightBurn est un logiciel de mise en page, d'édition et de contrôle pour votre découpeur laser.",
-        "subtitle": "LightBurn est une application native écrite pour Windows uniquement.",
+        "subtitle": "Logiciel de mise en page, d’édition et de contrôle pour votre découpeur laser. Paiement unique, livraison instantanée, sans abonnement. Windows uniquement.",
         "oneTimePayment": "Paiement unique – Aucun abonnement requis.",
-        "buyNow": "Acheter maintenant"
+        "buyNow": "Acheter maintenant",
+        "titleStart": "Logiciel",
+        "titleHighlight": "LightBurn Pro",
+        "titleEnd": "de découpe laser",
+        "rating": "Noté 5/5 par des clients vérifiés",
+        "instantAccess": "Accès instantané",
+        "save": "Économisez {discount}%",
+        "cta": "Obtenir un accès instantané",
+        "secureCheckout": "Paiement sécurisé — chiffrement SSL 256 bits",
+        "offer": "Offre limitée : économisez {discount}% aujourd’hui — seulement {price} (prix normal {original})",
+        "benefits": [
+            "Livraison instantanée (1-30 minutes)",
+            "Activation à vie",
+            "12 mois de mises à jour gratuites",
+            "Pas de frais supplémentaires ou cachés",
+            "Support client 24/7",
+            "Garantie de remboursement de 30 jours"
+        ]
     },
     "stats": {
         "title": "Meilleur logiciel pour",

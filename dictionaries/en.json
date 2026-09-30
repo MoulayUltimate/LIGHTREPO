@@ -5,7 +5,10 @@
         "refundPolicy": "Refund and Returns Policy",
         "login": "Login / Register",
         "shop": "Shop",
-        "myAccount": "My Account"
+        "myAccount": "My Account",
+        "buyNow": "Buy Now",
+        "cart": "Cart",
+        "announcement": "Instant delivery • 30-day money-back guarantee • 24/7 support"
     },
     "footer": {
         "company": {
@@ -35,9 +38,26 @@
     },
     "hero": {
         "title": "LightBurn is layout, editing, and control software for your laser cutter.",
-        "subtitle": "LightBurn is a native application written for Windows Only.",
+        "subtitle": "Layout, editing and control software for your laser cutter. One-time payment, instant delivery, no subscription. Windows only.",
         "oneTimePayment": "One-time payment – No subscription required.",
-        "buyNow": "Buy Now"
+        "buyNow": "Buy Now",
+        "titleStart": "LightBurn Pro",
+        "titleHighlight": "laser cutting",
+        "titleEnd": "software",
+        "rating": "Rated 5/5 by verified customers",
+        "instantAccess": "Instant Access",
+        "save": "Save {discount}%",
+        "cta": "Get instant access now",
+        "secureCheckout": "Secure checkout — 256-bit SSL encryption",
+        "offer": "Limited time offer: save {discount}% today — only {price} (regular {original})",
+        "benefits": [
+            "Instant delivery (1-30 minutes)",
+            "Lifetime activation",
+            "12 months free updates",
+            "No extra charges or hidden fees",
+            "24/7 customer support",
+            "30-day money-back guarantee"
+        ]
     },
     "stats": {
         "title": "Better Software For",

@@ -7,6 +7,7 @@ import { Menu, X, ShoppingCart, Zap } from "lucide-react"
 import { useCartStore } from "@/lib/cart-store"
 import { useModalStore } from "@/lib/modal-store"
 import { useCurrency } from "@/components/currency-provider"
+import { products } from "@/lib/products"
 
 export function Header({ dict }: { dict?: any }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -14,8 +15,9 @@ export function Header({ dict }: { dict?: any }) {
   const [mounted, setMounted] = useState(false)
   const getTotalItems = useCartStore((state) => state.getTotalItems)
   const getTotalPrice = useCartStore((state) => state.getTotalPrice)
+  const addItem = useCartStore((state) => state.addItem)
   const openModal = useModalStore((state) => state.openModal)
-  const { symbol } = useCurrency()
+  const { symbol, price } = useCurrency()
 
   useEffect(() => {
     setMounted(true)
@@ -35,7 +37,9 @@ export function Header({ dict }: { dict?: any }) {
       <div className="bg-primary text-white py-2 px-4 text-center">
         <div className="flex items-center justify-center gap-2 text-sm font-medium">
           <Zap className="h-4 w-4" />
-          <span>Instant Delivery • 30-Day Money Back Guarantee • 24/7 Support</span>
+          <span>
+            {dict?.announcement || "Instant delivery • 30-day money-back guarantee • 24/7 support"}
+          </span>
         </div>
       </div>
 
@@ -85,20 +89,39 @@ export function Header({ dict }: { dict?: any }) {
             </nav>
 
             {/* Right Side Actions */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 sm:gap-3">
               <button
                 onClick={openModal}
                 className="relative flex items-center gap-2 px-3 py-2 text-gray-700 hover:text-primary transition-colors rounded-lg hover:bg-gray-50"
+                aria-label={dict?.cart || "Cart"}
               >
                 <ShoppingCart className="h-5 w-5" />
-                <span className="hidden sm:inline text-sm font-medium">
+                <span className="hidden lg:inline text-sm font-medium">
                   {symbol}{totalPrice.toFixed(2)}
                 </span>
                 {totalItems > 0 && (
-                  <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">
+                  <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">
                     {totalItems}
                   </span>
                 )}
+              </button>
+
+              <button
+                onClick={() => {
+                  addItem(products[0], 1)
+                  openModal()
+                }}
+                className="flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-primary-dark"
+              >
+                <Zap className="hidden h-4 w-4 sm:inline" />
+                <span className="whitespace-nowrap">
+                  {dict?.buyNow || "Buy Now"}
+                  <span className="hidden sm:inline">
+                    {" – "}
+                    {symbol}
+                    {price.toFixed(2)}
+                  </span>
+                </span>
               </button>
             </div>
           </div>

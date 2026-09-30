@@ -1,125 +1,116 @@
 "use client"
 
 import Image from "next/image"
-import { CheckCircle2, Zap, ShieldCheck } from "lucide-react"
+import { Check, Star, Zap, Download } from "lucide-react"
 import { useCartStore } from "@/lib/cart-store"
 import { useModalStore } from "@/lib/modal-store"
 import { useCurrency } from "@/components/currency-provider"
+import { PaymentMarks } from "@/components/ui/payment-marks"
 import { products } from "@/lib/products"
 
-export function SalesHeroSection({ dict, common }: { dict?: any, common?: any }) {
+export function SalesHeroSection({ dict, common }: { dict?: any; common?: any }) {
   const product = products[0]
   const { price, originalPrice, symbol } = useCurrency()
   const addItem = useCartStore((state) => state.addItem)
   const openModal = useModalStore((state) => state.openModal)
 
-  const discountPercent = Math.round(((originalPrice - price) / originalPrice) * 100)
+  const discount = Math.round(((originalPrice - price) / originalPrice) * 100)
+  const benefits: string[] = dict?.benefits || product.features
 
-  const benefits = [
-    "Instant download after payment",
-    "Pre-activated – No license hassle",
-    "Free setup video included",
-    "Lifetime access, no subscriptions",
-    "24/7 Priority support",
-    "30-day money-back guarantee",
-  ]
+  const handleAddToCart = () => {
+    addItem(product, 1)
+    openModal()
+  }
 
   return (
-    <section className="bg-white py-12 md:py-16 border-b border-gray-200">
-      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left - Product Image */}
+    <section className="bg-white pb-16 pt-10 md:pb-20">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          {/* Product visual */}
           <div className="relative">
-            <div className="rounded-2xl overflow-hidden shadow-xl bg-gradient-to-br from-primary/20 to-red-100 p-8 flex items-center justify-center min-h-96">
+            <div className="flex min-h-[320px] items-center justify-center rounded-2xl border border-gray-100 bg-gradient-to-br from-gray-50 to-red-50/60 p-10 shadow-sm md:min-h-[420px]">
               <Image
                 src="/logo-icon.webp"
-                alt="LightBurn Pro"
-                width={300}
-                height={300}
-                className="w-full max-w-xs h-auto"
+                alt={product.name}
+                width={320}
+                height={320}
+                className="h-auto w-full max-w-[260px] rounded-2xl shadow-lg"
+                priority
               />
             </div>
-            
-            {/* Star Rating Badge */}
-            <div className="absolute bottom-4 left-4 bg-white rounded-lg shadow-lg p-3">
-              <div className="flex items-center gap-2">
-                <div className="flex gap-1">
-                  {[...Array(5)].map((_, i) => (
-                    <span key={i} className="text-lg">⭐</span>
-                  ))}
-                </div>
-                <div className="text-xs font-semibold text-gray-700">
-                  <div>4.9/5</div>
-                  <div className="text-gray-500">2,847 reviews</div>
-                </div>
-              </div>
-            </div>
+
+            <button
+              onClick={handleAddToCart}
+              className="absolute -bottom-5 right-4 flex items-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-white shadow-lg transition-colors hover:bg-primary-dark"
+            >
+              <Download className="h-4 w-4" />
+              {dict?.instantAccess || "Instant Access"}
+            </button>
           </div>
 
-          {/* Right - Sales Copy */}
+          {/* Sales copy */}
           <div className="space-y-6">
-            {/* Title */}
-            <div>
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                LightBurn Pro 2025
+            {/* Rating */}
+            <div className="flex items-center gap-3">
+              <div className="flex" aria-hidden="true">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star key={i} className="h-5 w-5 fill-amber-400 text-amber-400" />
+                ))}
+              </div>
+              <span className="text-sm font-medium text-gray-600">
+                {dict?.rating || "Rated 5/5 by verified customers"}
+              </span>
+            </div>
+
+            <div className="space-y-4">
+              <h1 className="text-3xl font-bold leading-tight text-gray-900 md:text-4xl lg:text-5xl">
+                {dict?.titleStart || "LightBurn Pro"}{" "}
+                <span className="text-primary">{dict?.titleHighlight || "laser cutting"}</span>{" "}
+                {dict?.titleEnd || "software"}
               </h1>
-              <p className="text-xl text-gray-700 leading-relaxed">
-                The professional laser cutting software that turns beginners into experts in minutes. No complex setup, no recurring fees, no frustration.
+              <p className="text-lg leading-relaxed text-gray-600">
+                {dict?.subtitle ||
+                  "Layout, editing and control software for your laser cutter. One-time payment, instant delivery, no subscription."}
               </p>
             </div>
 
             {/* Benefits */}
-            <div className="space-y-3">
+            <ul className="space-y-2.5">
               {benefits.map((benefit) => (
-                <div key={benefit} className="flex items-start gap-3">
-                  <CheckCircle2 className="h-6 w-6 text-green-500 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700 font-medium">{benefit}</span>
-                </div>
+                <li key={benefit} className="flex items-start gap-3">
+                  <span className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-green-100">
+                    <Check className="h-3 w-3 text-green-600" />
+                  </span>
+                  <span className="text-gray-700">{benefit}</span>
+                </li>
               ))}
+            </ul>
+
+            {/* Price */}
+            <div className="flex flex-wrap items-baseline gap-3 pt-2">
+              <span className="text-4xl font-bold text-gray-900 md:text-5xl">
+                {symbol}
+                {price.toFixed(2)}
+              </span>
+              <span className="text-lg text-gray-400 line-through">
+                {symbol}
+                {originalPrice.toFixed(2)}
+              </span>
+              <span className="rounded-full bg-green-100 px-3 py-1 text-sm font-bold text-green-700">
+                {(dict?.save || "Save {discount}%").replace("{discount}", String(discount))}
+              </span>
             </div>
 
-            {/* Pricing */}
-            <div className="bg-gray-50 rounded-xl p-6">
-              <div className="flex items-baseline gap-3 mb-2">
-                <span className="text-5xl font-bold text-gray-900">{symbol}{price.toFixed(2)}</span>
-                <span className="text-lg text-gray-400 line-through">{symbol}{originalPrice.toFixed(2)}</span>
-                <span className="bg-green-100 text-green-700 text-sm font-bold px-3 py-1 rounded-full">
-                  Save {discountPercent}%
-                </span>
-              </div>
-              <p className="text-sm text-gray-600">One-time payment, lifetime access</p>
-            </div>
-
-            {/* CTA Button */}
             <button
-              onClick={() => {
-                addItem(product, 1)
-                openModal()
-              }}
-              className="w-full bg-gradient-to-r from-primary to-red-700 hover:from-red-800 hover:to-red-900 text-white font-bold py-5 px-8 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl text-lg flex items-center justify-center gap-3"
+              onClick={handleAddToCart}
+              className="flex w-full items-center justify-center gap-3 rounded-xl bg-primary px-8 py-5 text-lg font-bold uppercase tracking-wide text-white shadow-lg transition-all duration-300 hover:bg-primary-dark hover:shadow-xl"
             >
-              <Zap className="h-6 w-6" />
-              GET INSTANT ACCESS NOW
+              <Zap className="h-5 w-5" />
+              {dict?.cta || "Get instant access now"}
             </button>
 
-            {/* Security Badge */}
-            <div className="flex items-center justify-center gap-4 pt-4 border-t border-gray-200">
-              <div className="flex items-center gap-2 text-sm text-gray-600">
-                <ShieldCheck className="h-5 w-5 text-blue-600" />
-                <span>256-BIT SSL ENCRYPTION</span>
-              </div>
-            </div>
-
-            {/* Payment Methods */}
-            <div className="flex items-center justify-center gap-4 text-sm text-gray-600">
-              <span>Secure Checkout with:</span>
-              <div className="flex gap-2">
-                {/* Payment logos using text/emojis */}
-                <span title="Visa">💳</span>
-                <span title="Mastercard">💳</span>
-                <span title="Amex">💳</span>
-                <span title="PayPal">💳</span>
-              </div>
+            <div className="border-t border-gray-100 pt-5">
+              <PaymentMarks label={dict?.secureCheckout} />
             </div>
           </div>
         </div>

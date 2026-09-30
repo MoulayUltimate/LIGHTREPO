@@ -1,6 +1,7 @@
 export const runtime = 'edge'
 
 import { getDictionary } from "@/lib/dictionary"
+import { OfferBanner } from "@/components/sections/offer-banner"
 import { SalesHeroSection } from "@/components/sections/sales-hero-section"
 import { StatsBar } from "@/components/sections/stats-bar"
 import { ProductDetailsSection } from "@/components/sections/product-details-section"
@@ -14,6 +15,9 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
 
   return (
     <>
+      {/* Limited-time offer bar */}
+      <OfferBanner dict={dict.hero} />
+
       {/* Main Sales Hero - focused conversion section */}
       <SalesHeroSection dict={dict.hero} common={dict.common} />
 
