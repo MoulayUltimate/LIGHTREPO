@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import Image from "next/image"
-import Link from "next/link"
+import { LocaleLink } from "@/components/ui/locale-link"
 import { ShoppingCart, Trash2, Minus, Plus, ArrowLeft, ShieldCheck, Lock, CreditCard } from "lucide-react"
 import { ProductButton } from "@/components/ui/product-button"
 import { useCartStore } from "@/lib/cart-store"
@@ -48,11 +48,11 @@ export function CartClient({ dict }: { dict: any }) {
                         <p className="text-gray-600 mb-8">
                             {dict?.empty?.message || "Looks like you haven't added any items to your cart yet. Start shopping to fill it up!"}
                         </p>
-                        <Link href="/">
+                        <LocaleLink href="/">
                             <ProductButton variant="primary" size="lg">
                                 {dict?.continueShopping || "Continue Shopping"}
                             </ProductButton>
-                        </Link>
+                        </LocaleLink>
                     </div>
                 </div>
             </div>
@@ -69,13 +69,13 @@ export function CartClient({ dict }: { dict: any }) {
                 {/* Header */}
                 <div className="flex items-center justify-between mb-8">
                     <div>
-                        <Link
+                        <LocaleLink
                             href="/"
                             className="inline-flex items-center gap-2 text-gray-600 hover:text-primary transition-colors mb-2"
                         >
                             <ArrowLeft className="h-4 w-4" />
                             {dict?.continueShopping || "Continue Shopping"}
-                        </Link>
+                        </LocaleLink>
                         <h1 className="text-2xl md:text-3xl font-bold text-gray-900">{dict?.title || "Shopping Cart"}</h1>
                     </div>
                     <button onClick={clearCart} className="text-sm text-gray-500 hover:text-primary transition-colors">

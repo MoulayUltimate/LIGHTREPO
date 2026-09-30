@@ -92,7 +92,7 @@ export default async function DeliveryPolicyPage({ params }: { params: Promise<{
                             If you have any issues with your delivery or installation, our support team is here to help 24/7.
                         </p>
                         <a
-                            href="/contact"
+                            href={`/${lang}/contact`}
                             className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors"
                         >
                             Contact Support

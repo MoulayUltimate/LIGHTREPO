@@ -1,6 +1,6 @@
 "use client"
 
-import Link from "next/link"
+import { LocaleLink } from "@/components/ui/locale-link"
 import Image from "next/image"
 import { useState, useEffect } from "react"
 import { Menu, X, ShoppingCart, Zap } from "lucide-react"
@@ -54,7 +54,7 @@ export function Header({ dict }: { dict?: any }) {
               <button className="md:hidden p-2 text-gray-600" onClick={() => setIsMenuOpen(!isMenuOpen)}>
                 {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </button>
-              <Link href="/" className="flex items-center">
+              <LocaleLink href="/" className="flex items-center">
                 <Image
                   src="/logo-wordmark.webp"
                   alt="LightBurn - Better Software for Laser Cutters"
@@ -63,29 +63,29 @@ export function Header({ dict }: { dict?: any }) {
                   className="h-7 w-auto sm:h-8 lg:h-10"
                   priority
                 />
-              </Link>
+              </LocaleLink>
             </div>
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center gap-8">
-              <Link
+              <LocaleLink
                 href="/"
                 className="text-sm font-medium text-gray-700 hover:text-primary transition-colors"
               >
                 {dict?.home || "Home"}
-              </Link>
-              <Link
+              </LocaleLink>
+              <LocaleLink
                 href="/contact"
                 className="text-sm font-medium text-gray-700 hover:text-primary transition-colors"
               >
                 {dict?.contact || "Contact Us"}
-              </Link>
-              <Link
+              </LocaleLink>
+              <LocaleLink
                 href="/refund-policy"
                 className="text-sm font-medium text-gray-700 hover:text-primary transition-colors"
               >
                 {dict?.refundPolicy || "Refund and Returns Policy"}
-              </Link>
+              </LocaleLink>
             </nav>
 
             {/* Right Side Actions */}
@@ -131,13 +131,13 @@ export function Header({ dict }: { dict?: any }) {
         {isMenuOpen && (
           <div className="md:hidden border-t bg-white">
             <div className="px-4 py-4 space-y-3">
-              <Link
+              <LocaleLink
                 href="/"
                 className="block py-2 text-gray-700 hover:text-primary font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {dict?.home || "Home"}
-              </Link>
+              </LocaleLink>
               <button
                 onClick={() => {
                   openModal()
@@ -147,13 +147,13 @@ export function Header({ dict }: { dict?: any }) {
               >
                 {dict?.shop || "Shopping Cart"}
               </button>
-              <Link
+              <LocaleLink
                 href="/contact"
                 className="block py-2 text-gray-700 hover:text-primary font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {dict?.contact || "Contact"}
-              </Link>
+              </LocaleLink>
             </div>
           </div>
         )}

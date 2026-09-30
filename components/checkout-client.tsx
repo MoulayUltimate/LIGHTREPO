@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import Link from "next/link"
+import { LocaleLink } from "@/components/ui/locale-link"
 import Image from "next/image"
 import { ArrowLeft, ShieldCheck, Lock, CreditCard, Mail, User, Loader2 } from "lucide-react"
 import { useCartStore } from "@/lib/cart-store"
@@ -78,13 +78,13 @@ export function CheckoutClient({ dict }: { dict: any }) {
             <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
                 {/* Header */}
                 <div className="mb-8">
-                    <Link
+                    <LocaleLink
                         href="/"
                         className="inline-flex items-center gap-2 text-gray-600 hover:text-primary transition-colors mb-4"
                     >
                         <ArrowLeft className="h-4 w-4" />
                         {dict?.backToStore || "Back to Store"}
-                    </Link>
+                    </LocaleLink>
                     <div className="flex items-center gap-3">
                         <Image src="/logo-icon.webp" alt="LightBurn" width={40} height={40} className="rounded-lg" />
                         <h1 className="text-2xl md:text-3xl font-bold text-gray-900">{dict?.title || "Checkout"}</h1>
@@ -97,9 +97,9 @@ export function CheckoutClient({ dict }: { dict: any }) {
                         {items.length === 0 ? (
                             <div className="bg-white p-8 rounded-2xl shadow-sm text-center">
                                 <p className="text-gray-500 mb-4">{dict?.empty || "Your cart is empty."}</p>
-                                <Link href="/" className="text-primary hover:underline font-medium">
+                                <LocaleLink href="/" className="text-primary hover:underline font-medium">
                                     {dict?.continueShopping || "Continue Shopping"}
-                                </Link>
+                                </LocaleLink>
                             </div>
                         ) : (
                             <>

@@ -1,6 +1,6 @@
 "use client"
 
-import Link from "next/link"
+import { LocaleLink } from "@/components/ui/locale-link"
 import Image from "next/image"
 import { useModalStore } from "@/lib/modal-store"
 import { useCurrency } from "@/components/currency-provider"
@@ -50,14 +50,14 @@ export function Footer({ dict }: { dict?: any }) {
                 </a>
               </li>
               <li>
-                <Link href="#" className="text-sm hover:text-white transition-colors">
+                <LocaleLink href="#" className="text-sm hover:text-white transition-colors">
                   {dict?.quickLinks?.myAccount || "My Account"}
-                </Link>
+                </LocaleLink>
               </li>
               <li>
-                <Link href="#" className="text-sm hover:text-white transition-colors">
+                <LocaleLink href="#" className="text-sm hover:text-white transition-colors">
                   {dict?.quickLinks?.search || "Search"}
-                </Link>
+                </LocaleLink>
               </li>
             </ul>
           </div>
@@ -67,24 +67,24 @@ export function Footer({ dict }: { dict?: any }) {
             <h3 className="text-white font-semibold mb-4">{dict?.legal?.title || "Legal"}</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/privacy-policy" className="text-sm hover:text-white transition-colors">
+                <LocaleLink href="/privacy-policy" className="text-sm hover:text-white transition-colors">
                   {dict?.legal?.privacy || "Privacy Policy"}
-                </Link>
+                </LocaleLink>
               </li>
               <li>
-                <Link href="/terms" className="text-sm hover:text-white transition-colors">
+                <LocaleLink href="/terms" className="text-sm hover:text-white transition-colors">
                   {dict?.legal?.terms || "Terms & Conditions"}
-                </Link>
+                </LocaleLink>
               </li>
               <li>
-                <Link href="/refund-policy" className="text-sm hover:text-white transition-colors">
+                <LocaleLink href="/refund-policy" className="text-sm hover:text-white transition-colors">
                   {dict?.legal?.refund || "Refund Policy"}
-                </Link>
+                </LocaleLink>
               </li>
               <li>
-                <Link href="/delivery-policy" className="text-sm hover:text-white transition-colors">
+                <LocaleLink href="/delivery-policy" className="text-sm hover:text-white transition-colors">
                   {dict?.legal?.delivery || "Delivery Policy"}
-                </Link>
+                </LocaleLink>
               </li>
             </ul>
           </div>
@@ -94,9 +94,9 @@ export function Footer({ dict }: { dict?: any }) {
             <h3 className="text-white font-semibold mb-4">{dict?.support?.title || "Support"}</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/contact" className="text-sm hover:text-white transition-colors">
+                <LocaleLink href="/contact" className="text-sm hover:text-white transition-colors">
                   {dict?.support?.contact || "Contact Us"}
-                </Link>
+                </LocaleLink>
               </li>
               <li>
                 <span className="text-sm">{dict?.support?.available || "24/7 Customer Support"}</span>

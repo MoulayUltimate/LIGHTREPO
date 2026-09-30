@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { LOCALES, DEFAULT_LOCALE } from '@/lib/i18n'
 
-const locales = ['en', 'de', 'fr', 'es', 'it']
-const defaultLocale = 'en'
+const locales = LOCALES as readonly string[]
+const defaultLocale = DEFAULT_LOCALE
 
 function getLocale(request: NextRequest) {
     // Check cf-ipcountry

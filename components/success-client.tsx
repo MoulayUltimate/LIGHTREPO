@@ -1,6 +1,6 @@
 "use client"
 
-import Link from "next/link"
+import { LocaleLink } from "@/components/ui/locale-link"
 import { CheckCircle2, Loader2, XCircle } from "lucide-react"
 import { useEffect, useState, Suspense } from "react"
 import { useSearchParams } from "next/navigation"
@@ -67,11 +67,11 @@ function SuccessContent({ dict }: { dict: any }) {
                 <p className="text-gray-600 mb-8">
                     {dict?.error?.message || "We couldn't confirm your payment automatically. If you were charged, please contact support."}
                 </p>
-                <Link href="/contact">
+                <LocaleLink href="/contact">
                     <button className="w-full bg-gray-900 hover:bg-gray-800 text-white h-12 text-lg rounded-xl font-medium transition-colors">
                         {dict?.error?.contact || "Contact Support"}
                     </button>
-                </Link>
+                </LocaleLink>
             </div>
         )
     }
@@ -102,11 +102,11 @@ function SuccessContent({ dict }: { dict: any }) {
             </p>
 
             <div className="space-y-4">
-                <Link href="/">
+                <LocaleLink href="/">
                     <button className="w-full bg-primary hover:bg-primary/90 text-white h-12 text-lg rounded-xl font-medium transition-colors">
                         {dict?.success?.continue || "Continue Shopping"}
                     </button>
-                </Link>
+                </LocaleLink>
             </div>
         </div>
     )
