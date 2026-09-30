@@ -34,12 +34,14 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
     try {
-        // const session = await auth()
-        // if (!session?.user) {
-        //     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
-        // }
+        // Check for admin authorization token
+        const authHeader = req.headers.get("Authorization")
+        const adminToken = process.env.ADMIN_API_TOKEN
 
-        // const db = drizzle(process.env.DB as D1Database)
+        if (!adminToken || authHeader !== `Bearer ${adminToken}`) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+        }
+
         const allOrders = await db.select().from(orders).orderBy(desc(orders.createdAt)).all()
 
         return NextResponse.json(allOrders)

@@ -3,10 +3,10 @@
 import Link from "next/link"
 import Image from "next/image"
 import { useState, useEffect } from "react"
-import { Menu, X, ShoppingCart } from "lucide-react"
+import { Menu, X, ShoppingCart, Zap } from "lucide-react"
 import { useCartStore } from "@/lib/cart-store"
 import { useModalStore } from "@/lib/modal-store"
-import { CURRENCY_SYMBOL } from "@/lib/products"
+import { useCurrency } from "@/components/currency-provider"
 
 export function Header({ dict }: { dict?: any }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -15,6 +15,7 @@ export function Header({ dict }: { dict?: any }) {
   const getTotalItems = useCartStore((state) => state.getTotalItems)
   const getTotalPrice = useCartStore((state) => state.getTotalPrice)
   const openModal = useModalStore((state) => state.openModal)
+  const { symbol } = useCurrency()
 
   useEffect(() => {
     setMounted(true)
@@ -30,6 +31,14 @@ export function Header({ dict }: { dict?: any }) {
 
   return (
     <header className="sticky top-0 z-50">
+      {/* Announcement Bar */}
+      <div className="bg-primary text-white py-2 px-4 text-center">
+        <div className="flex items-center justify-center gap-2 text-sm font-medium">
+          <Zap className="h-4 w-4" />
+          <span>Instant Delivery • 30-Day Money Back Guarantee • 24/7 Support</span>
+        </div>
+      </div>
+
       {/* Main Header */}
       <div
         className={`bg-white/95 backdrop-blur-md transition-shadow duration-300 ${isScrolled ? "shadow-md" : "shadow-sm"
@@ -77,25 +86,20 @@ export function Header({ dict }: { dict?: any }) {
 
             {/* Right Side Actions */}
             <div className="flex items-center gap-4">
-              <Link href="#" className="hidden sm:flex text-gray-600 hover:text-primary transition-colors text-sm">
-                {dict?.login || "Login / Register"}
-              </Link>
-              <a
-                href="https://t.co/dpqQleL9l2"
-                rel="noopener noreferrer"
-                className="relative flex items-center gap-2 p-2 text-gray-600 hover:text-primary transition-colors"
+              <button
+                onClick={openModal}
+                className="relative flex items-center gap-2 px-3 py-2 text-gray-700 hover:text-primary transition-colors rounded-lg hover:bg-gray-50"
               >
-                <span className="text-sm font-medium">
-                  {totalPrice.toFixed(2)}
-                  {CURRENCY_SYMBOL}
-                </span>
                 <ShoppingCart className="h-5 w-5" />
+                <span className="hidden sm:inline text-sm font-medium">
+                  {symbol}{totalPrice.toFixed(2)}
+                </span>
                 {totalItems > 0 && (
-                  <span className="absolute -top-1 right-0 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">
+                  <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">
                     {totalItems}
                   </span>
                 )}
-              </a>
+              </button>
             </div>
           </div>
         </div>
@@ -111,21 +115,15 @@ export function Header({ dict }: { dict?: any }) {
               >
                 {dict?.home || "Home"}
               </Link>
-              <a
-                href="https://t.co/dpqQleL9l2"
-                rel="noopener noreferrer"
+              <button
+                onClick={() => {
+                  openModal()
+                  setIsMenuOpen(false)
+                }}
                 className="block w-full text-left py-2 text-gray-700 hover:text-primary font-medium"
-                onClick={() => setIsMenuOpen(false)}
               >
-                {dict?.shop || "Shop"}
-              </a>
-              <Link
-                href="#"
-                className="block py-2 text-gray-700 hover:text-primary font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {dict?.myAccount || "My Account"}
-              </Link>
+                {dict?.shop || "Shopping Cart"}
+              </button>
               <Link
                 href="/contact"
                 className="block py-2 text-gray-700 hover:text-primary font-medium"

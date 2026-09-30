@@ -10,8 +10,19 @@ export async function POST(req: Request) {
         console.log("📧 Email:", email)
         console.log("🔑 Password length:", password?.length)
 
-        // Validate credentials
-        if (email === "admin@lightburnos.com" && password === "admin123") {
+        // Validate credentials from environment
+        const adminEmail = process.env.ADMIN_EMAIL
+        const adminPassword = process.env.ADMIN_PASSWORD
+
+        if (!adminEmail || !adminPassword) {
+            console.error("❌ Admin credentials not configured")
+            return NextResponse.json({
+                success: false,
+                error: "Server configuration error"
+            }, { status: 500 })
+        }
+
+        if (email === adminEmail && password === adminPassword) {
             console.log("✅ Credentials valid!")
             return NextResponse.json({
                 success: true,

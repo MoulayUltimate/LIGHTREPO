@@ -20,18 +20,18 @@ const partners = [
   },
   {
     name: "Official LightBurn Pro",
-    description: "Genuine License • Instant Delivery",
+    description: "Authorized Reseller • Genuine License",
     logo: "/logo-icon.webp",
   },
   {
-    name: "Secured by PayPal",
-    description: "Safe payments & buyer protection",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg",
+    name: "30-Day Money Back",
+    description: "Risk-free purchase guarantee",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/7/7e/Visa_Card_Logo.svg",
   },
   {
-    name: "ISO 9001 Certified",
-    description: "Trusted quality for business-grade software",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/0/0f/ISO_9001-2015.svg",
+    name: "Instant Delivery",
+    description: "License key sent via email within minutes",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg",
   },
 ]
 

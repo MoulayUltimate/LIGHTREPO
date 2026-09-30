@@ -11,8 +11,16 @@ export async function authenticate(
         console.log("📧 Email:", email)
         console.log("🔑 Password length:", password?.toString().length)
 
-        // Validate credentials directly
-        if (email === "admin@lightburnos.com" && password === "admin123") {
+        // Validate credentials from environment
+        const adminEmail = process.env.ADMIN_EMAIL
+        const adminPassword = process.env.ADMIN_PASSWORD
+
+        if (!adminEmail || !adminPassword) {
+            console.error("❌ Admin credentials not configured")
+            return "Authentication configuration error."
+        }
+
+        if (email === adminEmail && password === adminPassword) {
             console.log("✅ Credentials valid!")
             return { success: true, email: String(email) }
         } else {

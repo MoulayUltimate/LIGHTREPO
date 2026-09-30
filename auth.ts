@@ -17,11 +17,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 if (parsedCredentials.success) {
                     const { email, password } = parsedCredentials.data
 
-                    // TEMPORARY: Hardcoded admin for initial access
-                    if (email === "admin@lightburnos.com" && password === "admin123") {
+                    // Use environment variables for credentials
+                    const adminEmail = process.env.ADMIN_EMAIL
+                    const adminPassword = process.env.ADMIN_PASSWORD
+
+                    if (!adminEmail || !adminPassword) {
+                        console.error("Admin credentials not configured")
+                        return null
+                    }
+
+                    if (email === adminEmail && password === adminPassword) {
                         return {
                             id: "1",
-                            email: "admin@lightburnos.com",
+                            email: adminEmail,
                             name: "Admin User",
                             role: "admin"
                         }

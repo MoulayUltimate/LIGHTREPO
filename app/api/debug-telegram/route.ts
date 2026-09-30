@@ -3,8 +3,16 @@ import { sendTelegramMessage } from "@/lib/telegram";
 
 export const runtime = "edge";
 
-export async function GET() {
+export async function GET(req: Request) {
     try {
+        // Check for admin authorization token
+        const authHeader = req.headers.get("Authorization")
+        const adminToken = process.env.ADMIN_API_TOKEN
+
+        if (!adminToken || authHeader !== `Bearer ${adminToken}`) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+        }
+
         const token = process.env.TELEGRAM_BOT_TOKEN;
         const chatId = process.env.TELEGRAM_CHAT_ID;
 
