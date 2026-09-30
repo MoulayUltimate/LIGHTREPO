@@ -69,8 +69,8 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
           <h2>7. Contact Us</h2>
           <p>
             If you have any questions about this Privacy Policy, please contact us at{" "}
-            <a href="mailto:contact@lightburntool.com" className="text-primary hover:underline">
-              contact@lightburntool.com
+            <a href="mailto:contact@lightburnos.com" className="text-primary hover:underline">
+              contact@lightburnos.com
             </a>
             .
           </p>

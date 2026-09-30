@@ -71,8 +71,8 @@ export default async function TermsPage({ params }: { params: Promise<{ lang: st
           <h2>9. Contact</h2>
           <p>
             For any questions regarding these terms, please contact us at{" "}
-            <a href="mailto:contact@lightburntool.com" className="text-primary hover:underline">
-              contact@lightburntool.com
+            <a href="mailto:contact@lightburnos.com" className="text-primary hover:underline">
+              contact@lightburnos.com
             </a>
             .
           </p>

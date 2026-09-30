@@ -31,8 +31,8 @@ export default async function RefundPolicyPage({ params }: { params: Promise<{ l
           <ol>
             <li>
               Email us at{" "}
-              <a href="mailto:contact@lightburntool.com" className="text-primary hover:underline">
-                contact@lightburntool.com
+              <a href="mailto:contact@lightburnos.com" className="text-primary hover:underline">
+                contact@lightburnos.com
               </a>
             </li>
             <li>Include your order number and the email used for purchase</li>
@@ -62,8 +62,8 @@ export default async function RefundPolicyPage({ params }: { params: Promise<{ l
           <h2>Questions?</h2>
           <p>
             If you have any questions about our refund policy, please don{"'"}t hesitate to contact us at{" "}
-            <a href="mailto:contact@lightburntool.com" className="text-primary hover:underline">
-              contact@lightburntool.com
+            <a href="mailto:contact@lightburnos.com" className="text-primary hover:underline">
+              contact@lightburnos.com
             </a>
             . We{"'"}re here to help!
           </p>
