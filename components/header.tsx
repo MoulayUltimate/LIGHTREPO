@@ -58,9 +58,9 @@ export function Header({ dict }: { dict?: any }) {
                 <Image
                   src="/logo-wordmark.webp"
                   alt="LightBurn - Better Software for Laser Cutters"
-                  width={180}
-                  height={48}
-                  className="h-10 w-auto"
+                  width={195}
+                  height={40}
+                  className="h-7 w-auto sm:h-8 lg:h-10"
                   priority
                 />
               </Link>
