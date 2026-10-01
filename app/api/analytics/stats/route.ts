@@ -2,7 +2,6 @@ import { NextResponse } from "next/server"
 import { drizzle } from "drizzle-orm/d1"
 import { visitors, pageViews, externalClicks } from "@/db/schema"
 import { sql, desc, count } from "drizzle-orm"
-import { auth } from "@/auth"
 import { db } from "@/lib/db"
 
 export const runtime = "edge"

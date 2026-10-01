@@ -2,7 +2,6 @@ import { NextResponse } from "next/server"
 import { db } from "@/lib/db"
 import { orders } from "@/db/schema"
 import { desc, eq } from "drizzle-orm"
-import { auth } from "@/auth"
 
 export const runtime = "edge"
 
