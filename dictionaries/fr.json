@@ -388,5 +388,12 @@
     "meta": {
         "title": "LightBurn Pro 2.0 2026 - Logiciel de découpe laser",
         "description": "Logiciel de découpe laser LightBurn Pro 2.0 2026 pour Windows. Paiement unique, livraison instantanée, activation à vie, 12 mois de mises à jour gratuites et garantie de remboursement de 30 jours."
+    },
+    "coupon": {
+        "title": "Utilisez LIGHT10 pour 10% de réduction",
+        "instruction": "Saisissez le code lors du paiement",
+        "copied": "Code copié",
+        "cta": "Continuer vos achats",
+        "close": "Fermer"
     }
 }

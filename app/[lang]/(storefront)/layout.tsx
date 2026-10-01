@@ -1,6 +1,7 @@
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { ProductModal } from "@/components/product-modal"
+import { CouponPopup } from "@/components/coupon-popup"
 import { getDictionary } from "@/lib/dictionary"
 
 /**
@@ -24,6 +25,7 @@ export default async function StorefrontLayout({
             <main>{children}</main>
             <Footer dict={dict.footer} />
             <ProductModal dict={dict.cart} />
+            <CouponPopup dict={dict.coupon} />
         </>
     )
 }
