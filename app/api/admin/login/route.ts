@@ -2,6 +2,10 @@ import { NextResponse } from "next/server"
 
 export const runtime = "edge"
 
+// The address is fixed; only the password is a secret, and that stays in
+// the ADMIN_PASSWORD environment variable.
+const ADMIN_EMAIL = "admin@lightburnos.com"
+
 export async function POST(req: Request) {
     console.log("🔐 Login API called")
 
@@ -10,19 +14,17 @@ export async function POST(req: Request) {
         console.log("📧 Email:", email)
         console.log("🔑 Password length:", password?.length)
 
-        // Validate credentials from environment
-        const adminEmail = process.env.ADMIN_EMAIL
         const adminPassword = process.env.ADMIN_PASSWORD
 
-        if (!adminEmail || !adminPassword) {
-            console.error("❌ Admin credentials not configured")
+        if (!adminPassword) {
+            console.error("❌ ADMIN_PASSWORD is not configured")
             return NextResponse.json({
                 success: false,
                 error: "Server configuration error"
             }, { status: 500 })
         }
 
-        if (email === adminEmail && password === adminPassword) {
+        if (email === ADMIN_EMAIL && password === adminPassword) {
             console.log("✅ Credentials valid!")
             return NextResponse.json({
                 success: true,
