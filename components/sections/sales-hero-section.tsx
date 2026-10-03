@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { Check, Star, Zap, Download } from "lucide-react"
+import { Check, Star, Zap, Download, Monitor } from "lucide-react"
 import { useCartStore } from "@/lib/cart-store"
 import { useModalStore } from "@/lib/modal-store"
 import { useCurrency } from "@/components/currency-provider"
@@ -68,6 +68,15 @@ export function SalesHeroSection({ dict, common }: { dict?: any; common?: any })
                 <span className="text-primary">{dict?.titleHighlight || "laser cutting"}</span>{" "}
                 {dict?.titleEnd || "software"}
               </h1>
+
+              {/* Platform badge — the software is Windows-only, so say so up front. */}
+              <div className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2">
+                <Monitor className="h-4 w-4 flex-shrink-0 text-gray-600" />
+                <span className="text-sm font-semibold text-gray-700">
+                  {dict?.platform || "For Windows 10 & 11"}
+                </span>
+              </div>
+
               <p className="text-lg leading-relaxed text-gray-600">
                 {dict?.subtitle ||
                   "Layout, editing and control software for your laser cutter. One-time payment, instant delivery, no subscription."}
