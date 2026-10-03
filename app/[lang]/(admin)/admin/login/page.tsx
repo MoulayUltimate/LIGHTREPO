@@ -40,6 +40,7 @@ export default function LoginPage() {
                 sessionStorage.setItem("admin_session", JSON.stringify({ email: data.email }))
                 console.log("📍 Redirecting...")
                 router.push(`/${localeFromPathname(pathname)}/admin`)
+                router.refresh()
             } else {
                 console.log("⚠️ Login failed:", data.error)
                 setErrorMessage(data.error || "Login failed")

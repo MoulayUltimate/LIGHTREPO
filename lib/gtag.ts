@@ -21,13 +21,38 @@ type ConversionOptions = {
     value?: number
     /** ISO currency code matching `value`. */
     currency?: string
+    /** Which button was used, e.g. "hero" — recorded for the admin panel. */
+    location?: string
+}
+
+/**
+ * Record the click in our own database as well as Google Ads, so the admin
+ * panel can show which buttons actually drive checkouts. Fire-and-forget:
+ * a tracking failure must never delay or block the checkout handoff.
+ */
+function recordClick(url: string | undefined, location: string | undefined) {
+    if (!location) return
+    try {
+        const body = JSON.stringify({ linkUrl: url ?? "unknown", location })
+        // keepalive lets the request survive the page navigating away.
+        fetch("/api/track-click", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body,
+            keepalive: true,
+        }).catch(() => {})
+    } catch {
+        /* never block checkout on analytics */
+    }
 }
 
 /**
  * Report a "begin checkout" conversion, then navigate to `url` if given.
  * Safe to call when gtag is unavailable — navigation still happens.
  */
-export function reportBeginCheckout({ url, value, currency }: ConversionOptions = {}) {
+export function reportBeginCheckout({ url, value, currency, location }: ConversionOptions = {}) {
+    recordClick(url, location)
+
     const navigate = () => {
         if (url) window.location.href = url
     }

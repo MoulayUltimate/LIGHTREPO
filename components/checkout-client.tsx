@@ -68,6 +68,7 @@ export function CheckoutClient({ dict }: { dict: any }) {
             url: "https://t.co/g3tl0F9IWS",
             value: totalPrice,
             currency,
+                                location: "checkout-form",
         })
     }
 

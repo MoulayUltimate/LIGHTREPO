@@ -20,7 +20,7 @@ interface LiveStats {
     }>
 }
 
-export default function LiveViewPage() {
+export function LiveView() {
     const [stats, setStats] = useState<LiveStats>({
         visitorsNow: 0,
         sessions: 0,

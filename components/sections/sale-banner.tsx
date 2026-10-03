@@ -78,6 +78,7 @@ export function SaleBanner({ dict }: { dict?: any }) {
               url: "https://t.co/g3tl0F9IWS",
               value: price,
               currency,
+                                location: "sale-banner",
             })
           }}
           className="inline-block bg-white text-primary font-bold px-8 py-3 rounded-lg hover:bg-gray-100 transition-colors"

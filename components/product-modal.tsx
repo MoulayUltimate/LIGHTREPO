@@ -146,6 +146,7 @@ export function ProductModal({ dict }: { dict?: any }) {
                                 url: "https://t.co/g3tl0F9IWS",
                                 value: displayTotal,
                                 currency,
+                                location: "cart-drawer",
                             })
                         }}
                     >

@@ -1,8 +1,8 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
-import { LayoutDashboard, ShoppingCart, MessageSquare, LogOut, Activity } from "lucide-react"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { LayoutDashboard, ShoppingCart, MessageSquare, LogOut, Activity, TrendingUp } from "lucide-react"
 import { useState, useEffect } from "react"
 import { localeFromPathname } from "@/lib/i18n"
 
@@ -12,6 +12,7 @@ export default function AdminLayout({
     children: React.ReactNode
 }) {
     const pathname = usePathname()
+    const searchParams = useSearchParams()
     const router = useRouter()
     const [userEmail, setUserEmail] = useState("")
 
@@ -43,25 +44,28 @@ export default function AdminLayout({
         return <>{children}</>
     }
 
-    const handleSignOut = () => {
+    const handleSignOut = async () => {
         sessionStorage.removeItem("admin_session")
+        // Clear the httpOnly cookie too, or the server session outlives the
+        // browser flag and the user stays signed in.
+        await fetch("/api/admin/logout", { method: "POST" }).catch(() => {})
         router.push(loginPath)
+        router.refresh()
     }
+
+    // The panel is a single route; the section is chosen with ?view=.
+    const view = searchParams.get("view") ?? ""
 
     const navigation = [
-        { name: "Live View", href: `${base}/live`, icon: Activity },
-        { name: "Dashboard", href: base, icon: LayoutDashboard, exact: true },
-        { name: "Orders", href: `${base}/orders`, icon: ShoppingCart },
-        { name: "Missed", href: `${base}/missed`, icon: ShoppingCart },
-        { name: "Messages", href: `${base}/messages`, icon: MessageSquare },
+        { name: "Dashboard", href: base, view: "", icon: LayoutDashboard },
+        { name: "Live View", href: `${base}?view=live`, view: "live", icon: Activity },
+        { name: "Analytics", href: `${base}?view=analytics`, view: "analytics", icon: TrendingUp },
+        { name: "Orders", href: `${base}?view=orders`, view: "orders", icon: ShoppingCart },
+        { name: "Missed", href: `${base}?view=missed`, view: "missed", icon: ShoppingCart },
+        { name: "Messages", href: `${base}?view=messages`, view: "messages", icon: MessageSquare },
     ]
 
-    const isActive = (href: string, exact = false) => {
-        if (exact) {
-            return pathname === href
-        }
-        return pathname.startsWith(href)
-    }
+    const isActive = (item: { view: string }) => view === item.view
 
     return (
         <div className="min-h-screen bg-gray-50 flex">
@@ -81,7 +85,7 @@ export default function AdminLayout({
                 <nav className="flex-1 p-4">
                     <div className="space-y-1">
                         {navigation.map((item) => {
-                            const active = isActive(item.href, item.exact)
+                            const active = isActive(item)
                             return (
                                 <Link
                                     key={item.name}

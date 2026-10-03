@@ -42,6 +42,7 @@ export function Footer({ dict }: { dict?: any }) {
                       url: "https://t.co/g3tl0F9IWS",
                       value: price,
                       currency,
+                                location: "footer",
                     })
                   }}
                   className="text-sm hover:text-white transition-colors text-left"

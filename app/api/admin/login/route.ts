@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { ADMIN_COOKIE, sessionValue } from "@/lib/admin-auth"
 
 export const runtime = "edge"
 
@@ -26,10 +27,25 @@ export async function POST(req: Request) {
 
         if (email === ADMIN_EMAIL && password === adminPassword) {
             console.log("✅ Credentials valid!")
-            return NextResponse.json({
-                success: true,
-                email
+
+            const session = await sessionValue()
+            if (!session) {
+                console.error("❌ ADMIN_API_TOKEN is not configured; cannot start a session")
+                return NextResponse.json(
+                    { success: false, error: "Server configuration error" },
+                    { status: 500 },
+                )
+            }
+
+            const res = NextResponse.json({ success: true, email })
+            res.cookies.set(ADMIN_COOKIE, session, {
+                httpOnly: true,
+                secure: true,
+                sameSite: "lax",
+                path: "/",
+                maxAge: 60 * 60 * 8, // 8 hours
             })
+            return res
         } else {
             console.log("❌ Invalid credentials")
             return NextResponse.json({
