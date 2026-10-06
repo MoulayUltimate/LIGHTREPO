@@ -337,17 +337,240 @@
         }
     },
     "legal": {
-        "refundPolicy": {
-            "title": "Refund Policy"
+        "updated": "Last updated: January 2025",
+        "contactEmail": "contact@lightburnos.com",
+        "termsOfService": {
+            "title": "Terms of Service",
+            "sections": [
+                {
+                    "heading": "1. Acceptance of Terms",
+                    "paragraphs": [
+                        "By accessing and using this website, you accept and agree to be bound by the terms and provisions of this agreement. If you do not agree to abide by these terms, please do not use this service."
+                    ]
+                },
+                {
+                    "heading": "2. Products and Services",
+                    "paragraphs": [
+                        "We sell digital software licences for LightBurn Pro. All purchases are for digital delivery only. Licence keys are delivered by email within 1-30 minutes of successful payment."
+                    ]
+                },
+                {
+                    "heading": "3. Licence Terms",
+                    "paragraphs": [
+                        "Each LightBurn Pro licence entitles you to install and use the software on up to two computers for personal use. Commercial and multi-seat licences require separate agreements."
+                    ]
+                },
+                {
+                    "heading": "4. Payment",
+                    "paragraphs": [
+                        "Prices are shown in your local currency where supported. Payment is processed securely through our payment providers. We accept major credit and debit cards. All sales are final except as provided in our Refund Policy."
+                    ]
+                },
+                {
+                    "heading": "5. Delivery",
+                    "paragraphs": [
+                        "Software licence keys are delivered digitally by email. Delivery typically occurs within 1-30 minutes of payment confirmation. If you do not receive your licence within 24 hours, please contact our support team."
+                    ]
+                },
+                {
+                    "heading": "6. Intellectual Property",
+                    "paragraphs": [
+                        "LightBurn and all associated trademarks, logos and content are the property of their respective owners. We are an authorised reseller of LightBurn Pro software."
+                    ]
+                },
+                {
+                    "heading": "7. Limitation of Liability",
+                    "paragraphs": [
+                        "We shall not be liable for any indirect, incidental, special, consequential or punitive damages resulting from your use of, or inability to use, the service or products purchased."
+                    ]
+                },
+                {
+                    "heading": "8. Changes to Terms",
+                    "paragraphs": [
+                        "We reserve the right to modify these terms at any time. Changes take effect immediately upon posting to the website. Your continued use of the site constitutes acceptance of the modified terms."
+                    ]
+                },
+                {
+                    "heading": "9. Contact",
+                    "paragraphs": [
+                        "For any questions regarding these terms, please contact us at {email}."
+                    ]
+                }
+            ]
         },
         "privacyPolicy": {
-            "title": "Privacy Policy"
+            "title": "Privacy Policy",
+            "sections": [
+                {
+                    "heading": "1. Information We Collect",
+                    "paragraphs": [
+                        "We collect information you provide directly to us, including your name, email address, payment information and any other information you choose to provide when making a purchase or contacting us."
+                    ]
+                },
+                {
+                    "heading": "2. How We Use Your Information",
+                    "paragraphs": [
+                        "We use the information we collect to:"
+                    ],
+                    "list": [
+                        "Process your orders and deliver your software licence",
+                        "Send you order confirmations and licence keys",
+                        "Respond to your comments, questions and requests",
+                        "Communicate with you about products, services and promotions",
+                        "Monitor and analyse trends, usage and activity"
+                    ]
+                },
+                {
+                    "heading": "3. Information Sharing",
+                    "paragraphs": [
+                        "We do not sell, trade or otherwise transfer your personal information to third parties. This does not include trusted third parties who assist us in operating our website, conducting our business or serving you, provided they agree to keep this information confidential."
+                    ]
+                },
+                {
+                    "heading": "4. Data Security",
+                    "paragraphs": [
+                        "We implement appropriate technical and organisational measures to protect your personal data against unauthorised access, alteration, disclosure or destruction. All payment transactions are encrypted using SSL technology."
+                    ]
+                },
+                {
+                    "heading": "5. Cookies",
+                    "paragraphs": [
+                        "We use cookies to improve your experience on our site, including remembering your cart items and preferences. You can disable cookies in your browser settings, but this may affect some functionality."
+                    ]
+                },
+                {
+                    "heading": "6. Your Rights",
+                    "paragraphs": [
+                        "You have the right to:"
+                    ],
+                    "list": [
+                        "Access the personal data we hold about you",
+                        "Request correction of inaccurate data",
+                        "Request deletion of your data",
+                        "Opt out of marketing communications"
+                    ]
+                },
+                {
+                    "heading": "7. Contact Us",
+                    "paragraphs": [
+                        "If you have any questions about this Privacy Policy, please contact us at {email}."
+                    ]
+                }
+            ]
         },
-        "termsOfService": {
-            "title": "Terms of Service"
+        "refundPolicy": {
+            "title": "Refund Policy",
+            "sections": [
+                {
+                    "heading": "30-Day Money-Back Guarantee",
+                    "paragraphs": [
+                        "We want you to be completely satisfied with your purchase. If for any reason you are not happy with LightBurn Pro, we offer a full refund within 30 days of purchase."
+                    ]
+                },
+                {
+                    "heading": "How to Request a Refund",
+                    "paragraphs": [
+                        "To request a refund, please:"
+                    ],
+                    "list": [
+                        "Email us at {email}",
+                        "Include your order number and the email address used for the purchase",
+                        "Briefly explain why you are requesting a refund"
+                    ]
+                },
+                {
+                    "heading": "Refund Processing",
+                    "paragraphs": [
+                        "Once your refund request is approved, we will process the refund within 5-7 business days. The refund is credited to the original payment method used for the purchase."
+                    ]
+                },
+                {
+                    "heading": "Conditions",
+                    "paragraphs": [
+                        "Please note the following conditions:"
+                    ],
+                    "list": [
+                        "Refund requests must be made within 30 days of the original purchase date",
+                        "The licence key must not have been previously refunded",
+                        "We may ask for feedback to help us improve our service"
+                    ]
+                },
+                {
+                    "heading": "Non-Refundable Cases",
+                    "paragraphs": [
+                        "In cases of suspected fraud or abuse of the refund policy, we reserve the right to deny refund requests. Multiple refund requests from the same customer may also be subject to review."
+                    ]
+                },
+                {
+                    "heading": "Questions?",
+                    "paragraphs": [
+                        "If you have any questions about our refund policy, please contact us at {email}. We are here to help."
+                    ]
+                }
+            ]
         },
         "shippingPolicy": {
-            "title": "Shipping Policy"
+            "title": "Delivery Policy",
+            "intro": "Instant access to your software, delivered straight to your email.",
+            "highlights": [
+                {
+                    "title": "Instant Delivery",
+                    "description": "Your licence key and download link are sent immediately after purchase."
+                },
+                {
+                    "title": "Email Delivery",
+                    "description": "Check your inbox, and your spam folder, for an email from us containing your product."
+                }
+            ],
+            "sections": [
+                {
+                    "heading": "1. Digital Delivery Only",
+                    "paragraphs": [
+                        "We sell digital software licences only. No physical product is shipped to your address. This lets us provide instant access with no shipping costs or delays."
+                    ]
+                },
+                {
+                    "heading": "2. Delivery Timeframe",
+                    "paragraphs": [
+                        "In most cases delivery is instant. Our system processes your order immediately after payment confirmation, and you should receive your confirmation email with your licence key and download instructions within 1-10 minutes.",
+                        "In rare cases where manual verification is required for security, delivery may take up to 24 hours."
+                    ]
+                },
+                {
+                    "heading": "3. How to Access Your Purchase",
+                    "paragraphs": [
+                        "Once your order is complete you will receive an email containing:"
+                    ],
+                    "list": [
+                        "Your licence key",
+                        "The official download link for the software",
+                        "Installation instructions",
+                        "Your invoice and receipt"
+                    ]
+                },
+                {
+                    "heading": "4. Haven't Received Your Email?",
+                    "paragraphs": [
+                        "If you have not received your email within 10 minutes of purchase, please check the following:"
+                    ],
+                    "list": [
+                        "Spam or junk folder, as our emails are sometimes filtered by mistake",
+                        "The Promotions tab, if you use Gmail",
+                        "That the email address entered at checkout is correct"
+                    ]
+                },
+                {
+                    "heading": "5. System Requirements",
+                    "paragraphs": [
+                        "As this is a digital product, please make sure your computer meets the minimum system requirements before purchasing. The software runs on Windows 10 and Windows 11."
+                    ]
+                }
+            ],
+            "help": {
+                "title": "Need Help?",
+                "description": "If you have any issue with your delivery or installation, our support team is available 24/7.",
+                "cta": "Contact Support"
+            }
         }
     },
     "problem": {

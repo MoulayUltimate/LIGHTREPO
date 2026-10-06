@@ -337,17 +337,240 @@
         }
     },
     "legal": {
-        "refundPolicy": {
-            "title": "Politique de remboursement"
+        "updated": "Dernière mise à jour : janvier 2025",
+        "contactEmail": "contact@lightburnos.com",
+        "termsOfService": {
+            "title": "Conditions générales",
+            "sections": [
+                {
+                    "heading": "1. Acceptation des conditions",
+                    "paragraphs": [
+                        "En accédant à ce site et en l'utilisant, vous acceptez d'être lié par les présentes conditions. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser ce service."
+                    ]
+                },
+                {
+                    "heading": "2. Produits et services",
+                    "paragraphs": [
+                        "Nous vendons des licences logicielles numériques pour LightBurn Pro. Tous les achats sont livrés uniquement sous forme numérique. Les clés de licence sont envoyées par e-mail dans un délai de 1 à 30 minutes après le paiement."
+                    ]
+                },
+                {
+                    "heading": "3. Conditions de licence",
+                    "paragraphs": [
+                        "Chaque licence LightBurn Pro vous permet d'installer et d'utiliser le logiciel sur deux ordinateurs au maximum, pour un usage personnel. Les licences commerciales et multipostes font l'objet d'accords distincts."
+                    ]
+                },
+                {
+                    "heading": "4. Paiement",
+                    "paragraphs": [
+                        "Les prix sont affichés dans votre devise locale lorsque celle-ci est prise en charge. Le paiement est traité de manière sécurisée par nos prestataires. Nous acceptons les principales cartes de crédit et de débit. Toutes les ventes sont définitives, sauf dispositions contraires de notre politique de remboursement."
+                    ]
+                },
+                {
+                    "heading": "5. Livraison",
+                    "paragraphs": [
+                        "Les clés de licence sont livrées par voie numérique, par e-mail. La livraison intervient généralement dans un délai de 1 à 30 minutes après confirmation du paiement. Si vous ne recevez pas votre licence sous 24 heures, veuillez contacter notre service d'assistance."
+                    ]
+                },
+                {
+                    "heading": "6. Propriété intellectuelle",
+                    "paragraphs": [
+                        "LightBurn ainsi que l'ensemble des marques, logos et contenus associés demeurent la propriété de leurs titulaires respectifs. Nous sommes un revendeur agréé du logiciel LightBurn Pro."
+                    ]
+                },
+                {
+                    "heading": "7. Limitation de responsabilité",
+                    "paragraphs": [
+                        "Nous ne saurions être tenus responsables de dommages indirects, accessoires, particuliers, consécutifs ou punitifs résultant de l'utilisation ou de l'impossibilité d'utiliser le service ou les produits achetés."
+                    ]
+                },
+                {
+                    "heading": "8. Modification des conditions",
+                    "paragraphs": [
+                        "Nous nous réservons le droit de modifier ces conditions à tout moment. Les modifications prennent effet dès leur publication sur le site. La poursuite de votre utilisation du site vaut acceptation des conditions modifiées."
+                    ]
+                },
+                {
+                    "heading": "9. Contact",
+                    "paragraphs": [
+                        "Pour toute question concernant ces conditions, veuillez nous écrire à {email}."
+                    ]
+                }
+            ]
         },
         "privacyPolicy": {
-            "title": "Politique de confidentialité"
+            "title": "Politique de confidentialité",
+            "sections": [
+                {
+                    "heading": "1. Informations que nous collectons",
+                    "paragraphs": [
+                        "Nous collectons les informations que vous nous fournissez directement, notamment votre nom, votre adresse e-mail, vos informations de paiement et toute autre information que vous choisissez de communiquer lors d'un achat ou d'une prise de contact."
+                    ]
+                },
+                {
+                    "heading": "2. Utilisation de vos informations",
+                    "paragraphs": [
+                        "Nous utilisons les informations collectées pour :"
+                    ],
+                    "list": [
+                        "Traiter vos commandes et livrer votre licence logicielle",
+                        "Vous envoyer les confirmations de commande et les clés de licence",
+                        "Répondre à vos commentaires, questions et demandes",
+                        "Vous informer sur nos produits, services et promotions",
+                        "Suivre et analyser les tendances, l'utilisation et l'activité"
+                    ]
+                },
+                {
+                    "heading": "3. Partage des informations",
+                    "paragraphs": [
+                        "Nous ne vendons, n'échangeons ni ne transférons vos informations personnelles à des tiers. Cela n'inclut pas les partenaires de confiance qui nous aident à exploiter notre site, à mener nos activités ou à vous servir, dès lors qu'ils s'engagent à préserver la confidentialité de ces informations."
+                    ]
+                },
+                {
+                    "heading": "4. Sécurité des données",
+                    "paragraphs": [
+                        "Nous mettons en œuvre des mesures techniques et organisationnelles appropriées afin de protéger vos données personnelles contre tout accès, toute modification, toute divulgation ou toute destruction non autorisés. Toutes les transactions de paiement sont chiffrées au moyen de la technologie SSL."
+                    ]
+                },
+                {
+                    "heading": "5. Cookies",
+                    "paragraphs": [
+                        "Nous utilisons des cookies pour améliorer votre expérience sur le site, notamment pour mémoriser le contenu de votre panier et vos préférences. Vous pouvez désactiver les cookies dans les paramètres de votre navigateur, ce qui peut toutefois affecter certaines fonctionnalités."
+                    ]
+                },
+                {
+                    "heading": "6. Vos droits",
+                    "paragraphs": [
+                        "Vous disposez du droit :"
+                    ],
+                    "list": [
+                        "D'accéder aux données personnelles que nous détenons à votre sujet",
+                        "De demander la rectification de données inexactes",
+                        "De demander la suppression de vos données",
+                        "De vous opposer aux communications marketing"
+                    ]
+                },
+                {
+                    "heading": "7. Nous contacter",
+                    "paragraphs": [
+                        "Pour toute question relative à la présente politique de confidentialité, veuillez nous écrire à {email}."
+                    ]
+                }
+            ]
         },
-        "termsOfService": {
-            "title": "Conditions d'utilisation"
+        "refundPolicy": {
+            "title": "Politique de remboursement",
+            "sections": [
+                {
+                    "heading": "Garantie satisfait ou remboursé de 30 jours",
+                    "paragraphs": [
+                        "Nous souhaitons que vous soyez pleinement satisfait de votre achat. Si, pour quelque raison que ce soit, LightBurn Pro ne vous convient pas, nous vous remboursons intégralement dans les 30 jours suivant l'achat."
+                    ]
+                },
+                {
+                    "heading": "Comment demander un remboursement",
+                    "paragraphs": [
+                        "Pour demander un remboursement, veuillez :"
+                    ],
+                    "list": [
+                        "Nous écrire à {email}",
+                        "Indiquer votre numéro de commande et l'adresse e-mail utilisée lors de l'achat",
+                        "Expliquer brièvement le motif de votre demande"
+                    ]
+                },
+                {
+                    "heading": "Traitement du remboursement",
+                    "paragraphs": [
+                        "Une fois votre demande approuvée, nous traitons le remboursement sous 5 à 7 jours ouvrés. Le montant est crédité sur le moyen de paiement utilisé lors de l'achat."
+                    ]
+                },
+                {
+                    "heading": "Conditions",
+                    "paragraphs": [
+                        "Veuillez noter les conditions suivantes :"
+                    ],
+                    "list": [
+                        "La demande doit être formulée dans les 30 jours suivant la date d'achat",
+                        "La clé de licence ne doit pas avoir déjà fait l'objet d'un remboursement",
+                        "Nous pouvons vous demander un retour d'expérience afin d'améliorer notre service"
+                    ]
+                },
+                {
+                    "heading": "Cas non remboursables",
+                    "paragraphs": [
+                        "En cas de fraude présumée ou d'abus de la politique de remboursement, nous nous réservons le droit de refuser la demande. Les demandes répétées émanant d'un même client peuvent également faire l'objet d'un examen."
+                    ]
+                },
+                {
+                    "heading": "Des questions ?",
+                    "paragraphs": [
+                        "Pour toute question concernant notre politique de remboursement, écrivez-nous à {email}. Nous sommes là pour vous aider."
+                    ]
+                }
+            ]
         },
         "shippingPolicy": {
-            "title": "Politique d'expédition"
+            "title": "Politique de livraison",
+            "intro": "Un accès instantané à votre logiciel, livré directement par e-mail.",
+            "highlights": [
+                {
+                    "title": "Livraison instantanée",
+                    "description": "Votre clé de licence et votre lien de téléchargement sont envoyés immédiatement après l'achat."
+                },
+                {
+                    "title": "Livraison par e-mail",
+                    "description": "Consultez votre boîte de réception, ainsi que vos courriers indésirables, pour trouver notre e-mail contenant votre produit."
+                }
+            ],
+            "sections": [
+                {
+                    "heading": "1. Livraison numérique uniquement",
+                    "paragraphs": [
+                        "Nous vendons exclusivement des licences logicielles numériques. Aucun produit physique n'est expédié à votre adresse. Cela nous permet d'offrir un accès immédiat, sans frais ni délais de livraison."
+                    ]
+                },
+                {
+                    "heading": "2. Délai de livraison",
+                    "paragraphs": [
+                        "Dans la plupart des cas, la livraison est instantanée. Notre système traite votre commande dès la confirmation du paiement et vous devriez recevoir votre e-mail de confirmation, contenant votre clé de licence et les instructions de téléchargement, sous 1 à 10 minutes.",
+                        "Dans de rares cas nécessitant une vérification manuelle pour des raisons de sécurité, la livraison peut prendre jusqu'à 24 heures."
+                    ]
+                },
+                {
+                    "heading": "3. Accéder à votre achat",
+                    "paragraphs": [
+                        "Une fois votre commande finalisée, vous recevrez un e-mail contenant :"
+                    ],
+                    "list": [
+                        "Votre clé de licence",
+                        "Le lien de téléchargement officiel du logiciel",
+                        "Les instructions d'installation",
+                        "Votre facture et votre reçu"
+                    ]
+                },
+                {
+                    "heading": "4. Vous n'avez pas reçu votre e-mail ?",
+                    "paragraphs": [
+                        "Si vous n'avez rien reçu dans les 10 minutes suivant votre achat, veuillez vérifier les points suivants :"
+                    ],
+                    "list": [
+                        "Votre dossier de courriers indésirables, nos e-mails étant parfois filtrés par erreur",
+                        "L'onglet Promotions, si vous utilisez Gmail",
+                        "L'exactitude de l'adresse e-mail saisie lors du paiement"
+                    ]
+                },
+                {
+                    "heading": "5. Configuration requise",
+                    "paragraphs": [
+                        "S'agissant d'un produit numérique, veuillez vérifier que votre ordinateur répond à la configuration minimale requise avant tout achat. Le logiciel fonctionne sous Windows 10 et Windows 11."
+                    ]
+                }
+            ],
+            "help": {
+                "title": "Besoin d'aide ?",
+                "description": "En cas de difficulté avec votre livraison ou votre installation, notre équipe d'assistance est disponible 24h/24 et 7j/7.",
+                "cta": "Contacter l'assistance"
+            }
         }
     },
     "problem": {
