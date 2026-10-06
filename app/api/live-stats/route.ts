@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { requireAdminApi } from "@/lib/admin-auth"
 import { db } from "@/lib/db"
 import { visitors, pageViews, orders } from "@/db/schema"
 import { sql, count, inArray } from "drizzle-orm"
@@ -6,6 +7,9 @@ import { sql, count, inArray } from "drizzle-orm"
 export const runtime = "edge"
 
 export async function GET(req: Request) {
+    const denied = await requireAdminApi(req)
+    if (denied) return denied
+
     try {
         // const db = drizzle(process.env.DB as D1Database)
 

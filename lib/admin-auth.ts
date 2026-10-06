@@ -47,3 +47,23 @@ export async function requireAdmin(lang: string) {
         redirect(`/${lang}/admin/login`)
     }
 }
+
+/**
+ * Guard for admin API routes. Returns a 401 Response to return early, or null
+ * when the caller is allowed.
+ *
+ * Accepts either a signed-in admin session (the panel's own fetches send the
+ * cookie automatically) or a bearer token for calling the API directly.
+ */
+export async function requireAdminApi(req: Request): Promise<Response | null> {
+    const token = process.env.ADMIN_API_TOKEN
+    const authHeader = req.headers.get("Authorization")
+
+    if (token && authHeader === `Bearer ${token}`) return null
+    if (await isAdmin()) return null
+
+    return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401,
+        headers: { "Content-Type": "application/json" },
+    })
+}

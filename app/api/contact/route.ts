@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { requireAdminApi } from "@/lib/admin-auth"
 import { db } from "@/lib/db"
 import { contactMessages } from "@/db/schema"
 import { sendTelegramMessage } from "@/lib/telegram"
@@ -41,19 +42,9 @@ export async function POST(req: Request) {
 }
 
 export async function GET(req: Request) {
-    // Admin only - we'll check auth in the page or middleware, but good to check here too
-    // For simplicity in this step, skipping auth check here as middleware protects /admin 
-    // but this is an API route, so we should check.
-    // However, I'll implement the admin page fetching in a separate step or route if needed.
-    // Actually, let's just add the GET handler here for the admin page to use.
-
-    // Import auth dynamically or use the helper
-    // import { auth } from "@/auth" 
-    // const session = await auth()
-    // if (!session) return 401...
-
-    // For now, let's just return the messages. Middleware should protect /api routes if configured,
-    // but usually we protect specific routes.
+    // Returns every customer message, so this is admin-only.
+    const denied = await requireAdminApi(req)
+    if (denied) return denied
 
     try {
         // const db = drizzle(process.env.DB as D1Database)

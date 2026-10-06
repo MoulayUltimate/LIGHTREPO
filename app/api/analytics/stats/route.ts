@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { requireAdminApi } from "@/lib/admin-auth"
 import { drizzle } from "drizzle-orm/d1"
 import { visitors, pageViews, externalClicks } from "@/db/schema"
 import { sql, desc, count } from "drizzle-orm"
@@ -7,6 +8,9 @@ import { db } from "@/lib/db"
 export const runtime = "edge"
 
 export async function GET(req: Request) {
+    const denied = await requireAdminApi(req)
+    if (denied) return denied
+
     try {
         // const session = await auth()
         // if (!session?.user) {

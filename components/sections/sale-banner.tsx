@@ -6,62 +6,76 @@ import { reportBeginCheckout } from "@/lib/gtag"
 
 export function SaleBanner({ dict }: { dict?: any }) {
   const { price, currency } = useCurrency()
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  })
+  const [timeLeft, setTimeLeft] = useState<{
+    days: number
+    hours: number
+    minutes: number
+    seconds: number
+  } | null>(null)
 
   useEffect(() => {
-    // Set sale end date to 7 days from now
-    const saleEndDate = new Date()
-    saleEndDate.setDate(saleEndDate.getDate() + 7)
+    // The deadline comes from configuration. The previous version recomputed
+    // "now + 7 days" on every mount, so it always read about six days left no
+    // matter when you visited — a deadline that never arrived. With no date
+    // configured we show no timer rather than an invented one.
+    const configured = process.env.NEXT_PUBLIC_SALE_ENDS_AT
+    if (!configured) return
 
-    const timer = setInterval(() => {
-      const now = new Date().getTime()
-      const distance = saleEndDate.getTime() - now
+    const saleEndDate = new Date(configured)
+    if (Number.isNaN(saleEndDate.getTime())) {
+      console.warn("NEXT_PUBLIC_SALE_ENDS_AT is not a valid date:", configured)
+      return
+    }
 
-      if (distance > 0) {
-        setTimeLeft({
-          days: Math.floor(distance / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-          minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-          seconds: Math.floor((distance % (1000 * 60)) / 1000),
-        })
+    const tick = () => {
+      const distance = saleEndDate.getTime() - Date.now()
+      if (distance <= 0) {
+        setTimeLeft(null)
+        return
       }
-    }, 1000)
+      setTimeLeft({
+        days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+        minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+        seconds: Math.floor((distance % (1000 * 60)) / 1000),
+      })
+    }
 
+    tick()
+    const timer = setInterval(tick, 1000)
     return () => clearInterval(timer)
   }, [])
 
   return (
     <section className="bg-gradient-to-r from-primary via-secondary to-primary py-8 px-4">
       <div className="mx-auto max-w-4xl text-center text-white">
+        {timeLeft && (
+          <>
         <p className="text-sm font-medium mb-2">{dict?.endsIn || "SALE ENDS IN:"}</p>
 
-        {/* Countdown Timer */}
         <div className="flex items-center justify-center gap-4 mb-4">
           <div className="flex flex-col items-center">
-            <span className="text-3xl md:text-4xl font-bold">{timeLeft.days}</span>
+            <span className="text-3xl md:text-4xl font-bold">{timeLeft?.days}</span>
             <span className="text-xs uppercase">{dict?.time?.days || "Days"}</span>
           </div>
           <span className="text-2xl font-bold">:</span>
           <div className="flex flex-col items-center">
-            <span className="text-3xl md:text-4xl font-bold">{timeLeft.hours}</span>
+            <span className="text-3xl md:text-4xl font-bold">{timeLeft?.hours}</span>
             <span className="text-xs uppercase">{dict?.time?.hours || "Hours"}</span>
           </div>
           <span className="text-2xl font-bold">:</span>
           <div className="flex flex-col items-center">
-            <span className="text-3xl md:text-4xl font-bold">{timeLeft.minutes}</span>
+            <span className="text-3xl md:text-4xl font-bold">{timeLeft?.minutes}</span>
             <span className="text-xs uppercase">{dict?.time?.minutes || "Minutes"}</span>
           </div>
           <span className="text-2xl font-bold">:</span>
           <div className="flex flex-col items-center">
-            <span className="text-3xl md:text-4xl font-bold">{timeLeft.seconds}</span>
+            <span className="text-3xl md:text-4xl font-bold">{timeLeft?.seconds}</span>
             <span className="text-xs uppercase">{dict?.time?.seconds || "Seconds"}</span>
           </div>
         </div>
+          </>
+        )}
 
         <p className="text-sm font-medium mb-2">{dict?.applyCode || "APPLY THE CODE AT CHECKOUT"}</p>
 

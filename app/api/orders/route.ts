@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { requireAdminApi } from "@/lib/admin-auth"
 import { db } from "@/lib/db"
 import { orders } from "@/db/schema"
 import { desc, eq } from "drizzle-orm"
@@ -33,13 +34,8 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
     try {
-        // Check for admin authorization token
-        const authHeader = req.headers.get("Authorization")
-        const adminToken = process.env.ADMIN_API_TOKEN
-
-        if (!adminToken || authHeader !== `Bearer ${adminToken}`) {
-            return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
-        }
+        const denied = await requireAdminApi(req)
+        if (denied) return denied
 
         const allOrders = await db.select().from(orders).orderBy(desc(orders.createdAt)).all()
 
