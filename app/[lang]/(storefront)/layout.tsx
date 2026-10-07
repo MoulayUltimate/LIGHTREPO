@@ -2,6 +2,8 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { ProductModal } from "@/components/product-modal"
 import { CouponPopup } from "@/components/coupon-popup"
+import { AnalyticsTracker } from "@/components/analytics-tracker"
+import { Suspense } from "react"
 import { getDictionary } from "@/lib/dictionary"
 
 /**
@@ -21,6 +23,10 @@ export default async function StorefrontLayout({
 
     return (
         <>
+            {/* Only storefront traffic is tracked; admin visits are not customers. */}
+            <Suspense fallback={null}>
+                <AnalyticsTracker />
+            </Suspense>
             <Header dict={dict.header} />
             <main>{children}</main>
             <Footer dict={dict.footer} />

@@ -1,6 +1,6 @@
 import { db } from "@/lib/db"
 import { visitors, pageViews, orders, contactMessages, externalClicks } from "@/db/schema"
-import { sql, desc, count, eq } from "drizzle-orm"
+import { sql, desc, count, countDistinct, eq } from "drizzle-orm"
 
 /**
  * Server-side data for the admin panel.
@@ -21,6 +21,12 @@ async function safe<T>(label: string, run: () => Promise<T>, fallback: T): Promi
 
 const secondsAgo = (ms: number) => Math.floor((Date.now() - ms) / 1000)
 
+// Admin page views are the shop owner browsing their own panel, not customer
+// traffic. The tracker no longer records them, but rows logged before that
+// change are still in the table, so they are excluded here too.
+const notAdminView = sql`${pageViews.path} NOT LIKE '%/admin%'`
+const visitedStorefront = sql`${visitors.id} IN (SELECT DISTINCT visitor_id FROM page_views WHERE path NOT LIKE '%/admin%')`
+
 export type Totals = {
     visitors: number
     pageViews: number
@@ -33,8 +39,8 @@ export type Totals = {
 
 export async function getTotals(): Promise<Totals> {
     const [v, pv, allOrders, msgs, clicks] = await Promise.all([
-        safe("visitors", async () => (await db.select({ c: count() }).from(visitors).get())?.c ?? 0, 0),
-        safe("pageViews", async () => (await db.select({ c: count() }).from(pageViews).get())?.c ?? 0, 0),
+        safe("visitors", async () => (await db.select({ c: countDistinct(pageViews.visitorId) }).from(pageViews).where(notAdminView).get())?.c ?? 0, 0),
+        safe("pageViews", async () => (await db.select({ c: count() }).from(pageViews).where(notAdminView).get())?.c ?? 0, 0),
         safe("orders", async () => await db.select().from(orders).all(), [] as any[]),
         safe("messages", async () => (await db.select({ c: count() }).from(contactMessages).get())?.c ?? 0, 0),
         safe("buyClicks", async () => (await db.select({ c: count() }).from(externalClicks).get())?.c ?? 0, 0),
@@ -60,6 +66,7 @@ export async function getTopPages(limit = 8) {
             await db
                 .select({ path: pageViews.path, views: count() })
                 .from(pageViews)
+                .where(notAdminView)
                 .groupBy(pageViews.path)
                 .orderBy(desc(count()))
                 .limit(limit)
@@ -75,6 +82,7 @@ export async function getCountries(limit = 10) {
             await db
                 .select({ country: visitors.country, visitors: count() })
                 .from(visitors)
+                .where(visitedStorefront)
                 .groupBy(visitors.country)
                 .orderBy(desc(count()))
                 .limit(limit)
@@ -90,6 +98,7 @@ export async function getDevices() {
             await db
                 .select({ type: visitors.deviceType, visitors: count() })
                 .from(visitors)
+                .where(visitedStorefront)
                 .groupBy(visitors.deviceType)
                 .all(),
         [] as { type: string | null; visitors: number }[],
@@ -135,7 +144,7 @@ export async function getDailyTraffic(days = 7) {
             await db
                 .select({ visitorId: pageViews.visitorId, createdAt: pageViews.createdAt })
                 .from(pageViews)
-                .where(sql`${pageViews.createdAt} > ${since}`)
+                .where(sql`${pageViews.createdAt} > ${since} AND ${pageViews.path} NOT LIKE '%/admin%'`)
                 .all(),
         [] as { visitorId: string | null; createdAt: Date | number | null }[],
     )

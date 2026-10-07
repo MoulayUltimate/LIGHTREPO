@@ -1,8 +1,6 @@
 import type { Metadata, Viewport } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import "../globals.css"
-import { AnalyticsTracker } from "@/components/analytics-tracker"
-import { Suspense } from "react"
 import { headers } from "next/headers"
 import { getCurrencyFromCountry } from "@/lib/currency"
 import { CurrencyProvider } from "@/components/currency-provider"
@@ -82,9 +80,6 @@ export default async function RootLayout({
                     `}
                 </Script>
                 <CurrencyProvider initialCurrency={currency}>
-                    <Suspense fallback={null}>
-                        <AnalyticsTracker />
-                    </Suspense>
                     {children}
                 </CurrencyProvider>
             </body>
