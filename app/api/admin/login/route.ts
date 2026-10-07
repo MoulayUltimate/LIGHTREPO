@@ -40,7 +40,9 @@ export async function POST(req: Request) {
             const res = NextResponse.json({ success: true, email })
             res.cookies.set(ADMIN_COOKIE, session, {
                 httpOnly: true,
-                secure: true,
+                // Browsers drop Secure cookies over plain HTTP, which would make
+                // the panel untestable on localhost.
+                secure: process.env.NODE_ENV === "production",
                 sameSite: "lax",
                 path: "/",
                 maxAge: 60 * 60 * 8, // 8 hours

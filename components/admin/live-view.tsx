@@ -4,13 +4,15 @@ import { useEffect, useState } from "react"
 import { Eye, TrendingUp, ShoppingBag, Activity } from "lucide-react"
 
 interface LiveStats {
+    windowMinutes: number
     visitorsNow: number
-    sessions: number
-    totalSales: number
-    totalOrders: number
-    activeCarts: number
-    checkingOut: number
-    purchased: number
+    pageViewsNow: number
+    checkingOutNow: number
+    abandonedNow: number
+    purchasedNow: number
+    salesNow: number
+    salesAllTime: number
+    ordersAllTime: number
     visitorDetails: Array<{
         id: string
         country: string
@@ -22,13 +24,15 @@ interface LiveStats {
 
 export function LiveView() {
     const [stats, setStats] = useState<LiveStats>({
+        windowMinutes: 10,
         visitorsNow: 0,
-        sessions: 0,
-        totalSales: 0,
-        totalOrders: 0,
-        activeCarts: 0,
-        checkingOut: 0,
-        purchased: 0,
+        pageViewsNow: 0,
+        checkingOutNow: 0,
+        abandonedNow: 0,
+        purchasedNow: 0,
+        salesNow: 0,
+        salesAllTime: 0,
+        ordersAllTime: 0,
         visitorDetails: [],
     })
     const [loading, setLoading] = useState(true)
@@ -82,58 +86,44 @@ export function LiveView() {
 
             {/* Main Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-                {/* Visitors right now */}
                 <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
                     <div className="flex items-center justify-between mb-2">
                         <p className="text-sm text-gray-500">Visitors right now</p>
                         <Eye className="w-4 h-4 text-gray-400" />
                     </div>
                     <p className="text-3xl font-bold text-gray-900">{stats.visitorsNow}</p>
+                    <p className="text-xs text-gray-400 mt-2">last {stats.windowMinutes} min</p>
                 </div>
 
-                {/* Total sales */}
                 <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
                     <div className="flex items-center justify-between mb-2">
-                        <p className="text-sm text-gray-500">Total sales</p>
-                        <TrendingUp className="w-4 h-4 text-gray-400" />
-                    </div>
-                    <p className="text-3xl font-bold text-gray-900">${stats.totalSales.toFixed(2)}</p>
-                </div>
-
-                {/* Sessions */}
-                <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-                    <div className="flex items-center justify-between mb-2">
-                        <p className="text-sm text-gray-500">Sessions</p>
+                        <p className="text-sm text-gray-500">Page views</p>
                         <Activity className="w-4 h-4 text-gray-400" />
                     </div>
-                    <p className="text-3xl font-bold text-gray-900">{stats.sessions}</p>
-                    <div className="mt-2 flex items-center gap-2">
-                        <div className="flex-1 bg-gray-100 rounded-full h-1.5">
-                            <div
-                                className="bg-blue-500 h-1.5 rounded-full transition-all duration-500"
-                                style={{ width: stats.sessions > 0 ? '100%' : '0%' }}
-                            ></div>
-                        </div>
-                        <span className="text-xs text-gray-500">100%</span>
-                    </div>
+                    <p className="text-3xl font-bold text-gray-900">{stats.pageViewsNow}</p>
+                    <p className="text-xs text-gray-400 mt-2">last {stats.windowMinutes} min</p>
                 </div>
 
-                {/* Orders */}
                 <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
                     <div className="flex items-center justify-between mb-2">
-                        <p className="text-sm text-gray-500">Orders</p>
+                        <p className="text-sm text-gray-500">Sales</p>
+                        <TrendingUp className="w-4 h-4 text-gray-400" />
+                    </div>
+                    <p className="text-3xl font-bold text-gray-900">${stats.salesAllTime.toFixed(2)}</p>
+                    <p className="text-xs text-gray-400 mt-2">
+                        all time · ${stats.salesNow.toFixed(2)} in last {stats.windowMinutes} min
+                    </p>
+                </div>
+
+                <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div className="flex items-center justify-between mb-2">
+                        <p className="text-sm text-gray-500">Paid orders</p>
                         <ShoppingBag className="w-4 h-4 text-gray-400" />
                     </div>
-                    <p className="text-3xl font-bold text-gray-900">{stats.totalOrders}</p>
-                    <div className="mt-2 flex items-center gap-2">
-                        <div className="flex-1 bg-gray-100 rounded-full h-1.5">
-                            <div
-                                className="bg-green-500 h-1.5 rounded-full transition-all duration-500"
-                                style={{ width: stats.totalOrders > 0 ? '100%' : '0%' }}
-                            ></div>
-                        </div>
-                        <span className="text-xs text-gray-500">{stats.totalOrders > 0 ? '100%' : '0%'}</span>
-                    </div>
+                    <p className="text-3xl font-bold text-gray-900">{stats.ordersAllTime}</p>
+                    <p className="text-xs text-gray-400 mt-2">
+                        all time · {stats.purchasedNow} in last {stats.windowMinutes} min
+                    </p>
                 </div>
             </div>
 
@@ -145,20 +135,20 @@ export function LiveView() {
                 <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-gray-100">
                     {/* Active carts */}
                     <div className="p-6">
-                        <p className="text-sm text-gray-500 mb-1">Active carts</p>
-                        <p className="text-2xl font-bold text-gray-900">{stats.activeCarts}</p>
+                        <p className="text-sm text-gray-500 mb-1">Abandoned</p>
+                        <p className="text-2xl font-bold text-gray-900">{stats.abandonedNow}</p>
                     </div>
 
                     {/* Checking out */}
                     <div className="p-6">
                         <p className="text-sm text-gray-500 mb-1">Checking out</p>
-                        <p className="text-2xl font-bold text-gray-900">{stats.checkingOut}</p>
+                        <p className="text-2xl font-bold text-gray-900">{stats.checkingOutNow}</p>
                     </div>
 
                     {/* Purchased */}
                     <div className="p-6">
                         <p className="text-sm text-gray-500 mb-1">Purchased</p>
-                        <p className="text-2xl font-bold text-green-600">{stats.purchased}</p>
+                        <p className="text-2xl font-bold text-green-600">{stats.purchasedNow}</p>
                     </div>
                 </div>
 
