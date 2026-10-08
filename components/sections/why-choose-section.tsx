@@ -4,6 +4,7 @@ import { Check, ShoppingCart } from "lucide-react"
 import { useModalStore } from "@/lib/modal-store"
 import { useCartStore } from "@/lib/cart-store"
 import { products } from "@/lib/products"
+import { reportAddToCart } from "@/lib/gtag"
 
 export function WhyChooseSection({ dict }: { dict?: any }) {
   const openModal = useModalStore((state) => state.openModal)
@@ -49,6 +50,7 @@ export function WhyChooseSection({ dict }: { dict?: any }) {
           <button
             onClick={() => {
               addItem(product)
+                    reportAddToCart("why-choose")
               openModal()
             }}
             className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-8 py-4 font-bold text-white shadow-lg transition-all duration-300 hover:bg-primary-dark hover:shadow-xl"

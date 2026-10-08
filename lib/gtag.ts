@@ -30,6 +30,30 @@ type ConversionOptions = {
  * panel can show which buttons actually drive checkouts. Fire-and-forget:
  * a tracking failure must never delay or block the checkout handoff.
  */
+/**
+ * Record an add-to-cart press. Kept distinct from checkout clicks so the two
+ * are never added together: one is intent, the other is leaving for Stripe.
+ */
+export function reportAddToCart(location: string) {
+    if (typeof window === "undefined") return
+    let visitorId: string | null = null
+    try {
+        visitorId = localStorage.getItem("lb_visitor_id")
+    } catch {
+        /* storage can be blocked */
+    }
+    try {
+        fetch("/api/track-click", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ kind: "add_to_cart", location, visitorId }),
+            keepalive: true,
+        }).catch(() => {})
+    } catch {
+        /* never block the cart on analytics */
+    }
+}
+
 function recordClick(url: string | undefined, location: string | undefined) {
     if (!location) return
     try {

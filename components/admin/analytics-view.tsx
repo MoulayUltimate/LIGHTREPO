@@ -8,6 +8,7 @@ import {
     getClicksByUrl,
     getRecentClicks,
     getUniqueClickers,
+    getAddToCartByLocation,
 } from "@/lib/admin-data"
 import { RANGES, offsetLabel, type ResolvedRange } from "@/lib/admin-range"
 import { formatWhen } from "@/components/admin/records-table"
@@ -40,7 +41,7 @@ function Panel({ title, children, empty }: { title: string; children: React.Reac
 }
 
 export async function AnalyticsView({ lang, range }: { lang: string; range: ResolvedRange }) {
-    const [totals, topPages, countries, devices, traffic, clicksByLocation, clicksByUrl, recentClicks, uniqueClickers] =
+    const [totals, topPages, countries, devices, traffic, clicksByLocation, clicksByUrl, recentClicks, uniqueClickers, addToCart] =
         await Promise.all([
         getTotals(range),
         getTopPages(range),
@@ -51,6 +52,7 @@ export async function AnalyticsView({ lang, range }: { lang: string; range: Reso
         getClicksByUrl(range),
         getRecentClicks(range),
         getUniqueClickers(range),
+        getAddToCartByLocation(range),
     ])
 
     const maxTraffic = Math.max(1, ...traffic.map((d) => d.views))
@@ -59,6 +61,8 @@ export async function AnalyticsView({ lang, range }: { lang: string; range: Reso
     const maxDevice = Math.max(1, ...devices.map((d) => d.visitors))
     const maxClick = Math.max(1, ...clicksByLocation.map((c) => c.clicks))
     const maxUrl = Math.max(1, ...clicksByUrl.map((c) => c.clicks))
+    const maxCart = Math.max(1, ...addToCart.map((c) => c.clicks))
+    const addToCartTotal = addToCart.reduce((sum, c) => sum + c.clicks, 0)
 
     const base = `/${lang}/admin?view=analytics`
 
@@ -99,8 +103,9 @@ export async function AnalyticsView({ lang, range }: { lang: string; range: Reso
                     { label: "Visitors", value: totals.visitors.toLocaleString() },
                     { label: "Page views", value: totals.pageViews.toLocaleString() },
                     { label: "Checkout clicks", value: totals.buyClicks.toLocaleString() },
+                    { label: "Add to cart", value: addToCartTotal.toLocaleString() },
                     {
-                        label: "Click-through rate",
+                        label: "Reached checkout",
                         value:
                             totals.visitors > 0
                                 ? `${((uniqueClickers / totals.visitors) * 100).toFixed(1)}%`
@@ -121,6 +126,12 @@ export async function AnalyticsView({ lang, range }: { lang: string; range: Reso
                 >
                     {traffic.map((d) => (
                         <Bar key={d.label} label={d.label} value={d.views} max={maxTraffic} />
+                    ))}
+                </Panel>
+
+                <Panel title="Add to cart by button" empty={addToCart.length === 0}>
+                    {addToCart.map((c) => (
+                        <Bar key={c.location} label={c.location} value={c.clicks} max={maxCart} />
                     ))}
                 </Panel>
 

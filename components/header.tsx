@@ -8,6 +8,7 @@ import { useCartStore } from "@/lib/cart-store"
 import { useModalStore } from "@/lib/modal-store"
 import { useCurrency } from "@/components/currency-provider"
 import { products } from "@/lib/products"
+import { reportAddToCart } from "@/lib/gtag"
 
 export function Header({ dict }: { dict?: any }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -109,6 +110,7 @@ export function Header({ dict }: { dict?: any }) {
               <button
                 onClick={() => {
                   addItem(products[0])
+                    reportAddToCart("header")
                   openModal()
                 }}
                 className="flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-primary-dark"

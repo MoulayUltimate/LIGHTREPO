@@ -6,6 +6,7 @@ import { useCartStore } from "@/lib/cart-store"
 import { useModalStore } from "@/lib/modal-store"
 import { useCurrency } from "@/components/currency-provider"
 import { products } from "@/lib/products"
+import { reportAddToCart } from "@/lib/gtag"
 
 const fallback = {
   eyebrow: "The solution",
@@ -58,6 +59,7 @@ export function SolutionSection({ dict }: { dict?: any }) {
             <button
               onClick={() => {
                 addItem(product)
+                    reportAddToCart("solution")
                 openModal()
               }}
               className="group mt-10 inline-flex items-center gap-3 rounded-xl bg-primary px-7 py-4 font-semibold text-white shadow-lg transition-all hover:bg-primary-dark hover:shadow-xl"

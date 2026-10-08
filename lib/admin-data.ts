@@ -24,6 +24,12 @@ async function safe<T>(label: string, run: () => Promise<T>, fallback: T): Promi
 // change are still in the table, so they are excluded here too.
 const notAdminView = sql`${pageViews.path} NOT LIKE '%/admin%'`
 
+// Add-to-cart presses share the external_clicks table under a "cart:" prefix.
+// Checkout figures must exclude them: one is intent, the other is a departure
+// to Stripe, and adding them together would overstate checkout clicks.
+const isCheckoutClick = sql`${externalClicks.location} NOT LIKE 'cart:%'`
+const isAddToCart = sql`${externalClicks.location} LIKE 'cart:%'`
+
 /** Time bounds for a column, as drizzle conditions. */
 function bounds(column: SQL | any, range: ResolvedRange): SQL[] {
     const parts: SQL[] = []
@@ -76,9 +82,8 @@ export async function getTotals(range: ResolvedRange = resolveRange("all")): Pro
                 ? await db.select({ c: count() }).from(contactMessages).where(and(...msgBounds)).get()
                 : await db.select({ c: count() }).from(contactMessages).get())?.c ?? 0, 0),
         safe("buyClicks", async () =>
-            (clickBounds.length
-                ? await db.select({ c: count() }).from(externalClicks).where(and(...clickBounds)).get()
-                : await db.select({ c: count() }).from(externalClicks).get())?.c ?? 0, 0),
+            (await db.select({ c: count() }).from(externalClicks)
+                .where(and(isCheckoutClick, ...clickBounds)).get())?.c ?? 0, 0),
     ])
 
     const paid = rangeOrders.filter((o: any) => o.status === "paid")
@@ -146,11 +151,13 @@ export async function getBuyClicksByLocation(range: ResolvedRange) {
     return safe(
         "buyClicksByLocation",
         async () => {
-            const q = db
+            return await db
                 .select({ location: externalClicks.location, clicks: count() })
                 .from(externalClicks)
-            const scoped = b.length ? q.where(and(...b)) : q
-            return await scoped.groupBy(externalClicks.location).orderBy(desc(count())).all()
+                .where(and(isCheckoutClick, ...b))
+                .groupBy(externalClicks.location)
+                .orderBy(desc(count()))
+                .all()
         },
         [] as { location: string; clicks: number }[],
     )
@@ -162,9 +169,13 @@ export async function getClicksByUrl(range: ResolvedRange) {
     return safe(
         "clicksByUrl",
         async () => {
-            const q = db.select({ url: externalClicks.linkUrl, clicks: count() }).from(externalClicks)
-            const scoped = b.length ? q.where(and(...b)) : q
-            return await scoped.groupBy(externalClicks.linkUrl).orderBy(desc(count())).all()
+            return await db
+                .select({ url: externalClicks.linkUrl, clicks: count() })
+                .from(externalClicks)
+                .where(and(isCheckoutClick, ...b))
+                .groupBy(externalClicks.linkUrl)
+                .orderBy(desc(count()))
+                .all()
         },
         [] as { url: string; clicks: number }[],
     )
@@ -176,9 +187,13 @@ export async function getRecentClicks(range: ResolvedRange, limit = 25) {
     return safe(
         "recentClicks",
         async () => {
-            const q = db.select().from(externalClicks)
-            const scoped = b.length ? q.where(and(...b)) : q
-            return await scoped.orderBy(desc(externalClicks.createdAt)).limit(limit).all()
+            return await db
+                .select()
+                .from(externalClicks)
+                .where(and(isCheckoutClick, ...b))
+                .orderBy(desc(externalClicks.createdAt))
+                .limit(limit)
+                .all()
         },
         [] as any[],
     )
@@ -190,11 +205,32 @@ export async function getUniqueClickers(range: ResolvedRange): Promise<number> {
     return safe(
         "uniqueClickers",
         async () => {
-            const q = db.select({ c: countDistinct(externalClicks.visitorId) }).from(externalClicks)
-            const scoped = b.length ? q.where(and(...b)) : q
-            return (await scoped.get())?.c ?? 0
+            return (await db
+                .select({ c: countDistinct(externalClicks.visitorId) })
+                .from(externalClicks)
+                .where(and(isCheckoutClick, ...b))
+                .get())?.c ?? 0
         },
         0,
+    )
+}
+
+/** Add-to-cart presses by button, with the "cart:" prefix stripped. */
+export async function getAddToCartByLocation(range: ResolvedRange) {
+    const b = bounds(externalClicks.createdAt, range)
+    return safe(
+        "addToCartByLocation",
+        async () => {
+            const rows = await db
+                .select({ location: externalClicks.location, clicks: count() })
+                .from(externalClicks)
+                .where(and(isAddToCart, ...b))
+                .groupBy(externalClicks.location)
+                .orderBy(desc(count()))
+                .all()
+            return rows.map((r) => ({ location: String(r.location).replace(/^cart:/, ""), clicks: r.clicks }))
+        },
+        [] as { location: string; clicks: number }[],
     )
 }
 

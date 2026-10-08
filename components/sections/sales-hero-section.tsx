@@ -7,6 +7,7 @@ import { useModalStore } from "@/lib/modal-store"
 import { useCurrency } from "@/components/currency-provider"
 import { PaymentMarks } from "@/components/ui/payment-marks"
 import { products } from "@/lib/products"
+import { reportAddToCart } from "@/lib/gtag"
 
 export function SalesHeroSection({ dict, common }: { dict?: any; common?: any }) {
   const product = products[0]
@@ -40,7 +41,7 @@ export function SalesHeroSection({ dict, common }: { dict?: any; common?: any })
             </div>
 
             <button
-              onClick={handleAddToCart}
+              onClick={() => handleAddToCart("hero-instant-access")}
               className="absolute -bottom-5 right-4 flex items-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-white shadow-lg transition-colors hover:bg-primary-dark"
             >
               <Download className="h-4 w-4" />
@@ -111,7 +112,7 @@ export function SalesHeroSection({ dict, common }: { dict?: any; common?: any })
             </div>
 
             <button
-              onClick={handleAddToCart}
+              onClick={() => handleAddToCart("hero-cta")}
               className="flex w-full items-center justify-center gap-3 rounded-xl bg-primary px-8 py-5 text-lg font-bold uppercase tracking-wide text-white shadow-lg transition-all duration-300 hover:bg-primary-dark hover:shadow-xl"
             >
               <Zap className="h-5 w-5" />

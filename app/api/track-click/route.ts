@@ -8,9 +8,15 @@ export const runtime = "edge";
 export async function POST(req: Request) {
     try {
         const body = await req.json();
-        const { linkUrl, location, visitorId } = body;
+        const { linkUrl, location, visitorId, kind } = body;
 
-        if (!linkUrl || !location) {
+        // Add-to-cart presses share this endpoint but are stored under a
+        // "cart:" prefix so checkout-click figures never include them.
+        const isAddToCart = kind === "add_to_cart";
+        const storedLocation = isAddToCart ? `cart:${location}` : location;
+        const storedUrl = isAddToCart ? "(add-to-cart)" : linkUrl;
+
+        if (!location || (!isAddToCart && !linkUrl)) {
             return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
         }
 
@@ -19,11 +25,11 @@ export async function POST(req: Request) {
         // Run concurrently, but don't let DB failure stop the response or notification logging
         const [dbResult, telegramResult] = await Promise.allSettled([
             db.insert(externalClicks).values({
-                linkUrl,
-                location,
+                linkUrl: storedUrl,
+                location: storedLocation,
                 visitorId: typeof visitorId === "string" ? visitorId : null,
             }),
-            sendTelegramMessage(message)
+            isAddToCart ? Promise.resolve() : sendTelegramMessage(message)
         ]);
 
         if (dbResult.status === 'rejected') {
