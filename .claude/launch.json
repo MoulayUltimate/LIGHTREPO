@@ -4,15 +4,10 @@
     {
       "name": "dev",
       "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["dev"],
+      "runtimeArgs": [
+        "dev"
+      ],
       "port": 3000,
-      "autoPort": true
-    },
-    {
-      "name": "guide",
-      "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "4321", "--directory", "lightos-site"],
-      "port": 4321,
       "autoPort": true
     }
   ]
