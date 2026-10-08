@@ -33,7 +33,15 @@ type ConversionOptions = {
 function recordClick(url: string | undefined, location: string | undefined) {
     if (!location) return
     try {
-        const body = JSON.stringify({ linkUrl: url ?? "unknown", location })
+        // The analytics tracker already keeps a visitor id; sending it lets the
+        // panel count unique clickers and a real click-through rate.
+        let visitorId: string | null = null
+        try {
+            visitorId = localStorage.getItem("lb_visitor_id")
+        } catch {
+            /* storage can be blocked; the click is still worth recording */
+        }
+        const body = JSON.stringify({ linkUrl: url ?? "unknown", location, visitorId })
         // keepalive lets the request survive the page navigating away.
         fetch("/api/track-click", {
             method: "POST",

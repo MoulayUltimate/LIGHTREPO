@@ -8,7 +8,7 @@ export const runtime = "edge";
 export async function POST(req: Request) {
     try {
         const body = await req.json();
-        const { linkUrl, location } = body;
+        const { linkUrl, location, visitorId } = body;
 
         if (!linkUrl || !location) {
             return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
@@ -21,6 +21,7 @@ export async function POST(req: Request) {
             db.insert(externalClicks).values({
                 linkUrl,
                 location,
+                visitorId: typeof visitorId === "string" ? visitorId : null,
             }),
             sendTelegramMessage(message)
         ]);

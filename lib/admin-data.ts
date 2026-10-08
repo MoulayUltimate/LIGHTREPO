@@ -156,6 +156,48 @@ export async function getBuyClicksByLocation(range: ResolvedRange) {
     )
 }
 
+/** Which destination link was clicked — the Stripe URL has changed before. */
+export async function getClicksByUrl(range: ResolvedRange) {
+    const b = bounds(externalClicks.createdAt, range)
+    return safe(
+        "clicksByUrl",
+        async () => {
+            const q = db.select({ url: externalClicks.linkUrl, clicks: count() }).from(externalClicks)
+            const scoped = b.length ? q.where(and(...b)) : q
+            return await scoped.groupBy(externalClicks.linkUrl).orderBy(desc(count())).all()
+        },
+        [] as { url: string; clicks: number }[],
+    )
+}
+
+/** Individual clicks, newest first, for the detail table. */
+export async function getRecentClicks(range: ResolvedRange, limit = 25) {
+    const b = bounds(externalClicks.createdAt, range)
+    return safe(
+        "recentClicks",
+        async () => {
+            const q = db.select().from(externalClicks)
+            const scoped = b.length ? q.where(and(...b)) : q
+            return await scoped.orderBy(desc(externalClicks.createdAt)).limit(limit).all()
+        },
+        [] as any[],
+    )
+}
+
+/** Distinct visitors who clicked a checkout button, for click-through rate. */
+export async function getUniqueClickers(range: ResolvedRange): Promise<number> {
+    const b = bounds(externalClicks.createdAt, range)
+    return safe(
+        "uniqueClickers",
+        async () => {
+            const q = db.select({ c: countDistinct(externalClicks.visitorId) }).from(externalClicks)
+            const scoped = b.length ? q.where(and(...b)) : q
+            return (await scoped.get())?.c ?? 0
+        },
+        0,
+    )
+}
+
 export type TrafficPoint = { label: string; views: number; visitors: number }
 
 /**
