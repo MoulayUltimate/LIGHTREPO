@@ -1,4 +1,5 @@
 import { requireAdmin } from "@/lib/admin-auth"
+import { resolveRange } from "@/lib/admin-range"
 import { DashboardView } from "@/components/admin/dashboard-view"
 import { OrdersView } from "@/components/admin/orders-view"
 import { MissedView } from "@/components/admin/missed-view"
@@ -21,12 +22,12 @@ export default async function AdminPage({
     searchParams,
 }: {
     params: Promise<{ lang: string }>
-    searchParams: Promise<{ view?: string }>
+    searchParams: Promise<{ view?: string; range?: string }>
 }) {
     const { lang } = await params
     await requireAdmin(lang)
 
-    const { view } = await searchParams
+    const { view, range } = await searchParams
 
     switch (view) {
         case "orders":
@@ -36,7 +37,7 @@ export default async function AdminPage({
         case "messages":
             return <MessagesView />
         case "analytics":
-            return <AnalyticsView />
+            return <AnalyticsView lang={lang} range={resolveRange(range)} />
         case "live":
             return <LiveView />
         default:
