@@ -1,7 +1,7 @@
 import { db } from "@/lib/db"
 import { visitors, pageViews, orders, contactMessages, externalClicks } from "@/db/schema"
 import { sql, desc, count, countDistinct, eq, and, type SQL } from "drizzle-orm"
-import { resolveRange, type ResolvedRange } from "@/lib/admin-range"
+import { resolveRange, localDateKey, localHour, utcOffsetSeconds, type ResolvedRange } from "@/lib/admin-range"
 
 /**
  * Server-side data for the admin panel.
@@ -174,43 +174,42 @@ export async function getTraffic(range: ResolvedRange): Promise<TrafficPoint[]> 
         [] as { visitorId: string | null; createdAt: Date | number | null }[],
     )
 
-    const toMs = (raw: unknown) =>
-        raw instanceof Date ? raw.getTime() : Number(raw) * 1000
+    // Buckets are keyed in the shop owner's local day, not the server's UTC day.
+    const toSeconds = (raw: unknown) =>
+        raw instanceof Date ? Math.floor(raw.getTime() / 1000) : Number(raw)
 
     const buckets = new Map<string, { views: number; visitors: Set<string> }>()
 
     if (range.hourly) {
-        const dayStart = (range.since ?? Math.floor(Date.now() / 1000)) * 1000
         for (let h = 0; h < 24; h++) {
             buckets.set(String(h).padStart(2, "0") + ":00", { views: 0, visitors: new Set() })
         }
         for (const row of rows) {
-            const ms = toMs(row.createdAt)
-            if (!Number.isFinite(ms)) continue
-            const hour = new Date(ms).getUTCHours()
-            const key = String(hour).padStart(2, "0") + ":00"
+            const secs = toSeconds(row.createdAt)
+            if (!Number.isFinite(secs)) continue
+            const key = String(localHour(secs)).padStart(2, "0") + ":00"
             const b = buckets.get(key)
             if (!b) continue
             b.views++
             if (row.visitorId) b.visitors.add(row.visitorId)
         }
-        void dayStart
     } else {
-        const days = range.since === null ? 30 : Math.max(1, Math.round((Date.now() / 1000 - range.since) / 86400))
+        const nowSeconds = Math.floor(Date.now() / 1000)
+        const days = range.since === null ? 30 : Math.max(1, Math.round((nowSeconds - range.since) / 86400))
         for (let i = days - 1; i >= 0; i--) {
-            const d = new Date(Date.now() - i * 86400000)
-            buckets.set(d.toISOString().slice(0, 10), { views: 0, visitors: new Set() })
+            buckets.set(localDateKey(nowSeconds - i * 86400), { views: 0, visitors: new Set() })
         }
         for (const row of rows) {
-            const ms = toMs(row.createdAt)
-            if (!Number.isFinite(ms)) continue
-            const key = new Date(ms).toISOString().slice(0, 10)
-            const b = buckets.get(key)
+            const secs = toSeconds(row.createdAt)
+            if (!Number.isFinite(secs)) continue
+            const b = buckets.get(localDateKey(secs))
             if (!b) continue
             b.views++
             if (row.visitorId) b.visitors.add(row.visitorId)
         }
     }
+
+    void utcOffsetSeconds
 
     return Array.from(buckets.entries()).map(([label, b]) => ({
         label,

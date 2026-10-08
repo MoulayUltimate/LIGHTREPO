@@ -6,7 +6,7 @@ import {
     getTraffic,
     getBuyClicksByLocation,
 } from "@/lib/admin-data"
-import { RANGES, type ResolvedRange } from "@/lib/admin-range"
+import { RANGES, offsetLabel, type ResolvedRange } from "@/lib/admin-range"
 
 function Bar({ label, value, max, suffix }: { label: string; value: number; max: number; suffix?: string }) {
     const pct = max > 0 ? Math.round((value / max) * 100) : 0
@@ -58,7 +58,7 @@ export async function AnalyticsView({ lang, range }: { lang: string; range: Reso
             <div className="mb-6">
                 <h1 className="text-2xl font-bold text-gray-900">Analytics</h1>
                 <p className="mt-1 text-sm text-gray-500">
-                    {range.label} · {totals.visitors.toLocaleString()} visitors ·{" "}
+                    {range.label} ({offsetLabel()}) · {totals.visitors.toLocaleString()} visitors ·{" "}
                     {totals.pageViews.toLocaleString()} page views ·{" "}
                     {totals.buyClicks.toLocaleString()} checkout clicks
                 </p>
@@ -101,7 +101,7 @@ export async function AnalyticsView({ lang, range }: { lang: string; range: Reso
 
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
                 <Panel
-                    title={range.hourly ? "Page views by hour (UTC)" : "Page views by day"}
+                    title={range.hourly ? `Page views by hour (${offsetLabel()})` : "Page views by day"}
                     empty={traffic.every((d) => d.views === 0)}
                 >
                     {traffic.map((d) => (
