@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LightBurn Installation &amp; Usage Guide</title>
+<meta name="description" content="Step-by-step guide to installing LightBurn, connecting your laser and running your first job. Windows 10 and 11.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📘</text></svg>">
+<style>
+  :root{
+    --primary:#8B1A1A; --primary-dark:#6d1414; --ink:#111827; --muted:#6b7280;
+    --line:#e5e7eb; --bg:#f9fafb; --card:#ffffff;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6}
+  .wrap{max-width:860px;margin:0 auto;padding:0 20px}
+  header{background:var(--card);border-bottom:1px solid var(--line)}
+  .bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 0;flex-wrap:wrap}
+  .brand{font-weight:800;letter-spacing:.14em;color:var(--primary);text-decoration:none;font-size:15px}
+  .langs{display:flex;gap:6px}
+  .langs button{border:1px solid var(--line);background:var(--card);color:var(--muted);
+    padding:6px 12px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer}
+  .langs button[aria-pressed="true"]{background:var(--primary);border-color:var(--primary);color:#fff}
+  .hero{background:var(--card);border-bottom:1px solid var(--line);padding:56px 0;text-align:center}
+  .eyebrow{color:var(--primary);font-weight:700;font-size:13px;letter-spacing:.12em;text-transform:uppercase}
+  h1{font-size:clamp(28px,5vw,42px);line-height:1.15;margin:12px 0 16px}
+  .lede{color:var(--muted);font-size:18px;max-width:620px;margin:0 auto}
+  .chip{display:inline-flex;align-items:center;gap:8px;margin-top:22px;border:1px solid var(--line);
+    background:var(--bg);border-radius:9px;padding:8px 14px;font-size:14px;font-weight:600;color:#374151}
+  section{padding:48px 0}
+  h2{font-size:clamp(21px,3.4vw,28px);margin:0 0 10px}
+  .sub{color:var(--muted);margin:0 0 26px}
+  ol.steps{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+  ol.steps li{display:flex;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
+  .num{flex:0 0 32px;height:32px;border-radius:999px;background:var(--primary);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
+  ol.steps h3{margin:0 0 4px;font-size:16px}
+  ol.steps p{margin:0;color:var(--muted);font-size:14.5px}
+  .grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px}
+  .card h3{margin:0 0 6px;font-size:16px}
+  .card p{margin:0;color:var(--muted);font-size:14.5px}
+  .videos{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+  .video{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card)}
+  .video .frame{position:relative;padding-top:56.25%}
+  .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .video p{margin:0;padding:12px 14px;font-size:14px;font-weight:600}
+  .channel{display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--line);
+    border-radius:12px;padding:20px;text-decoration:none;color:inherit}
+  .channel:hover{background:#f3f4f6}
+  .play{flex:0 0 46px;height:46px;border-radius:999px;background:rgba(139,26,26,.1);
+    display:flex;align-items:center;justify-content:center;color:var(--primary);font-size:18px}
+  .help{background:var(--card);border-top:1px solid var(--line);text-align:center}
+  .btn{display:inline-block;background:var(--primary);color:#fff;text-decoration:none;font-weight:700;
+    padding:14px 28px;border-radius:11px;margin-top:8px}
+  .btn:hover{background:var(--primary-dark)}
+  footer{padding:30px 0;text-align:center;color:var(--muted);font-size:13.5px}
+  footer a{color:var(--primary)}
+  [data-lang]{display:none}
+  [data-lang].on{display:block}
+  li[data-lang].on{display:flex}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="/">LIGHTBURN GUIDE</a>
+    <div class="langs" role="group" aria-label="Language">
+      <button type="button" data-set="en" aria-pressed="true">EN</button>
+      <button type="button" data-set="de" aria-pressed="false">DE</button>
+      <button type="button" data-set="fr" aria-pressed="false">FR</button>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div data-lang="en" class="on">
+      <p class="eyebrow">Guide</p>
+      <h1>LightBurn installation and usage guide</h1>
+      <p class="lede">Everything you need to get LightBurn installed, connected to your machine, and cutting your first job.</p>
+      <p class="chip">🖥 For Windows 10 &amp; 11</p>
+    </div>
+    <div data-lang="de">
+      <p class="eyebrow">Anleitung</p>
+      <h1>LightBurn: Installation und Bedienung</h1>
+      <p class="lede">Alles, was Sie brauchen, um LightBurn zu installieren, mit Ihrer Maschine zu verbinden und den ersten Auftrag zu schneiden.</p>
+      <p class="chip">🖥 Für Windows 10 &amp; 11</p>
+    </div>
+    <div data-lang="fr">
+      <p class="eyebrow">Guide</p>
+      <h1>Guide d’installation et d’utilisation de LightBurn</h1>
+      <p class="lede">Tout ce qu’il faut pour installer LightBurn, le connecter à votre machine et lancer votre première découpe.</p>
+      <p class="chip">🖥 Pour Windows 10 et 11</p>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div data-lang="en" class="on">
+      <h2>Installing LightBurn</h2>
+      <p class="sub">Work through these in order. The whole process usually takes under ten minutes.</p>
+      <ol class="steps">
+        <li><span class="num">1</span><div><h3>Check your system</h3><p>LightBurn runs on Windows 10 and Windows 11. Make sure you have administrator rights on the computer you are installing on.</p></div></li>
+        <li><span class="num">2</span><div><h3>Download the installer</h3><p>Use the download link from your order email. Save the file somewhere you can find it, such as your Downloads folder.</p></div></li>
+        <li><span class="num">3</span><div><h3>Run the installer</h3><p>Open the downloaded file and follow the prompts. Windows may ask you to confirm the installation; accept to continue.</p></div></li>
+        <li><span class="num">4</span><div><h3>Enter your licence key</h3><p>Start LightBurn and enter the licence key from your order email when prompted. Keep that email — you will need the key again if you reinstall.</p></div></li>
+        <li><span class="num">5</span><div><h3>Add your laser</h3><p>Open Devices and add your controller: Ruida, GRBL, Smoothieboard, TopWisdom or EZCad2. Set your bed size and origin to match your machine.</p></div></li>
+        <li><span class="num">6</span><div><h3>Run a test</h3><p>Start with a small, low-power test on scrap material to confirm framing and focus before committing to a real job.</p></div></li>
+      </ol>
+    </div>
+
+    <div data-lang="de">
+      <h2>LightBurn installieren</h2>
+      <p class="sub">Gehen Sie die Schritte der Reihe nach durch. Das Ganze dauert meist weniger als zehn Minuten.</p>
+      <ol class="steps">
+        <li><span class="num">1</span><div><h3>System prüfen</h3><p>LightBurn läuft unter Windows 10 und Windows 11. Stellen Sie sicher, dass Sie auf dem Computer Administratorrechte haben.</p></div></li>
+        <li><span class="num">2</span><div><h3>Installationsdatei herunterladen</h3><p>Verwenden Sie den Download-Link aus Ihrer Bestell-E-Mail. Speichern Sie die Datei an einem Ort, den Sie wiederfinden, etwa im Ordner Downloads.</p></div></li>
+        <li><span class="num">3</span><div><h3>Installation starten</h3><p>Öffnen Sie die heruntergeladene Datei und folgen Sie den Anweisungen. Windows fragt eventuell nach einer Bestätigung; bestätigen Sie, um fortzufahren.</p></div></li>
+        <li><span class="num">4</span><div><h3>Lizenzschlüssel eingeben</h3><p>Starten Sie LightBurn und geben Sie den Lizenzschlüssel aus Ihrer Bestell-E-Mail ein. Bewahren Sie die E-Mail auf — bei einer Neuinstallation brauchen Sie den Schlüssel erneut.</p></div></li>
+        <li><span class="num">5</span><div><h3>Laser hinzufügen</h3><p>Öffnen Sie Geräte und fügen Sie Ihren Controller hinzu: Ruida, GRBL, Smoothieboard, TopWisdom oder EZCad2. Stellen Sie Arbeitsfläche und Nullpunkt passend zu Ihrer Maschine ein.</p></div></li>
+        <li><span class="num">6</span><div><h3>Testlauf</h3><p>Beginnen Sie mit einem kleinen Test bei geringer Leistung auf Restmaterial, um Rahmen und Fokus zu prüfen, bevor Sie einen echten Auftrag starten.</p></div></li>
+      </ol>
+    </div>
+
+    <div data-lang="fr">
+      <h2>Installer LightBurn</h2>
+      <p class="sub">Suivez ces étapes dans l’ordre. L’ensemble prend généralement moins de dix minutes.</p>
+      <ol class="steps">
+        <li><span class="num">1</span><div><h3>Vérifier votre système</h3><p>LightBurn fonctionne sous Windows 10 et Windows 11. Assurez-vous de disposer des droits administrateur sur l’ordinateur concerné.</p></div></li>
+        <li><span class="num">2</span><div><h3>Télécharger le programme d’installation</h3><p>Utilisez le lien de téléchargement figurant dans l’e-mail de votre commande. Enregistrez le fichier dans un dossier que vous retrouverez facilement.</p></div></li>
+        <li><span class="num">3</span><div><h3>Lancer l’installation</h3><p>Ouvrez le fichier téléchargé et suivez les instructions. Windows peut demander une confirmation ; acceptez pour continuer.</p></div></li>
+        <li><span class="num">4</span><div><h3>Saisir votre clé de licence</h3><p>Démarrez LightBurn et saisissez la clé de licence reçue dans l’e-mail de commande. Conservez cet e-mail : la clé vous resservira en cas de réinstallation.</p></div></li>
+        <li><span class="num">5</span><div><h3>Ajouter votre laser</h3><p>Ouvrez Périphériques et ajoutez votre contrôleur : Ruida, GRBL, Smoothieboard, TopWisdom ou EZCad2. Réglez la taille du plateau et l’origine selon votre machine.</p></div></li>
+        <li><span class="num">6</span><div><h3>Faire un essai</h3><p>Commencez par un petit test à faible puissance sur une chute afin de vérifier le cadrage et la mise au point avant un vrai travail.</p></div></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div data-lang="en" class="on">
+      <h2>Video tutorials</h2>
+      <p class="sub">Watch the software in use before you start on your own machine.</p>
+    </div>
+    <div data-lang="de">
+      <h2>Video-Tutorials</h2>
+      <p class="sub">Sehen Sie die Software im Einsatz, bevor Sie an der eigenen Maschine starten.</p>
+    </div>
+    <div data-lang="fr">
+      <h2>Tutoriels vidéo</h2>
+      <p class="sub">Voyez le logiciel en action avant de vous lancer sur votre propre machine.</p>
+    </div>
+
+    <!-- Add your own videos here: put YouTube IDs in the list below and they
+         replace the channel link automatically. Left empty on purpose so the
+         page never shows a broken player. -->
+    <div class="videos" id="videos"></div>
+
+    <a class="channel" id="channel" href="https://www.youtube.com/@LightBurnSoftware" target="_blank" rel="noopener noreferrer">
+      <span class="play">▶</span>
+      <span>
+        <strong data-lang="en" class="on">LightBurn on YouTube</strong>
+        <strong data-lang="de">LightBurn auf YouTube</strong>
+        <strong data-lang="fr">LightBurn sur YouTube</strong>
+        <span data-lang="en" class="on" style="color:var(--muted);font-size:14px">Official tutorials covering setup, layers, camera alignment and more.</span>
+        <span data-lang="de" style="color:var(--muted);font-size:14px">Offizielle Tutorials zu Einrichtung, Ebenen, Kameraausrichtung und mehr.</span>
+        <span data-lang="fr" style="color:var(--muted);font-size:14px">Tutoriels officiels : installation, calques, alignement par caméra et plus encore.</span>
+      </span>
+    </a>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div data-lang="en" class="on"><h2>What you can do with LightBurn</h2></div>
+    <div data-lang="de"><h2>Was Sie mit LightBurn machen können</h2></div>
+    <div data-lang="fr"><h2>Ce que vous pouvez faire avec LightBurn</h2></div>
+
+    <div class="grid" style="margin-top:20px">
+      <div class="card">
+        <div data-lang="en" class="on"><h3>Layers and settings</h3><p>Give each layer its own power, speed and number of passes, so cutting, scoring and engraving run in one job.</p></div>
+        <div data-lang="de"><h3>Ebenen und Einstellungen</h3><p>Geben Sie jeder Ebene eigene Werte für Leistung, Geschwindigkeit und Durchgänge, sodass Schneiden, Rillen und Gravieren in einem Auftrag laufen.</p></div>
+        <div data-lang="fr"><h3>Calques et réglages</h3><p>Attribuez à chaque calque sa puissance, sa vitesse et son nombre de passages, pour découper, rainurer et graver en une seule opération.</p></div>
+      </div>
+      <div class="card">
+        <div data-lang="en" class="on"><h3>Import your artwork</h3><p>Bring in vector and image files from tools like Adobe Illustrator, CorelDRAW and CAD software.</p></div>
+        <div data-lang="de"><h3>Grafiken importieren</h3><p>Übernehmen Sie Vektor- und Bilddateien aus Programmen wie Adobe Illustrator, CorelDRAW und CAD-Software.</p></div>
+        <div data-lang="fr"><h3>Importer vos créations</h3><p>Récupérez des fichiers vectoriels et images issus d’Adobe Illustrator, CorelDRAW ou de logiciels de CAO.</p></div>
+      </div>
+      <div class="card">
+        <div data-lang="en" class="on"><h3>Camera alignment</h3><p>With a supported camera, line your design up against the material on the bed instead of guessing.</p></div>
+        <div data-lang="de"><h3>Kameraausrichtung</h3><p>Mit einer unterstützten Kamera richten Sie Ihr Design am Material auf der Arbeitsfläche aus, statt zu schätzen.</p></div>
+        <div data-lang="fr"><h3>Alignement par caméra</h3><p>Avec une caméra compatible, alignez votre motif sur le matériau posé sur le plateau au lieu de l’estimer.</p></div>
+      </div>
+      <div class="card">
+        <div data-lang="en" class="on"><h3>Preview before you burn</h3><p>Simulate the whole job first and catch mistakes before they cost you material.</p></div>
+        <div data-lang="de"><h3>Vorschau vor dem Brennen</h3><p>Simulieren Sie den gesamten Auftrag und erkennen Sie Fehler, bevor sie Material kosten.</p></div>
+        <div data-lang="fr"><h3>Aperçu avant gravure</h3><p>Simulez l’ensemble du travail et repérez les erreurs avant qu’elles ne gâchent du matériau.</p></div>
+      </div>
+      <div class="card">
+        <div data-lang="en" class="on"><h3>Wide controller support</h3><p>Works with Ruida, GRBL, Smoothieboard, TopWisdom and EZCad2 controllers.</p></div>
+        <div data-lang="de"><h3>Breite Controller-Unterstützung</h3><p>Funktioniert mit Ruida-, GRBL-, Smoothieboard-, TopWisdom- und EZCad2-Controllern.</p></div>
+        <div data-lang="fr"><h3>Large prise en charge</h3><p>Compatible avec les contrôleurs Ruida, GRBL, Smoothieboard, TopWisdom et EZCad2.</p></div>
+      </div>
+      <div class="card">
+        <div data-lang="en" class="on"><h3>Edit without leaving</h3><p>Create and adjust vector shapes directly in LightBurn, without switching to another program.</p></div>
+        <div data-lang="de"><h3>Direkt bearbeiten</h3><p>Erstellen und ändern Sie Vektorformen direkt in LightBurn, ohne in ein anderes Programm zu wechseln.</p></div>
+        <div data-lang="fr"><h3>Éditer sans quitter</h3><p>Créez et modifiez des formes vectorielles directement dans LightBurn, sans passer par un autre logiciel.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="help">
+  <div class="wrap">
+    <div data-lang="en" class="on">
+      <h2>Need a hand?</h2>
+      <p class="sub">If anything does not go to plan during installation or setup, get in touch and we will help you through it.</p>
+      <a class="btn" href="mailto:contact@lightburnos.com">Contact support</a>
+    </div>
+    <div data-lang="de">
+      <h2>Brauchen Sie Hilfe?</h2>
+      <p class="sub">Wenn bei Installation oder Einrichtung etwas nicht wie geplant läuft, melden Sie sich — wir helfen Ihnen weiter.</p>
+      <a class="btn" href="mailto:contact@lightburnos.com">Support kontaktieren</a>
+    </div>
+    <div data-lang="fr">
+      <h2>Besoin d’aide ?</h2>
+      <p class="sub">Si quelque chose ne se passe pas comme prévu lors de l’installation ou de la configuration, écrivez-nous.</p>
+      <a class="btn" href="mailto:contact@lightburnos.com">Contacter l’assistance</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>
+      <a href="https://lightburnos.com">lightburnos.com</a> ·
+      <a href="mailto:contact@lightburnos.com">contact@lightburnos.com</a>
+    </p>
+    <p style="font-size:12.5px">LightBurn and its logo are trademarks of their respective owners.</p>
+  </div>
+</footer>
+
+<script>
+  // Put YouTube IDs here and they render in place of the channel link.
+  var VIDEOS = [
+    // { id: "xxxxxxxxxxx", title: "Getting started with LightBurn" },
+  ];
+
+  (function () {
+    var grid = document.getElementById("videos");
+    var channel = document.getElementById("channel");
+    var usable = VIDEOS.filter(function (v) { return v && v.id; });
+
+    if (usable.length) {
+      channel.style.display = "none";
+      grid.innerHTML = usable.map(function (v) {
+        return '<div class="video"><div class="frame"><iframe loading="lazy" allowfullscreen ' +
+          'allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" ' +
+          'src="https://www.youtube-nocookie.com/embed/' + encodeURIComponent(v.id) + '" ' +
+          'title="' + String(v.title || "").replace(/"/g, "&quot;") + '"></iframe></div>' +
+          '<p>' + (v.title || "") + '</p></div>';
+      }).join("");
+    }
+
+    function setLang(code) {
+      document.documentElement.lang = code;
+      document.querySelectorAll("[data-lang]").forEach(function (el) {
+        el.classList.toggle("on", el.getAttribute("data-lang") === code);
+      });
+      document.querySelectorAll(".langs button").forEach(function (b) {
+        b.setAttribute("aria-pressed", String(b.getAttribute("data-set") === code));
+      });
+      try { localStorage.setItem("guide-lang", code); } catch (e) {}
+    }
+
+    document.querySelectorAll(".langs button").forEach(function (b) {
+      b.addEventListener("click", function () { setLang(b.getAttribute("data-set")); });
+    });
+
+    var saved = null;
+    try { saved = localStorage.getItem("guide-lang"); } catch (e) {}
+    var guess = saved || (navigator.language || "en").slice(0, 2).toLowerCase();
+    setLang(["en", "de", "fr"].indexOf(guess) >= 0 ? guess : "en");
+  })();
+</script>
+
+</body>
+</html>

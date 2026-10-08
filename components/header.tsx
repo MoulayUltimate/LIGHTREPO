@@ -75,12 +75,14 @@ export function Header({ dict }: { dict?: any }) {
               >
                 {dict?.home || "Home"}
               </LocaleLink>
-              <LocaleLink
-                href="/guide"
+              <a
+                href="https://lightos.site"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-sm font-medium text-gray-700 hover:text-primary transition-colors"
               >
                 {dict?.guide || "Guide"}
-              </LocaleLink>
+              </a>
               <LocaleLink
                 href="/contact"
                 className="text-sm font-medium text-gray-700 hover:text-primary transition-colors"
