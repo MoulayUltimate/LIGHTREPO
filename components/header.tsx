@@ -76,6 +76,12 @@ export function Header({ dict }: { dict?: any }) {
                 {dict?.home || "Home"}
               </LocaleLink>
               <LocaleLink
+                href="/guide"
+                className="text-sm font-medium text-gray-700 hover:text-primary transition-colors"
+              >
+                {dict?.guide || "Guide"}
+              </LocaleLink>
+              <LocaleLink
                 href="/contact"
                 className="text-sm font-medium text-gray-700 hover:text-primary transition-colors"
               >

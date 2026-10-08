@@ -8,7 +8,8 @@
         "myAccount": "Mon compte",
         "buyNow": "Acheter",
         "cart": "Panier",
-        "announcement": "Livraison instantanée • Garantie 30 jours satisfait ou remboursé • Support 24/7"
+        "announcement": "Livraison instantanée • Garantie 30 jours satisfait ou remboursé • Support 24/7",
+        "guide": "Guide"
     },
     "footer": {
         "company": {
@@ -619,5 +620,81 @@
         "copied": "Code copié",
         "cta": "Continuer vos achats",
         "close": "Fermer"
+    },
+    "guide": {
+        "eyebrow": "Guide",
+        "title": "Guide d’installation et d’utilisation de LightBurn",
+        "intro": "Tout ce qu’il faut pour installer LightBurn, le connecter à votre machine et lancer votre première découpe.",
+        "platform": "Pour Windows 10 et 11",
+        "install": {
+            "title": "Installer LightBurn",
+            "intro": "Suivez ces étapes dans l’ordre. L’ensemble prend généralement moins de dix minutes.",
+            "steps": [
+                {
+                    "title": "Vérifier votre système",
+                    "body": "LightBurn fonctionne sous Windows 10 et Windows 11. Assurez-vous de disposer des droits administrateur sur l’ordinateur concerné."
+                },
+                {
+                    "title": "Télécharger le programme d’installation",
+                    "body": "Utilisez le lien de téléchargement figurant dans l’e-mail de votre commande. Enregistrez le fichier dans un dossier que vous retrouverez facilement, par exemple Téléchargements."
+                },
+                {
+                    "title": "Lancer l’installation",
+                    "body": "Ouvrez le fichier téléchargé et suivez les instructions. Windows peut demander une confirmation ; acceptez pour continuer."
+                },
+                {
+                    "title": "Saisir votre clé de licence",
+                    "body": "Démarrez LightBurn et saisissez la clé de licence reçue dans l’e-mail de commande. Conservez cet e-mail : la clé vous resservira en cas de réinstallation."
+                },
+                {
+                    "title": "Ajouter votre laser",
+                    "body": "Ouvrez Périphériques et ajoutez votre contrôleur : Ruida, GRBL, Smoothieboard, TopWisdom ou EZCad2. Réglez la taille du plateau et l’origine selon votre machine."
+                },
+                {
+                    "title": "Faire un essai",
+                    "body": "Commencez par un petit test à faible puissance sur une chute afin de vérifier le cadrage et la mise au point avant un vrai travail."
+                }
+            ]
+        },
+        "videos": {
+            "title": "Tutoriels vidéo",
+            "intro": "Voyez le logiciel en action avant de vous lancer sur votre propre machine.",
+            "channelTitle": "LightBurn sur YouTube",
+            "channelBody": "Tutoriels officiels : installation, calques, alignement par caméra et plus encore."
+        },
+        "features": {
+            "title": "Ce que vous pouvez faire avec LightBurn",
+            "items": [
+                {
+                    "title": "Calques et réglages",
+                    "body": "Attribuez à chaque calque sa puissance, sa vitesse et son nombre de passages, pour découper, rainurer et graver en une seule opération."
+                },
+                {
+                    "title": "Importer vos créations",
+                    "body": "Récupérez des fichiers vectoriels et images issus d’Adobe Illustrator, CorelDRAW ou de logiciels de CAO."
+                },
+                {
+                    "title": "Alignement par caméra",
+                    "body": "Avec une caméra compatible, alignez votre motif sur le matériau posé sur le plateau au lieu de l’estimer."
+                },
+                {
+                    "title": "Aperçu avant gravure",
+                    "body": "Simulez l’ensemble du travail et repérez les erreurs avant qu’elles ne gâchent du matériau."
+                },
+                {
+                    "title": "Large prise en charge",
+                    "body": "Compatible avec les contrôleurs Ruida, GRBL, Smoothieboard, TopWisdom et EZCad2."
+                },
+                {
+                    "title": "Éditer sans quitter",
+                    "body": "Créez et modifiez des formes vectorielles directement dans LightBurn, sans passer par un autre logiciel."
+                }
+            ]
+        },
+        "help": {
+            "title": "Besoin d’aide ?",
+            "body": "Si quelque chose ne se passe pas comme prévu lors de l’installation ou de la configuration, écrivez-nous et nous vous accompagnerons.",
+            "cta": "Contacter l’assistance"
+        }
     }
 }

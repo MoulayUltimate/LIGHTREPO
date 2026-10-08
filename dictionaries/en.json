@@ -8,7 +8,8 @@
         "myAccount": "My Account",
         "buyNow": "Buy Now",
         "cart": "Cart",
-        "announcement": "Instant delivery • 30-day money-back guarantee • 24/7 support"
+        "announcement": "Instant delivery • 30-day money-back guarantee • 24/7 support",
+        "guide": "Guide"
     },
     "footer": {
         "company": {
@@ -619,5 +620,81 @@
         "copied": "Code copied",
         "cta": "Continue shopping",
         "close": "Close"
+    },
+    "guide": {
+        "eyebrow": "Guide",
+        "title": "LightBurn installation and usage guide",
+        "intro": "Everything you need to get LightBurn installed, connected to your machine, and cutting your first job.",
+        "platform": "For Windows 10 & 11",
+        "install": {
+            "title": "Installing LightBurn",
+            "intro": "Work through these in order. The whole process usually takes under ten minutes.",
+            "steps": [
+                {
+                    "title": "Check your system",
+                    "body": "LightBurn runs on Windows 10 and Windows 11. Make sure you have administrator rights on the computer you are installing on."
+                },
+                {
+                    "title": "Download the installer",
+                    "body": "Use the download link from your order email. Save the file somewhere you can find it, such as your Downloads folder."
+                },
+                {
+                    "title": "Run the installer",
+                    "body": "Open the downloaded file and follow the prompts. Windows may ask you to confirm the installation; accept to continue."
+                },
+                {
+                    "title": "Enter your licence key",
+                    "body": "Start LightBurn and enter the licence key from your order email when prompted. Keep that email — you will need the key again if you reinstall."
+                },
+                {
+                    "title": "Add your laser",
+                    "body": "Open Devices and add your controller: Ruida, GRBL, Smoothieboard, TopWisdom or EZCad2. Set your bed size and origin to match your machine."
+                },
+                {
+                    "title": "Run a test",
+                    "body": "Start with a small, low-power test on scrap material to confirm framing and focus before committing to a real job."
+                }
+            ]
+        },
+        "videos": {
+            "title": "Video tutorials",
+            "intro": "Watch the software in use before you start on your own machine.",
+            "channelTitle": "LightBurn on YouTube",
+            "channelBody": "Official tutorials covering setup, layers, camera alignment and more."
+        },
+        "features": {
+            "title": "What you can do with LightBurn",
+            "items": [
+                {
+                    "title": "Layers and settings",
+                    "body": "Give each layer its own power, speed and number of passes, so cutting, scoring and engraving run in one job."
+                },
+                {
+                    "title": "Import your artwork",
+                    "body": "Bring in vector and image files from tools like Adobe Illustrator, CorelDRAW and CAD software."
+                },
+                {
+                    "title": "Camera alignment",
+                    "body": "With a supported camera, line your design up against the material on the bed instead of guessing."
+                },
+                {
+                    "title": "Preview before you burn",
+                    "body": "Simulate the whole job first and catch mistakes before they cost you material."
+                },
+                {
+                    "title": "Wide controller support",
+                    "body": "Works with Ruida, GRBL, Smoothieboard, TopWisdom and EZCad2 controllers."
+                },
+                {
+                    "title": "Edit without leaving",
+                    "body": "Create and adjust vector shapes directly in LightBurn, without switching to another program."
+                }
+            ]
+        },
+        "help": {
+            "title": "Need a hand?",
+            "body": "If anything does not go to plan during installation or setup, get in touch and we will help you through it.",
+            "cta": "Contact support"
+        }
     }
 }
